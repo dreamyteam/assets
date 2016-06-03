@@ -43,8 +43,8 @@
                 color: #2b2c2e;
                 line-height: 45px;
                 padding-left: 11px;
-                &:focus{
-                     background: #fcf8e2;
+                &:focus {
+                    background: #fcf8e2;
                 }
             }
             // 验证码
@@ -118,6 +118,9 @@
                 }
                 input {
                     width: 100%;
+                }
+                &.introduce {
+                    width: 590px;
                 }
             }
         }

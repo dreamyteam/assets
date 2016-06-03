@@ -281,7 +281,7 @@ ul.sidebar_nav {
   float: right;
   width: 700px;
   position: relative;
-  min-height: 525px;
+  min-height: 475px;
   background: #ffffff;
   box-shadow: 0px 2px 2px 0px rgba(209, 209, 209, 0.5);
   padding: 30px 20px 30px 20px; }
@@ -294,14 +294,6 @@ ul.sidebar_nav {
     background-size: 540px;
     width: 540px;
     height: 4px; }
-  .sidebar_content .clear_history {
-    display: block;
-    position: absolute;
-    background: none;
-    font-size: 12px;
-    color: #9b9b9b;
-    right: 20px;
-    top: 35px; }
   .sidebar_content h1.title {
     display: inline-block;
     vertical-align: bottom;
@@ -323,12 +315,6 @@ ul.sidebar_nav {
     font-size: 14px;
     color: #2b2c2e;
     margin-top: 20px; }
-  .sidebar_content span.update_date {
-    display: inline-block;
-    vertical-align: bottom;
-    float: right;
-    font-size: 12px;
-    color: #9b9b9b; }
   .sidebar_content p {
     font-size: 13px;
     color: #262626;
@@ -339,14 +325,6 @@ ul.sidebar_nav {
     font-size: 14px;
     color: #4a4a4a;
     margin-bottom: 15px; }
-  .sidebar_content .col_2_container {
-    padding: 0;
-    margin-bottom: 142px; }
-    .sidebar_content .col_2_container .col {
-      height: auto; }
-      .sidebar_content .col_2_container .col img {
-        margin-top: 7px;
-        width: 100%; }
   .sidebar_content .about_form_container {
     font-size: 0; }
     .sidebar_content .about_form_container h6.form_label {
@@ -458,55 +436,38 @@ ul.sidebar_nav {
         text-align: center; }
     .sidebar_content .ip_pic_list li:nth-child(5n) {
       margin-right: 0; }
-  .sidebar_content .user_personal_information_container {
-    margin-top: 22px;
-    padding: 0 40px 0 30px; }
-    .sidebar_content .user_personal_information_container h2.sub_title {
-      font-size: 14px;
-      color: #2b2c2e; }
-    .sidebar_content .user_personal_information_container .col_2_container {
-      margin-top: 0;
-      margin-bottom: 0; }
-      .sidebar_content .user_personal_information_container .col_2_container .col {
-        margin-top: 10px;
-        text-align: left; }
-        .sidebar_content .user_personal_information_container .col_2_container .col input[type=text] {
-          width: 270px; }
-      .sidebar_content .user_personal_information_container .col_2_container .col:nth-child(2n) {
-        padding-left: 24px; }
-    .sidebar_content .user_personal_information_container .personal_information_label {
-      margin-top: 5px;
-      font-size: 14px;
-      color: #9b9b9b;
-      margin-bottom: 5px; }
 
-.account_setting {
-  padding: 48px 0 0 30px; }
-  .account_setting li {
-    font-size: 0;
-    margin-bottom: 10px; }
-    .account_setting li label, .account_setting li input, .account_setting li button {
-      display: inline-block;
-      vertical-align: middle; }
-    .account_setting li label {
+.user_basic_container {
+  margin-top: 22px;
+  padding: 0 40px 0 30px; }
+  .user_basic_container h2.sub_title {
+    font-size: 14px;
+    color: #2b2c2e; }
+  .user_basic_container .input_content {
+    position: relative;
+    margin-top: 27px;
+    text-align: left;
+    width: 270px; }
+    .user_basic_container .input_content .err_msg {
+      position: absolute;
+      top: 0;
+      right: 0;
       font-size: 14px;
-      color: #9b9b9b;
-      margin-right: 20px; }
-    .account_setting li input[type='text'], .account_setting li input[type=email], .account_setting li input[type=password] {
-      display: inline-block;
-      width: 270px;
-      margin-right: 70px;
-      border: 1px solid transparent; }
-      .account_setting li input[type='text']:focus, .account_setting li input[type=email]:focus, .account_setting li input[type=password]:focus {
-        border: 1px solid #9b9b9b; }
-    .account_setting li button {
-      cursor: pointer;
-      background: none;
-      font-size: 14px;
-      color: #9b9b9b; }
-  .account_setting .submit_container {
-    padding-right: 20px;
-    margin-top: 149px; }
+      color: #bb4945; }
+    .user_basic_container .input_content input[type=text] {
+      width: 100%; }
+    .user_basic_container .input_content textarea {
+      width: 100%;
+      height: 80px; }
+    .user_basic_container .input_content.introduce {
+      width: 590px; }
+  .user_basic_container .personal_information_label {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #9b9b9b;
+    margin-bottom: 5px; }
+  .user_basic_container input[type=submit] {
+    margin-top: 30px; }
 
 .modify_password {
   margin-top: 31px;
@@ -526,42 +487,3 @@ ul.sidebar_nav {
   .modify_password input[type=submit] {
     float: none;
     margin-top: 16px; }
-
-.history_container {
-  margin: 0 -20px; }
-  .history_container .history_list {
-    width: 100%;
-    font-size: 12px;
-    color: #2b2c2e; }
-    .history_container .history_list tr {
-      line-height: 50px;
-      transition: background 300ms ease; }
-      .history_container .history_list tr:hover {
-        background: #f9f9f9; }
-        .history_container .history_list tr:hover .delete button {
-          display: block; }
-    .history_container .history_list .name {
-      padding-left: 20px; }
-    .history_container .history_list .delete {
-      text-align: center; }
-      .history_container .history_list .delete button {
-        display: none;
-        background: none;
-        color: #9b9b9b; }
-    .history_container .history_list .date {
-      text-align: right;
-      padding-right: 30px; }
-  .history_container .nohistory {
-    height: 260px;
-    text-align: center;
-    padding-top: 190px; }
-    .history_container .nohistory .nohistory_pic {
-      display: inline-block;
-      background: url("../../assets/images/no_contents_ico@2x.png") no-repeat;
-      background-size: 52px;
-      width: 52px;
-      height: 52px; }
-    .history_container .nohistory h6 {
-      margin-top: 8px;
-      font-size: 13px;
-      color: #9b9b9b; }

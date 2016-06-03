@@ -12,8 +12,10 @@ export default class Validate {
         this.inputBoxs = this.el.find(this.cfg.inputBoxs);
         this.btnSubmit = this.el.find(this.cfg.btnSubmit);
         this.errMsg = ".err_msg";
-        this.validateBlur();
-        this.checkSubmit();
+        if (this.el.length > 0) {
+            this.validateBlur();
+            this.checkSubmit();
+        }
     }
     checkRequired(obj, parent, canSubmit) {
         let self = this;
@@ -63,6 +65,30 @@ export default class Validate {
             }
         }
     }
+    checkCurrentPwd(obj, parent, canSubmit) {
+        let self = this;
+        let errMsg = parent.find(this.errMsg);
+        console.log("checkedcurrintpwd");
+        // errMsg.show().html("旧密码不正确")
+        if (canSubmit) {
+            self.canSubmit = true;
+        }
+    }
+    checkNewPwd(obj, newPwd, parent, canSubmit) {
+        let self = this;
+        let errMsg = parent.find(this.errMsg);
+        if (obj.val() != newPwd) {
+            errMsg.show().html("两次密码输入不一致");
+            if (canSubmit) {
+                self.canSubmit = false;
+            }
+        } else {
+            errMsg.hide();
+            if (canSubmit) {
+                self.canSubmit = true;
+            }
+        }
+    }
     validateBlur() {
         let self = this;
         this.inputBoxs.each(function() {
@@ -74,11 +100,19 @@ export default class Validate {
                     self.checkRequired(curInput, curBox, false);
                 }
                 if (curInput.attr("type") == "email") {
-                    self.checkMail(curInput, curBox, true);
+                    self.checkMail(curInput, curBox, false);
+                }
+                if (curInput.attr("type") == "password") { //验证密码
+                    if (curInput.attr("name") == "currentPassword") {
+                        self.checkCurrentPwd(curInput, curBox, false)
+                    }
+                    if (curInput.attr("name") == "newPasswordConfirm") {
+                        let newPwd = self.inputBoxs.find("input[name=newPassword]").val();
+                        self.checkNewPwd(curInput, newPwd, curBox, true)
+                    }
                 }
             });
             curInput.on("focus", function() {
-                console.log(errMsg);
                 errMsg.hide().html("");
             });
             // select框
@@ -103,6 +137,15 @@ export default class Validate {
             }
             if (curInput.attr("type") == "email") {
                 self.checkMail(curInput, curBox, true);
+            }
+            if (curInput.attr("type") == "password") { //验证密码
+                if (curInput.attr("name") == "currentPassword") {
+                    self.checkCurrentPwd(curInput, curBox, true)
+                }
+                if (curInput.attr("name") == "newPasswordConfirm") {
+                    let newPwd = self.inputBoxs.find("input[name=newPassword]").val();
+                    self.checkNewPwd(curInput, newPwd, curBox, true)
+                }
             }
             let curSelect = $(this).find("select");
             if (curSelect.attr("required")) {

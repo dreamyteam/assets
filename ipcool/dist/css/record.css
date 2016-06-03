@@ -103,6 +103,8 @@ section.record {
         color: #bb4945; }
       section.record .record_content .input_content input {
         width: 100%; }
+      section.record .record_content .input_content.introduce {
+        width: 590px; }
   section.record .record_content:last-child {
     border: none; }
   section.record span.record_result {

@@ -873,12 +873,14 @@
 	                    }
 	                },
 	                tooltip: {
-	                    trigger: 'item'
+	                    trigger: 'item',
+	                    formatter: '{a}<br/>{b} : {d}%'
 	                },
 	                series: [{
 	                    name: this.name,
 	                    type: 'pie',
 	                    startAngle: 140,
+	                    minAngle: 20,
 	                    radius: ['40%', '65%'],
 	                    center: ['50%', '55%'],
 	                    avoidLabelOverlap: true,
@@ -922,6 +924,7 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
+	            console.log(data);
 	            this.chart.hideLoading();
 	            var option = {
 	                series: [{
