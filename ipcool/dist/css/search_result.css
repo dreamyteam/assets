@@ -135,9 +135,14 @@ section.search_result {
       section.search_result .sresult_ip .sresult_content h2 {
         font-size: 24px; }
         section.search_result .sresult_ip .sresult_content h2 a {
+          width: 440px;
+          white-space: nowrap;
+          vertical-align: middle;
+          overflow: hidden;
           display: inline-block;
           transition: color 300ms ease;
-          color: #5E5E5E; }
+          color: #5E5E5E;
+          text-overflow: ellipsis; }
           section.search_result .sresult_ip .sresult_content h2 a:hover {
             color: #00a69d; }
         section.search_result .sresult_ip .sresult_content h2 span {

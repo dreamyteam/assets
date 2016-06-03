@@ -1,6 +1,5 @@
 @import "./components/searchbar.scss";
 @import "./components/pagging.scss";
-
 section.search_count {
     padding: 22px 30px;
     font-size: 14px;
@@ -45,9 +44,14 @@ section.search_result {
             h2 {
                 font-size: 24px;
                 a {
+                    width: 440px;
+                    white-space: nowrap;
+                    vertical-align:middle;
+                    overflow: hidden;
                     display: inline-block;
                     transition: color 300ms ease;
                     color: #5E5E5E;
+                    text-overflow: ellipsis;
                     &:hover {
                         color: #00a69d;
                     }
