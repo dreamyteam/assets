@@ -14,7 +14,7 @@ export default class BackTop {
             this.boundingBox = $('#gotoTop');
         } else {
             this.boundingBox = $(
-                "<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>"
+                "<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='/about/feedback'></a></div>"
             )
             this.boundingBox.appendTo(document.body);
         }

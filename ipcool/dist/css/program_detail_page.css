@@ -59,13 +59,13 @@ section.program_info {
     font-size: 20px;
     color: #f2f2f2;
     text-align: center;
-    line-height: 66px; }
+    line-height: 75px; }
     section.program_info .level_flag span {
-      font-size: 14px;
-      line-height: 14px;
+      font-size: 13px;
+      line-height: 13px;
       position: absolute;
       left: 50%;
-      top: 5px;
+      top: 10px;
       -webkit-transform: translateX(-50%);
               transform: translateX(-50%); }
     section.program_info .level_flag::before {

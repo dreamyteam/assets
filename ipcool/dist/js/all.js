@@ -510,7 +510,7 @@
 	            if ($('#gotoTop').length > 0) {
 	                this.boundingBox = $('#gotoTop');
 	            } else {
-	                this.boundingBox = $("<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>");
+	                this.boundingBox = $("<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='/about/feedback'></a></div>");
 	                this.boundingBox.appendTo(document.body);
 	            }
 	            // 先消失
