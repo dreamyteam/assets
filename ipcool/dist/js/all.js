@@ -500,9 +500,11 @@
 	    _createClass(BackTop, [{
 	        key: 'init',
 	        value: function init() {
-	            this.renderUI();
-	            this.syncUI();
-	            this.toTop();
+	            if ($("#gotoTop").length > 0) {
+	                this.renderUI();
+	                this.syncUI();
+	                this.toTop();
+	            }
 	        }
 	    }, {
 	        key: 'renderUI',

@@ -411,7 +411,7 @@
 	            this.trendEL = this.el.find(".arrow");
 	            this.historyDateEL = this.el.find('.highest_history_date');
 	            this.historyValueEL = this.el.find('.highest_histroy_value');
-	            this.bookId = $('#bookId').val();
+	            this.bookId = $('#getIpid').val();
 	            this.el.length > 0 && this.getRemoteData();
 	        }
 	    }, {
@@ -425,6 +425,7 @@
 	                dataType: 'jsonp',
 	                jsonp: 'callback',
 	                success: function success(result) {
+	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        self.renderUI(result.data);
 	                    }

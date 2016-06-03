@@ -5,9 +5,11 @@ export default class BackTop {
         this.init();
     }
     init() {
-        this.renderUI();
-        this.syncUI();
-        this.toTop();
+        if ($("#gotoTop").length > 0) {
+            this.renderUI();
+            this.syncUI();
+            this.toTop();
+        }
     }
     renderUI() {
         if ($('#gotoTop').length > 0) {
@@ -52,7 +54,7 @@ export default class BackTop {
     toTop() {
         let self = this;
         this.boundingBox.find('button.back_to_top').on('click', function() {
-            $('html,body').animate({scrollTop: 0}, 500)
+            $('html,body').animate({ scrollTop: 0 }, 500)
         })
     }
 }

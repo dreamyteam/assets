@@ -476,18 +476,28 @@
 	                type: 'POST',
 	                processData: false,
 	                contentType: false,
-	                data: data,
+	                data: fd,
 	                success: function success(result) {
-	                    // console.log(result);
 	                    if (result.error_code == 0) {
 	                        var image_url = result.data.image_url;
-	                        self.bioImage.attr("src", image_url);
-	                        self.navImage.attr("src", image_url);
+	                        self.setImageUrl(image_url);
 	                        popup.destory();
 	                    } else if (result.error_code > 0) {
 	                        console.log(result.error_msg);
 	                    }
 	                }
+	            });
+	        }
+	    }, {
+	        key: 'setImageUrl',
+	        value: function setImageUrl(imgUrl) {
+	            this.bioImage.attr("src", imgUrl);
+	            this.navImage.attr("src", imgUrl);
+	            $.ajax({
+	                url: '/user/update',
+	                type: 'POST',
+	                data: { imageUrl: imgUrl },
+	                success: function success() {}
 	            });
 	        }
 	    }]);

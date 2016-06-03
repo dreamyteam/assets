@@ -55,7 +55,7 @@ export default class Avatar {
                     }).cropper('replace', blobURL)
                     self.confrimBtn.off('click');
                     self.confrimBtn.on("click", function() {
-                        self.uploadImg(file, x, y, width,avatar_popup);
+                        self.uploadImg(file, x, y, width, avatar_popup);
                     })
                     self.cancleBtn.off("click");
                     self.cancleBtn.on("click", function() {
@@ -65,7 +65,7 @@ export default class Avatar {
             }
         })
     }
-    uploadImg(file, x, y, width,popup) {
+    uploadImg(file, x, y, width, popup) {
         let self = this;
         let fd = new FormData();
         fd.append("file", file);
@@ -80,18 +80,26 @@ export default class Avatar {
             type: 'POST',
             processData: false,
             contentType: false,
-            data: data,
+            data: fd,
             success: function(result) {
-                // console.log(result);
                 if (result.error_code == 0) {
                     let image_url = result.data.image_url;
-                    self.bioImage.attr("src",image_url);
-                    self.navImage.attr("src",image_url);
+                    self.setImageUrl(image_url);
                     popup.destory();
                 } else if (result.error_code > 0) {
                     console.log(result.error_msg)
                 }
             }
+        })
+    }
+    setImageUrl(imgUrl) {
+        this.bioImage.attr("src", imgUrl);
+        this.navImage.attr("src", imgUrl);
+        $.ajax({
+            url: '/user/update',
+            type: 'POST',
+            data: { imageUrl: imgUrl },
+            success: function() {}
         })
     }
 }

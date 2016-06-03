@@ -1,0 +1,95 @@
+.user_identify_container {
+    .no_identify_container {
+        padding-top: 85px;
+        h3 {
+            font-size: 22px;
+            color: #2B2C2E;
+            text-align: center;
+        }
+        p {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #9B9B9B;
+            text-align: center;
+        }
+        .start_identify {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            width: 228px;
+            height: 43px;
+            line-height: 43px;
+            font-size: 14px;
+            color: #fff;
+            background: #00a69d;
+        }
+    }
+    .start_identify_container {
+        padding-top: 45px;
+        font-size: 0;
+        .start_identify_content {
+            padding-left: 20px;
+            display: inline-block;
+            width: 50%;
+            font-size: 14px;
+            .go_identify {
+                display: block;
+                position: relative;
+                width: 270px;
+                height: 44px;
+                border-radius: 2px;
+                background: #00a69d;
+                font-size: 18px;
+                color: #fff;
+                text-align: center;
+                line-height: 44px;
+                font-weight: 200;
+                &:after{
+                	content:">";
+                	position: absolute;
+                	right: 8px;
+                }
+            }
+            .inner{
+            	padding-left: 30px;
+            	margin-top: 20px;
+
+            	.info{
+            		font-size: 14px;
+            		color:#9B9B9B;
+            	}
+            	ul{
+            		margin-top: 10px;
+            		li{
+            			padding-left: 40px;
+            			line-height: 45px;
+            			position: relative;
+            			color:#2B2C2E;
+            			font-size: 18px;
+
+            			&::before{
+            				content:"";
+            				width:16px;
+            				height:16px;
+            				border-radius: 100%;
+            				background:#D8D8D8;
+            				position: absolute;
+            				left:0;
+            				top:50%;
+            				margin-top: -8px;
+            			}
+            		}
+            	}
+            	.download{
+            		padding-left: 40px;
+            		background:transparent;
+            		color:#4A90E2;
+            		font-size: 14px;
+            	}
+            }
+        }
+    }
+    .character_choose_container{
+    	
+    }
+}
