@@ -51,87 +51,22 @@
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
+	var _avatar_upload = __webpack_require__(20);
+
+	var _avatar_upload2 = _interopRequireDefault(_avatar_upload);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var cropper = __webpack_require__(18);
-	// var Avatar = require('../components/avatar_upload.js');
-
 	$(function () {
-	    /* $("#avatar_mask").on("click",function(){
-	         var avatar = new Avatar({
-	             input: '#avatar_input_upload',
-	             preview: '#avatar_upload',
-	             confrimBtn: "#avatar_upload_submit"
-	         })
-	     })*/
-
-	    $('#avatar_mask').on('click', function () {
-	        var $inputImage = $("#avatar_input_upload");
-	        var URL = window.URL || window.webkitURL;
-	        var blobURL;
-	        if (URL) {
-	            $inputImage.change(function () {
-	                var files = this.files;
-	                var file;
-	                if (files && files.length) {
-	                    file = files[0];
-	                    if (/^image\/\w+$/.test(file.type)) {
-	                        blobURL = URL.createObjectURL(file);
-	                        // 弹框
-	                        var avatar_popup = new _pop_up2.default('#avatar_popup');
-	                        avatar_popup.alert();
-	                        var $avatar = $("#avatar_upload");
-	                        $avatar.cropper({
-	                            aspectRatio: 1 / 1,
-	                            viewMode: 3,
-	                            dragModel: 'move',
-	                            highlight: false,
-	                            background: false,
-	                            crop: function crop(e) {
-	                                // console.log(e.x);
-	                                // console.log(e.y);
-	                                // console.log(e.width);
-	                                // console.log(e.height);
-	                                // console.log(e.scaleX);
-	                                // console.log(e.scaleY);
-	                            }
-	                        });
-	                        $avatar.one('built.cropper', function () {
-	                            URL.revokeObjectURL(blobURL);
-	                        }).cropper('reset').cropper('replace', blobURL);
-
-	                        //发送ajax
-	                        $("#avatar_upload_submit").off("click");
-	                        $("#avatar_upload_submit").on("click", function () {
-	                            avatar_popup.destory();
-	                            var fd = new FormData();
-	                            fd.append("file", file);
-	                            $.ajax({
-	                                url: '/upload/img',
-	                                type: 'POST',
-	                                processData: false,
-	                                contentType: false,
-	                                data: fd,
-	                                success: function success(result) {
-	                                    console.log(result);
-	                                    if (result.error_code == 0) {
-	                                        var image_url = result.data.image_url;
-	                                        //赋值hidden input
-	                                        $("#avatar_image").attr("src", image_url);
-	                                        $("#hidden_avatar").val(image_url);
-	                                    } else if (result.error_code > 0) {
-	                                        console.log(result.error_msg);
-	                                    }
-	                                }
-	                            });
-	                            return false;
-	                        });
-	                    } else {
-	                        window.alert('请选择图片文件');
-	                    }
-	                }
-	            });
-	        }
+	    $("#avatar_mask").on("click", function () {
+	        var avatar = new _avatar_upload2.default({
+	            input: '#avatar_input_upload',
+	            preview: '#avatar_upload',
+	            confrimBtn: "#avatar_upload_submit",
+	            cancleBtn: "#avatar_upload_cancle",
+	            bioImage: ".user_avatar_container img",
+	            navImage: "#currentUser img"
+	        });
 	    });
 	});
 
@@ -205,7 +140,144 @@
 
 /***/ },
 
-/***/ 18:
+/***/ 20:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _cropper = __webpack_require__(21);
+
+	var _cropper2 = _interopRequireDefault(_cropper);
+
+	var _pop_up = __webpack_require__(2);
+
+	var _pop_up2 = _interopRequireDefault(_pop_up);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Avatar = function () {
+	    function Avatar(cfg) {
+	        _classCallCheck(this, Avatar);
+
+	        this.cfg = cfg;
+	        this.input = null; //输入框
+	        this.preview = null;
+	        this.confrimBtn = null;
+	        this.cancleBtn = null;
+	        this.bioImage = null; //用户中心右侧头像
+	        this.navImage = null; //导航右侧头像
+	        this.init();
+	    }
+
+	    _createClass(Avatar, [{
+	        key: 'init',
+	        value: function init() {
+	            this.input = $(this.cfg.input);
+	            this.preview = $(this.cfg.preview);
+	            this.confrimBtn = $(this.cfg.confrimBtn);
+	            this.cancleBtn = $(this.cfg.cancleBtn);
+	            this.bioImage = $(this.cfg.bioImage);
+	            this.navImage = $(this.cfg.navImage);
+	            this.inputHandler();
+	        }
+	    }, {
+	        key: 'inputHandler',
+	        value: function inputHandler() {
+	            var self = this;
+	            var URL = window.URL || window.webkitURL;
+	            this.input.on("change", function () {
+	                var files = this.files;
+	                var file = void 0;
+	                var blobURL = void 0;
+	                var x = void 0,
+	                    y = void 0,
+	                    width = void 0;
+	                if (files && files.length) {
+	                    file = files[0];
+	                    if (/^image\/\w+$/.test(file.type)) {
+	                        // 是图片文件的处理TODO 非图片文件提示
+	                        var avatar_popup = new _pop_up2.default("#avatar_popup");
+	                        avatar_popup.alert();
+
+	                        blobURL = URL.createObjectURL(file);
+	                        //此处正式时候为弹窗
+	                        self.preview.cropper({
+	                            aspectRatio: 1 / 1,
+	                            viewMode: 3,
+	                            dragMode: 'move',
+	                            guides: false,
+	                            center: false,
+	                            scalable: false,
+	                            zoomable: false,
+	                            background: false,
+	                            toggleDragModeOnDblclick: false,
+	                            crop: function crop(e) {
+	                                x = e.x;
+	                                y = e.y;
+	                                width = e.width;
+	                            }
+	                        }).cropper('replace', blobURL);
+	                        self.confrimBtn.off('click');
+	                        self.confrimBtn.on("click", function () {
+	                            self.uploadImg(file, x, y, width, avatar_popup);
+	                        });
+	                        self.cancleBtn.off("click");
+	                        self.cancleBtn.on("click", function () {
+	                            avatar_popup.destory();
+	                        });
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'uploadImg',
+	        value: function uploadImg(file, x, y, width, popup) {
+	            var self = this;
+	            var fd = new FormData();
+	            fd.append("file", file);
+	            var data = {
+	                file: fd,
+	                x: x,
+	                y: y,
+	                width: width
+	            };
+	            $.ajax({
+	                url: '/upload/img',
+	                type: 'POST',
+	                processData: false,
+	                contentType: false,
+	                data: data,
+	                success: function success(result) {
+	                    // console.log(result);
+	                    if (result.error_code == 0) {
+	                        var image_url = result.data.image_url;
+	                        self.bioImage.attr("src", image_url);
+	                        self.navImage.attr("src", image_url);
+	                        popup.destory();
+	                    } else if (result.error_code > 0) {
+	                        console.log(result.error_msg);
+	                    }
+	                }
+	            });
+	        }
+	    }]);
+
+	    return Avatar;
+	}();
+
+	exports.default = Avatar;
+
+/***/ },
+
+/***/ 21:
 /***/ function(module, exports) {
 
 	/*!
@@ -221,6 +293,9 @@
 
 	// Globals
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	var $window = $(window);
 	var $document = $(document);
 	var location = window.location;
@@ -3105,7 +3180,8 @@
 	  return this;
 	};
 
-	module.exports = Cropper;
+	// module.exports = Cropper;
+	exports.default = Cropper;
 
 /***/ }
 

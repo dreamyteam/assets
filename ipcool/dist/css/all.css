@@ -538,15 +538,21 @@ input[type=checkbox]:checked {
       font-size: 14px;
       color: #848484;
       text-align: justify; }
+    .avatar .img_upload_container .avatar_btn_container {
+      margin-top: 40px; }
+      .avatar .img_upload_container .avatar_btn_container button {
+        width: 145px;
+        display: inline-block;
+        border-radius: 5px;
+        height: 40px;
+        font-size: 18px; }
     .avatar .img_upload_container .submit {
-      margin-top: 40px;
-      display: inline-block;
       background: #00a69d;
-      border-radius: 5px;
-      width: 295px;
-      height: 43px;
-      font-size: 18px;
       color: #ffffff; }
+    .avatar .img_upload_container .cancle {
+      border: 1px solid #00a69d;
+      background: transparent;
+      color: #00a69d; }
 
 #gotoTop {
   position: fixed;

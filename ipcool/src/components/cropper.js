@@ -2976,5 +2976,5 @@
     return this;
   };
 
-module.exports = Cropper;
-
+// module.exports = Cropper;
+export default Cropper;

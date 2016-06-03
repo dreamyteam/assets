@@ -46,11 +46,11 @@
 
 	'use strict';
 
-	var _tab = __webpack_require__(5);
+	var _tab = __webpack_require__(6);
 
 	var _tab2 = _interopRequireDefault(_tab);
 
-	var _slide_tab = __webpack_require__(6);
+	var _slide_tab = __webpack_require__(7);
 
 	var _slide_tab2 = _interopRequireDefault(_slide_tab);
 
@@ -606,7 +606,8 @@
 	exports.default = HoverDelay;
 
 /***/ },
-/* 5 */
+/* 5 */,
+/* 6 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -683,7 +684,7 @@
 	exports.default = Tab;
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	"use strict";

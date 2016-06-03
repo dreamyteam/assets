@@ -29,9 +29,8 @@
         right: -27px;
         top: -27px;
         transition: all 300ms ease;
-
-        &:hover{
-            transform:rotate(30deg);
+        &:hover {
+            transform: rotate(30deg);
         }
     }
 }
@@ -298,15 +297,24 @@ input[type=checkbox]:checked {
             color: #848484;
             text-align: justify;
         }
-        .submit {
+        .avatar_btn_container {
             margin-top: 40px;
-            display: inline-block;
+            button {
+                width: 145px;
+                display: inline-block;
+                border-radius: 5px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+        .submit {
             background: #00a69d;
-            border-radius: 5px;
-            width: 295px;
-            height: 43px;
-            font-size: 18px;
             color: #ffffff;
+        }
+        .cancle{
+            border:1px solid #00a69d;
+            background:transparent;
+            color:#00a69d;
         }
     }
 }

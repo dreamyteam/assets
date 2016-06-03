@@ -65,7 +65,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
-
 	    var userMenu = new _hover_delay2.default({
 	        el: "#currentUser",
 	        target: "#user_menu"

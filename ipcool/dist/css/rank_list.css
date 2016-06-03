@@ -123,10 +123,16 @@ section.program_nav_scroll {
   margin-top: 40px;
   padding: 0 30px;
   font-size: 0; }
-  .rank_container .rank_title {
+  .rank_container .rank_title_container .rank_title {
     font-size: 18px;
     color: #4A4A4A;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    float: left; }
+  .rank_container .rank_title_container .more {
+    font-size: 14px;
+    display: inline-block;
+    color: #9B9B9B;
+    float: right; }
   .rank_container .rank_top_three {
     display: inline-block;
     vertical-align: top;
@@ -157,9 +163,10 @@ section.program_nav_scroll {
           line-height: 18px;
           text-align: center; }
       .rank_container .rank_top_three li .name {
-        margin-top: 10px;
         font-size: 16px;
-        color: #4A4A4A; }
+        margin-top: 10px; }
+        .rank_container .rank_top_three li .name a {
+          color: #4A4A4A; }
       .rank_container .rank_top_three li .info {
         margin-top: 9px;
         font-size: 12px;
@@ -184,9 +191,10 @@ section.program_nav_scroll {
         text-align: center;
         background: #9B9B9B; }
       .rank_container .rank_rest li .name {
-        font-size: 16px;
         margin-left: 12px;
-        color: #4A4A4A; }
+        font-size: 16px; }
+        .rank_container .rank_rest li .name a {
+          color: #4A4A4A; }
       .rank_container .rank_rest li .trend {
         float: right;
         font-style: normal;
