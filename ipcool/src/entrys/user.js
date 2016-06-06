@@ -24,6 +24,7 @@ $(function() {
     let companyLimite = new LimiteChoose("#company_choose_form", 3);
     let personalLimite = new LimiteChoose("#personal_choose_form", 5);
 
-    
-    
+    let personalInfoForm = new Validate({
+    })
+
 })

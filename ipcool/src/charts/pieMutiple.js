@@ -18,13 +18,12 @@ export default class pieMutiple extends Chart {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: '{a}<br/>{b} : {d}%',
+                formatter: '{a}<br/>{b} : {d}%'
             },
             series: [{
                 name: this.name,
                 type: 'pie',
                 startAngle: 140,
-                minAngle: 20,
                 radius: ['40%', '65%'],
                 center: ['50%', '55%'],
                 avoidLabelOverlap: true,
@@ -66,7 +65,6 @@ export default class pieMutiple extends Chart {
         this.url && this.getRemoteData();
     }
     updateChart(data) {
-        console.log(data);
         this.chart.hideLoading();
         var option = {
             series: [{

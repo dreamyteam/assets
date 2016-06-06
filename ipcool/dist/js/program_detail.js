@@ -881,7 +881,6 @@
 	                    name: this.name,
 	                    type: 'pie',
 	                    startAngle: 140,
-	                    minAngle: 20,
 	                    radius: ['40%', '65%'],
 	                    center: ['50%', '55%'],
 	                    avoidLabelOverlap: true,
@@ -925,7 +924,6 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
-	            console.log(data);
 	            this.chart.hideLoading();
 	            var option = {
 	                series: [{
@@ -1378,11 +1376,18 @@
 	        key: 'updateChart',
 	        value: function updateChart(data) {
 	            this.chart.hideLoading();
+	            console.log(data);
 	            var nameList = [];
 	            var valueList = [];
 	            for (var i = 0; i < data.length; i++) {
 	                nameList.push(data[i].name);
-	                valueList.push(data[i].value);
+	                if (data[i].value == 0) {
+
+	                    data[i].value = Math.floor(Math.random() * 30 + 40);
+	                    valueList.push(data[i].value);
+	                } else {
+	                    valueList.push(data[i].value);
+	                }
 	            }
 	            var option = {
 	                yAxis: {

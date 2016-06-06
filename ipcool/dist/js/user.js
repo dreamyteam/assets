@@ -85,6 +85,8 @@
 
 	    var companyLimite = new _limiteChoose2.default("#company_choose_form", 3);
 	    var personalLimite = new _limiteChoose2.default("#personal_choose_form", 5);
+
+	    var personalInfoForm = new _validate2.default({});
 	});
 
 /***/ },
