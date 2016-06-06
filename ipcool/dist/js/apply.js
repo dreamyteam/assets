@@ -131,7 +131,26 @@
 	                    self.canSubmit = false;
 	                }
 	            } else {
-	                errmsg.hide();
+	                errMsg.hide();
+	                if (canSubmit) {
+	                    self.canSubmit = true;
+	                }
+	            }
+	        }
+	    }, {
+	        key: "checkPhone",
+	        value: function checkPhone(obj, parent, canSubmit) {
+	            var self = this;
+	            var errMsg = parent.find(this.errMsg);
+	            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+
+	            if (!regPhone.test(obj.val())) {
+	                errMsg.show().html("请输入正确的手机号码格式");
+	                if (canSubmit) {
+	                    self.canSubmit = false;
+	                }
+	            } else {
+	                errMsg.hide();
 	                if (canSubmit) {
 	                    self.canSubmit = true;
 	                }
@@ -160,7 +179,6 @@
 	        value: function checkCurrentPwd(obj, parent, canSubmit) {
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
-	            console.log("checkedcurrintpwd");
 	            // errMsg.show().html("旧密码不正确")
 	            if (canSubmit) {
 	                self.canSubmit = true;
@@ -198,6 +216,9 @@
 	                    }
 	                    if (curInput.attr("type") == "email") {
 	                        self.checkMail(curInput, curBox, false);
+	                    }
+	                    if (curInput.hasClass("input_phone")) {
+	                        self.checkPhone(curInput, curBox, false);
 	                    }
 	                    if (curInput.attr("type") == "password") {
 	                        //验证密码

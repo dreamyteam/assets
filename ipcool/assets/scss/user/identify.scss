@@ -160,10 +160,18 @@
             margin-bottom: 10px;
         }
         .input_content {
+            position: relative;
             display: inline-block;
             vertical-align: bottom;
             width: 50%;
             font-size: 14px;
+            .err_msg {
+                font-size: 14px;
+                position: absolute;
+                top: 30px;
+                right: 30px;
+                color: #bb4945;
+            }
             .info_label {
                 margin-top: 30px;
                 color: #9B9B9B;
@@ -202,10 +210,10 @@
                 }
             }
         }
-        .input_content.whole_line{
-            display:block;
+        .input_content.whole_line {
+            display: block;
         }
-        input[type=submit]{
+        input[type=submit] {
             margin-top: 100px;
         }
     }

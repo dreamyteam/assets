@@ -355,10 +355,17 @@
     color: #2B2C2E;
     margin-bottom: 10px; }
   .user_identify_container .user_identify_info_container .input_content {
+    position: relative;
     display: inline-block;
     vertical-align: bottom;
     width: 50%;
     font-size: 14px; }
+    .user_identify_container .user_identify_info_container .input_content .err_msg {
+      font-size: 14px;
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      color: #bb4945; }
     .user_identify_container .user_identify_info_container .input_content .info_label {
       margin-top: 30px;
       color: #9B9B9B; }

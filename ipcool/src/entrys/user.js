@@ -25,6 +25,9 @@ $(function() {
     let personalLimite = new LimiteChoose("#personal_choose_form", 5);
 
     let personalInfoForm = new Validate({
+        el: "#c_indentify_form",
+        inputBoxs: ".input_content",
+        btnSubmit: "input[type='submit']"
     })
 
 })
