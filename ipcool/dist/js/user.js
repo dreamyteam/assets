@@ -59,6 +59,10 @@
 
 	var _validate2 = _interopRequireDefault(_validate);
 
+	var _limiteChoose = __webpack_require__(22);
+
+	var _limiteChoose2 = _interopRequireDefault(_limiteChoose);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
@@ -78,6 +82,9 @@
 	        inputBoxs: ".input_content",
 	        btnSubmit: "input[type='submit']"
 	    });
+
+	    var companyLimite = new _limiteChoose2.default("#company_choose_form", 3);
+	    var personalLimite = new _limiteChoose2.default("#personal_choose_form", 5);
 	});
 
 /***/ },
@@ -3414,6 +3421,72 @@
 
 	// module.exports = Cropper;
 	exports.default = Cropper;
+
+/***/ },
+
+/***/ 22:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var LimiteChoose = function () {
+	    function LimiteChoose(el, limit) {
+	        _classCallCheck(this, LimiteChoose);
+
+	        this.el = $(el);
+	        this.limit = limit;
+	        this.btnSubmit = null;
+	        this.errMsg = null;
+	        this.init();
+	    }
+
+	    _createClass(LimiteChoose, [{
+	        key: "init",
+	        value: function init() {
+	            if (this.el.length > 0) {
+	                this.btnSubmit = this.el.find("input[type='submit']");
+	                this.errMsg = this.el.find(".err_msg");
+	                this.limitCheck();
+	                this.submitCheck();
+	            }
+	        }
+	    }, {
+	        key: "limitCheck",
+	        value: function limitCheck() {
+	            var self = this;
+	            var checkboxs = this.el.find("input[type='checkbox']");
+	            checkboxs.on("click", function () {
+	                if (self.el.find("input[type='checkbox']:checked").length > self.limit) {
+	                    $(this).attr("checked", false);
+	                }
+	            });
+	        }
+	    }, {
+	        key: "submitCheck",
+	        value: function submitCheck() {
+	            var self = this;
+	            this.btnSubmit.on("click", function () {
+	                var curLength = self.el.find("input[type='checkbox']:checked").length;
+	                if (curLength <= 0) {
+	                    self.errMsg.show().html("请至少选择1个角色");
+	                    return false;
+	                }
+	            });
+	        }
+	    }]);
+
+	    return LimiteChoose;
+	}();
+
+	exports.default = LimiteChoose;
 
 /***/ }
 

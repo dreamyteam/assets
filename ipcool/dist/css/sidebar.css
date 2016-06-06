@@ -294,6 +294,106 @@
         color: #4A90E2;
         font-size: 14px; }
 
+.user_identify_container .character_choose_container .character_choose_title {
+  color: #2B2C2E;
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 10px; }
+
+.user_identify_container .character_choose_container .character_choose_form {
+  padding: 0 30px;
+  font-size: 0;
+  position: relative; }
+  .user_identify_container .character_choose_container .character_choose_form .character_choose_subtitle {
+    color: #2b2c2e;
+    font-size: 18px; }
+    .user_identify_container .character_choose_container .character_choose_form .character_choose_subtitle .sub_info {
+      color: #9B9B9B;
+      font-size: 14px;
+      font-weight: 200; }
+  .user_identify_container .character_choose_container .character_choose_form .err_msg {
+    display: none;
+    font-size: 14px;
+    position: absolute;
+    top: 13px;
+    right: 40px;
+    color: #bb4945; }
+  .user_identify_container .character_choose_container .character_choose_form .character_checkbox_container {
+    display: inline-block;
+    width: 20%;
+    text-align: center; }
+  .user_identify_container .character_choose_container .character_choose_form input[type=checkbox] {
+    display: none; }
+  .user_identify_container .character_choose_container .character_choose_form input[type=checkbox] + label {
+    display: inline-block;
+    border-radius: 5px;
+    margin: 10px 0;
+    width: 100px;
+    text-align: center;
+    line-height: 30px;
+    height: 30px;
+    border: 1px solid #9b9b9b;
+    color: #979797;
+    font-size: 14px;
+    transition: all 300ms ease; }
+    .user_identify_container .character_choose_container .character_choose_form input[type=checkbox] + label:hover {
+      border: 1px solid #00a69d;
+      color: #00a69d; }
+  .user_identify_container .character_choose_container .character_choose_form input[type=checkbox]:checked + label {
+    background: #00a69d;
+    border: 1px solid #00a69d;
+    color: #fff; }
+  .user_identify_container .character_choose_container .character_choose_form input[type=submit] {
+    margin-top: 100px; }
+
+.user_identify_container .user_identify_info_container {
+  padding: 0 30px;
+  font-size: 0; }
+  .user_identify_container .user_identify_info_container .sub_title {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #2B2C2E;
+    margin-bottom: 10px; }
+  .user_identify_container .user_identify_info_container .input_content {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 50%;
+    font-size: 14px; }
+    .user_identify_container .user_identify_info_container .input_content .info_label {
+      margin-top: 30px;
+      color: #9B9B9B; }
+      .user_identify_container .user_identify_info_container .input_content .info_label i {
+        color: #bb4945; }
+    .user_identify_container .user_identify_info_container .input_content input {
+      margin-top: 5px;
+      margin-bottom: 12px;
+      width: 270px; }
+    .user_identify_container .user_identify_info_container .input_content input[type=file] {
+      display: none; }
+    .user_identify_container .user_identify_info_container .input_content .img_upload {
+      position: relative;
+      margin-top: 22px;
+      display: inline-block;
+      height: 120px;
+      width: 270px;
+      border: 1px dashed #9B9B9B;
+      text-align: center;
+      font-size: 14px;
+      color: #D8D8D8;
+      transition: all 300ms ease; }
+      .user_identify_container .user_identify_info_container .input_content .img_upload:hover {
+        border: 1px dashed #00a69d;
+        color: #00a69d; }
+      .user_identify_container .user_identify_info_container .input_content .img_upload::before {
+        content: '+';
+        display: block;
+        font-size: 40px;
+        line-height: 65px; }
+  .user_identify_container .user_identify_info_container .input_content.whole_line {
+    display: block; }
+  .user_identify_container .user_identify_info_container input[type=submit] {
+    margin-top: 100px; }
+
 .container {
   margin-top: 40px; }
 
@@ -461,6 +561,8 @@ ul.sidebar_nav {
     font-size: 14px;
     width: 100%;
     padding: 0 10px; }
+  .sidebar_content input:focus {
+    border: 1px solid #00a69d; }
   .sidebar_content select {
     background: url("../../assets/images/selectbg.png") 95% center no-repeat;
     background-size: 9px; }
