@@ -56,17 +56,15 @@ section.search_result {
                         color: #00a69d;
                     }
                 }
-
             }
-             span.type {
-                    position: absolute;
-                    border: 1px solid #00A69D;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    color: #00A69D;
-                    padding: 2px 3px;
-                    vertical-align: middle;
-                }
+            span.type {
+                border: 1px solid #00A69D;
+                border-radius: 4px;
+                font-size: 12px;
+                color: #00A69D;
+                padding: 2px 3px;
+                vertical-align: middle;
+            }
             h6 {
                 margin-top: 5px;
                 font-size: 14px;

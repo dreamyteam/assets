@@ -146,7 +146,6 @@ section.search_result {
           section.search_result .sresult_ip .sresult_content h2 a:hover {
             color: #00a69d; }
       section.search_result .sresult_ip .sresult_content span.type {
-        position: absolute;
         border: 1px solid #00A69D;
         border-radius: 4px;
         font-size: 12px;
