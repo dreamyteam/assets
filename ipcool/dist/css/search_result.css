@@ -145,20 +145,20 @@ section.search_result {
           text-overflow: ellipsis; }
           section.search_result .sresult_ip .sresult_content h2 a:hover {
             color: #00a69d; }
-        section.search_result .sresult_ip .sresult_content h2 span {
-          display: inline-block;
-          margin-left: 10px;
-          border: 1px solid #00A69D;
-          border-radius: 4px;
-          font-size: 12px;
-          color: #00A69D;
-          padding: 2px 3px;
-          vertical-align: middle; }
+      section.search_result .sresult_ip .sresult_content span.type {
+        position: absolute;
+        border: 1px solid #00A69D;
+        border-radius: 4px;
+        font-size: 12px;
+        color: #00A69D;
+        padding: 2px 3px;
+        vertical-align: middle; }
       section.search_result .sresult_ip .sresult_content h6 {
+        margin-top: 5px;
         font-size: 14px;
         color: #717171; }
       section.search_result .sresult_ip .sresult_content .quotient {
-        margin-top: 40px; }
+        margin-top: 10px; }
         section.search_result .sresult_ip .sresult_content .quotient li {
           width: 135px;
           overflow: hidden;
