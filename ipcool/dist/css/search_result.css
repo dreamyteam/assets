@@ -135,29 +135,33 @@ section.search_result {
       section.search_result .sresult_ip .sresult_content h2 {
         font-size: 24px; }
         section.search_result .sresult_ip .sresult_content h2 a {
-          width: 440px;
+          max-width: 440px;
           white-space: nowrap;
           vertical-align: middle;
           overflow: hidden;
           display: inline-block;
           transition: color 300ms ease;
           color: #5E5E5E;
-          text-overflow: ellipsis; }
+          text-overflow: ellipsis;
+          display: inline-block;
+          transition: color 300ms ease;
+          color: #5E5E5E; }
           section.search_result .sresult_ip .sresult_content h2 a:hover {
             color: #00a69d; }
-      section.search_result .sresult_ip .sresult_content span.type {
-        border: 1px solid #00A69D;
-        border-radius: 4px;
-        font-size: 12px;
-        color: #00A69D;
-        padding: 2px 3px;
-        vertical-align: middle; }
+        section.search_result .sresult_ip .sresult_content h2 span {
+          display: inline-block;
+          margin-left: 10px;
+          border: 1px solid #00A69D;
+          border-radius: 4px;
+          font-size: 12px;
+          color: #00A69D;
+          padding: 2px 3px;
+          vertical-align: middle; }
       section.search_result .sresult_ip .sresult_content h6 {
-        margin-top: 5px;
         font-size: 14px;
         color: #717171; }
       section.search_result .sresult_ip .sresult_content .quotient {
-        margin-top: 10px; }
+        margin-top: 40px; }
         section.search_result .sresult_ip .sresult_content .quotient li {
           width: 135px;
           overflow: hidden;
