@@ -1230,7 +1230,7 @@
 	        value: function updateChart(data) {
 	            this.chart.hideLoading();
 	            if (this.type == 'age') {
-	                this.subTitle = this.caculateSubTitle(data[1].value);
+	                this.subTitle = this.caculateSubTitle(data[0].value);
 	            }
 	            var option = {
 	                title: {
@@ -1242,7 +1242,7 @@
 	                series: [{
 	                    name: '平均分布',
 	                    type: 'bar',
-	                    data: data[0].value,
+	                    data: data[1].value,
 	                    itemStyle: {
 	                        emphasis: {
 	                            color: '#EEE'
@@ -1253,7 +1253,7 @@
 	                    type: 'bar',
 	                    barGap: '-50%',
 	                    z: 3,
-	                    data: data[1].value
+	                    data: data[0].value
 	                }]
 	            };
 	            this.chart.setOption(option);
