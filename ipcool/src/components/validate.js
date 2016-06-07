@@ -1,16 +1,17 @@
-//TODO 组织提交
 export default class Validate {
     constructor(cfg) {
         this.cfg = cfg;
         this.el = null;
         this.inputBoxs = null; //input 容器 用于查找 input 和 errmsg
         this.btnSubmit = null;
+        this.fnSubmit = null;
         this.init();
     }
     init() {
         this.el = $(this.cfg.el);
         this.inputBoxs = this.el.find(this.cfg.inputBoxs);
         this.btnSubmit = this.el.find(this.cfg.btnSubmit);
+        this.fnSubmit = this.cfg.fnSubmit;
         this.errMsg = ".err_msg";
         if (this.el.length > 0) {
             this.validateBlur();
@@ -56,6 +57,23 @@ export default class Validate {
 
         if (!regPhone.test(obj.val())) {
             errMsg.show().html("请输入正确的手机号码格式");
+            if (canSubmit) {
+                self.canSubmit = false;
+            }
+        } else {
+            errMsg.hide();
+            if (canSubmit) {
+                self.canSubmit = true;
+            }
+        }
+    }
+    checkIdCard(obj, parent, canSubmit) {
+        let self = this;
+        let errMsg = parent.find(this.errMsg);
+        let regId = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
+
+        if (!regId.test(obj.val())) {
+            errMsg.show().html("请输入正确的身份证号码格式");
             if (canSubmit) {
                 self.canSubmit = false;
             }
@@ -121,6 +139,9 @@ export default class Validate {
                 if (curInput.hasClass("input_phone")) {
                     self.checkPhone(curInput, curBox, false);
                 }
+                if (curInput.hasClass("input_id_card")) {
+                    self.checkIdCard(curInput, curBox, false);
+                }
                 if (curInput.attr("type") == "password") { //验证密码
                     if (curInput.attr("name") == "currentPassword") {
                         self.checkCurrentPwd(curInput, curBox, false)
@@ -157,6 +178,12 @@ export default class Validate {
             if (curInput.attr("type") == "email") {
                 self.checkMail(curInput, curBox, true);
             }
+            if (curInput.hasClass("input_phone")) {
+                self.checkPhone(curInput, curBox, true);
+            }
+            if (curInput.hasClass("input_id_card")) {
+                self.checkIdCard(curInput, curBox, true);
+            }
             if (curInput.attr("type") == "password") { //验证密码
                 if (curInput.attr("name") == "currentPassword") {
                     self.checkCurrentPwd(curInput, curBox, true)
@@ -178,6 +205,9 @@ export default class Validate {
             self.validateSubmit();
             if (!self.canSubmit) {
                 return false;
+                // self.fnSubmit();
+            } else {
+                self.fnSubmit();
             }
         })
     }

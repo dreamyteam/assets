@@ -9,7 +9,7 @@ $(function() {
         target:"#user_menu"
     });
     $("#register").on('click', function() {
-        var popReg = new Popup('#popup_sign');
+        var popReg = new Popup({el:'#popup_sign'});
         popReg.alert();
         new SignIn({
             el: '#popup_sign',
@@ -17,7 +17,7 @@ $(function() {
         })
     })
     $("#login").on('click', function() {
-        var popLogin = new Popup("#popup_sign");
+        var popLogin = new Popup({el:"#popup_sign"});
         popLogin.alert();
         new SignIn({
             el: "#popup_sign",

@@ -32,7 +32,7 @@ export default class Avatar {
             if (files && files.length) {
                 file = files[0];
                 if (/^image\/\w+$/.test(file.type)) { // 是图片文件的处理TODO 非图片文件提示
-                    var avatar_popup = new Popup("#avatar_popup");
+                    var avatar_popup = new Popup({ el: "#avatar_popup" });
                     avatar_popup.alert();
 
                     blobURL = URL.createObjectURL(file);

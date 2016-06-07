@@ -8,23 +8,23 @@ import HoverDelay from '../components/hover_delay.js';
 $(function() {
 
     let userMenu = new HoverDelay({
-        el:"#currentUser",
-        target:"#user_menu"
+        el: "#currentUser",
+        target: "#user_menu"
     });
 
     setTimeout(function() {
         $("#loading").hide();
         $("#home_page").show();
-        setTimeout(function(){
+        setTimeout(function() {
             $("#home_page").addClass("active");
-        },100)
+        }, 100)
         $("#home_page").fullpage({
             verticalCentered: false,
             afterLoad: function(anchorLink, index) {
                 $(".sec_" + index).addClass('active');
             },
         })
-    },800)
+    }, 800)
 
 
 
@@ -56,7 +56,7 @@ $(function() {
         li: ".single_product",
     })
     $("#register").on('click', function() {
-        let popReg = new Popup('#popup_sign');
+        let popReg = new Popup({ el: '#popup_sign' });
         popReg.alert();
         new SignIn({
             el: '#popup_sign',
@@ -64,7 +64,7 @@ $(function() {
         })
     })
     $("#login").on('click', function() {
-        let popLogin = new Popup("#popup_sign");
+        let popLogin = new Popup({ el: "#popup_sign" });
         popLogin.alert();
         new SignIn({
             el: "#popup_sign",
@@ -72,7 +72,7 @@ $(function() {
         })
     })
     $("#regBottom").on('click', function() {
-        let popRegBottom = new Popup('#popup_sign');
+        let popRegBottom = new Popup({ el: '#popup_sign' });
         popRegBottom.alert();
         new SignIn({
             el: '#popup_sign',

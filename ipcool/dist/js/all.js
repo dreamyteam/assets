@@ -70,7 +70,7 @@
 	        target: "#user_menu"
 	    });
 	    $("#register").on('click', function () {
-	        var popReg = new _pop_up2.default('#popup_sign');
+	        var popReg = new _pop_up2.default({ el: '#popup_sign' });
 	        popReg.alert();
 	        new _LonginReg2.default({
 	            el: '#popup_sign',
@@ -78,7 +78,7 @@
 	        });
 	    });
 	    $("#login").on('click', function () {
-	        var popLogin = new _pop_up2.default("#popup_sign");
+	        var popLogin = new _pop_up2.default({ el: "#popup_sign" });
 	        popLogin.alert();
 	        new _LonginReg2.default({
 	            el: "#popup_sign",
@@ -421,17 +421,21 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Popup = function () {
-	    function Popup(el) {
+	    function Popup(cfg) {
 	        _classCallCheck(this, Popup);
 
-	        this.el = $(el);
+	        this.cfg = cfg;
+	        this.el = null;
 	        this.mask = null;
+	        this.callBack = null;
 	        this.init();
 	    }
 
 	    _createClass(Popup, [{
 	        key: 'init',
 	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.callBack = this.cfg.callBack || null;
 	            if ($('#popup_mask').length > 0) {
 	                this.mask = $('#popup_mask');
 	            } else {
@@ -458,6 +462,9 @@
 	        value: function destory() {
 	            this.mask.remove();
 	            this.el.hide();
+	            if (this.callBack) {
+	                this.callBack();
+	            }
 	        }
 	    }, {
 	        key: 'alert',

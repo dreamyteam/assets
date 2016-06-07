@@ -86,10 +86,31 @@
 	    var companyLimite = new _limiteChoose2.default("#company_choose_form", 3);
 	    var personalLimite = new _limiteChoose2.default("#personal_choose_form", 5);
 
-	    var personalInfoForm = new _validate2.default({
+	    //企业机构身份验证 完成后进去银行卡 验证页面
+	    var cInfoForm = new _validate2.default({
 	        el: "#c_indentify_form",
 	        inputBoxs: ".input_content",
 	        btnSubmit: "input[type='submit']"
+	    });
+
+	    //个人身份验证 完成后弹窗
+	    var pInfoForm = new _validate2.default({
+	        el: "#p_indentify_form",
+	        inputBoxs: ".input_content",
+	        btnSubmit: "input[type='submit']",
+	        fnSubmit: function fnSubmit() {
+	            var p_info_popup = new _pop_up2.default({
+	                el: "#p_info_popup",
+	                callBack: function callBack() {
+	                    //认证完成 跳转到基本页面 显示等待3个工作日
+	                    console.log("去下一个页面之类的回调");
+	                }
+	            });
+	            p_info_popup.alert();
+	            $("#p_info_popup .confrim").on("click", function () {
+	                p_info_popup.destory();
+	            });
+	        }
 	    });
 	});
 
@@ -109,17 +130,21 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Popup = function () {
-	    function Popup(el) {
+	    function Popup(cfg) {
 	        _classCallCheck(this, Popup);
 
-	        this.el = $(el);
+	        this.cfg = cfg;
+	        this.el = null;
 	        this.mask = null;
+	        this.callBack = null;
 	        this.init();
 	    }
 
 	    _createClass(Popup, [{
 	        key: 'init',
 	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.callBack = this.cfg.callBack || null;
 	            if ($('#popup_mask').length > 0) {
 	                this.mask = $('#popup_mask');
 	            } else {
@@ -146,6 +171,9 @@
 	        value: function destory() {
 	            this.mask.remove();
 	            this.el.hide();
+	            if (this.callBack) {
+	                this.callBack();
+	            }
 	        }
 	    }, {
 	        key: 'alert',
@@ -176,8 +204,6 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	//TODO 组织提交
-
 	var Validate = function () {
 	    function Validate(cfg) {
 	        _classCallCheck(this, Validate);
@@ -186,6 +212,7 @@
 	        this.el = null;
 	        this.inputBoxs = null; //input 容器 用于查找 input 和 errmsg
 	        this.btnSubmit = null;
+	        this.fnSubmit = null;
 	        this.init();
 	    }
 
@@ -195,6 +222,7 @@
 	            this.el = $(this.cfg.el);
 	            this.inputBoxs = this.el.find(this.cfg.inputBoxs);
 	            this.btnSubmit = this.el.find(this.cfg.btnSubmit);
+	            this.fnSubmit = this.cfg.fnSubmit;
 	            this.errMsg = ".err_msg";
 	            if (this.el.length > 0) {
 	                this.validateBlur();
@@ -246,6 +274,25 @@
 
 	            if (!regPhone.test(obj.val())) {
 	                errMsg.show().html("请输入正确的手机号码格式");
+	                if (canSubmit) {
+	                    self.canSubmit = false;
+	                }
+	            } else {
+	                errMsg.hide();
+	                if (canSubmit) {
+	                    self.canSubmit = true;
+	                }
+	            }
+	        }
+	    }, {
+	        key: "checkIdCard",
+	        value: function checkIdCard(obj, parent, canSubmit) {
+	            var self = this;
+	            var errMsg = parent.find(this.errMsg);
+	            var regId = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
+
+	            if (!regId.test(obj.val())) {
+	                errMsg.show().html("请输入正确的身份证号码格式");
 	                if (canSubmit) {
 	                    self.canSubmit = false;
 	                }
@@ -320,6 +367,9 @@
 	                    if (curInput.hasClass("input_phone")) {
 	                        self.checkPhone(curInput, curBox, false);
 	                    }
+	                    if (curInput.hasClass("input_id_card")) {
+	                        self.checkIdCard(curInput, curBox, false);
+	                    }
 	                    if (curInput.attr("type") == "password") {
 	                        //验证密码
 	                        if (curInput.attr("name") == "currentPassword") {
@@ -360,6 +410,12 @@
 	                if (curInput.attr("type") == "email") {
 	                    self.checkMail(curInput, curBox, true);
 	                }
+	                if (curInput.hasClass("input_phone")) {
+	                    self.checkPhone(curInput, curBox, true);
+	                }
+	                if (curInput.hasClass("input_id_card")) {
+	                    self.checkIdCard(curInput, curBox, true);
+	                }
 	                if (curInput.attr("type") == "password") {
 	                    //验证密码
 	                    if (curInput.attr("name") == "currentPassword") {
@@ -384,7 +440,10 @@
 	                self.validateSubmit();
 	                if (!self.canSubmit) {
 	                    return false;
-	                }
+	                    // self.fnSubmit();
+	                } else {
+	                        self.fnSubmit();
+	                    }
 	            });
 	        }
 	    }]);
@@ -460,7 +519,7 @@
 	                    file = files[0];
 	                    if (/^image\/\w+$/.test(file.type)) {
 	                        // 是图片文件的处理TODO 非图片文件提示
-	                        var avatar_popup = new _pop_up2.default("#avatar_popup");
+	                        var avatar_popup = new _pop_up2.default({ el: "#avatar_popup" });
 	                        avatar_popup.alert();
 
 	                        blobURL = URL.createObjectURL(file);
