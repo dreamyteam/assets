@@ -51,11 +51,22 @@
 
 	var _paging2 = _interopRequireDefault(_paging);
 
+	var _sizer = __webpack_require__(23);
+
+	var _sizer2 = _interopRequireDefault(_sizer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
 	    //分页
 	    var paging = new _paging2.default('#paging');
+	    var sizer = new _sizer2.default({
+	        el: "#sizer_search",
+	        btnToggle: ".toggle_sub_sizer",
+	        subSizer: ".sub_sizer_container",
+	        target: ".search_result"
+
+	    });
 	});
 
 /***/ },
@@ -213,6 +224,90 @@
 	}();
 
 	exports.default = Paging;
+
+/***/ },
+
+/***/ 23:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Sizer = function () {
+	    function Sizer(cfg) {
+	        _classCallCheck(this, Sizer);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.target = null;
+	        this.btnToggle = null;
+	        this.subSizer = null;
+	        this.init();
+	    }
+
+	    _createClass(Sizer, [{
+	        key: "init",
+	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.target = $(this.cfg.target);
+	            this.btnToggle = this.el.find(this.cfg.btnToggle);
+	            this.subSizer = this.el.find(this.cfg.subSizer);
+	            this.bindToggleBtn();
+	        }
+	    }, {
+	        key: "bindToggleBtn",
+	        value: function bindToggleBtn() {
+	            var self = this;
+	            var subSizerHeght = this.subSizer.height() + 1; //修正1px边框 并记录高度
+	            var spread = false; //初始化展开 为否
+	            self.subSizer.css({
+	                "height": "0px",
+	                "border-bottom": "none"
+	            });
+	            self.btnToggle.removeClass("active");
+
+	            function offSpread() {
+	                self.subSizer.animate({
+	                    "height": "0px"
+	                }).css({
+	                    "border-bottom": "none"
+	                });
+	                self.btnToggle.removeClass("active");
+	            }
+
+	            function onSpread() {
+	                self.subSizer.animate({
+	                    "height": subSizerHeght + "px"
+	                }).css({
+	                    "border-bottom": "1px solid #eee"
+	                });
+	                self.btnToggle.addClass("active");
+	            }
+
+	            this.btnToggle.on("click", function () {
+	                if (spread) {
+	                    // 收起逻辑
+	                    offSpread();
+	                } else {
+	                    //展开逻辑
+	                    onSpread();
+	                }
+	                spread = !spread;
+	            });
+	        }
+	    }]);
+
+	    return Sizer;
+	}();
+
+	exports.default = Sizer;
 
 /***/ }
 

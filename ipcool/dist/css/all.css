@@ -209,6 +209,19 @@ section {
       font-size: 18px;
       color: #00a69d; }
 
+input[type=checkbox] {
+  margin: 0;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  width: 14px;
+  height: 14px; }
+
+input[type=checkbox]:checked {
+  background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
+  background-size: 12px; }
+
 .col_2_container {
   font-size: 0;
   padding: 0 20px;
@@ -499,19 +512,6 @@ section {
     line-height: 40px;
     color: #fff;
     font-size: 14px; }
-
-input[type=checkbox] {
-  margin: 0;
-  display: inline-block;
-  vertical-align: bottom;
-  border: 1px solid #cccccc;
-  border-radius: 2px;
-  width: 14px;
-  height: 14px; }
-
-input[type=checkbox]:checked {
-  background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
-  background-size: 12px; }
 
 .avatar {
   width: 400px;

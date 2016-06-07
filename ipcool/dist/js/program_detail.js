@@ -1228,6 +1228,7 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
+	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'age') {
 	                this.subTitle = this.caculateSubTitle(data[1].value);
@@ -1383,7 +1384,6 @@
 	        key: 'updateChart',
 	        value: function updateChart(data) {
 	            this.chart.hideLoading();
-	            console.log(data);
 	            var nameList = [];
 	            var valueList = [];
 	            for (var i = 0; i < data.length; i++) {

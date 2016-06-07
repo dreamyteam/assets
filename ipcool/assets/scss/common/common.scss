@@ -185,6 +185,21 @@ section {
     }
 }
 
+input[type=checkbox] {
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    width: 14px;
+    height: 14px;
+}
+
+input[type=checkbox]:checked {
+    background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
+    background-size: 12px;
+}
+
 // 2等分
 .col_2_container {
     font-size: 0;
@@ -228,7 +243,10 @@ section {
     }
 }
 
-[placeholder] {font-weight: 100;}
+[placeholder] {
+    font-weight: 100;
+}
+
 ::-moz-placeholder {
     text-indent: 5px;
     font-weight: 100;

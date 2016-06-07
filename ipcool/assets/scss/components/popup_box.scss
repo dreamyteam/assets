@@ -252,20 +252,7 @@
     }
 }
 
-input[type=checkbox] {
-    margin: 0;
-    display: inline-block;
-    vertical-align: bottom;
-    border: 1px solid #cccccc;
-    border-radius: 2px;
-    width: 14px;
-    height: 14px;
-}
 
-input[type=checkbox]:checked {
-    background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
-    background-size: 12px;
-}
 
 //头像上传
 .avatar {
