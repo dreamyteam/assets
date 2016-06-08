@@ -94,7 +94,7 @@ export default class barVertical extends Chart {
         console.log(data);
         this.chart.hideLoading();
         if (this.type == 'age') {
-            this.subTitle = this.caculateSubTitle(data[1].value);
+            this.subTitle = this.caculateSubTitle(data[0].value);
         }
         let option = {
             title: {
@@ -106,7 +106,7 @@ export default class barVertical extends Chart {
             series: [{
                 name: '平均分布',
                 type: 'bar',
-                data: data[0].value,
+                data: data[1].value,
                 itemStyle: {
                     emphasis: {
                         color: '#EEE'
@@ -117,7 +117,7 @@ export default class barVertical extends Chart {
                 type: 'bar',
                 barGap: '-50%',
                 z: 3,
-                data: data[1].value
+                data: data[0].value
             }]
         }
         this.chart.setOption(option);

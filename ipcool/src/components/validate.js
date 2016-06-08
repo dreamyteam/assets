@@ -11,7 +11,7 @@ export default class Validate {
         this.el = $(this.cfg.el);
         this.inputBoxs = this.el.find(this.cfg.inputBoxs);
         this.btnSubmit = this.el.find(this.cfg.btnSubmit);
-        this.fnSubmit = this.cfg.fnSubmit;
+        this.callBack = this.cfg.callBack;
         this.errMsg = ".err_msg";
         if (this.el.length > 0) {
             this.validateBlur();
@@ -204,10 +204,10 @@ export default class Validate {
         this.btnSubmit.on("click", function() {
             self.validateSubmit();
             if (!self.canSubmit) {
-                return false;
-                // self.fnSubmit();
+                // return false;
+                self.callBack();
             } else {
-                self.fnSubmit();
+                self.callBack();
             }
         })
     }

@@ -32,7 +32,12 @@ export default class Avatar {
             if (files && files.length) {
                 file = files[0];
                 if (/^image\/\w+$/.test(file.type)) { // 是图片文件的处理TODO 非图片文件提示
-                    var avatar_popup = new Popup({ el: "#avatar_popup" });
+                    var avatar_popup = new Popup({
+                        el: "#avatar_popup",
+                        callBack: function() {
+                            self.uploadImg(file, x, y, width, avatar_popup);
+                        }
+                    });
                     avatar_popup.alert();
 
                     blobURL = URL.createObjectURL(file);
@@ -53,14 +58,6 @@ export default class Avatar {
                             width = e.width;
                         }
                     }).cropper('replace', blobURL)
-                    self.confrimBtn.off('click');
-                    self.confrimBtn.on("click", function() {
-                        self.uploadImg(file, x, y, width, avatar_popup);
-                    })
-                    self.cancleBtn.off("click");
-                    self.cancleBtn.on("click", function() {
-                        avatar_popup.destory();
-                    })
                 }
             }
         })

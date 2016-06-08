@@ -8,8 +8,6 @@ $(function() {
         var avatar = new Avatar({
             input: '#avatar_input_upload',
             preview: '#avatar_upload',
-            confrimBtn: "#avatar_upload_submit",
-            cancleBtn: "#avatar_upload_cancle",
             bioImage: ".user_avatar_container img",
             navImage: "#currentUser img"
         })
@@ -39,20 +37,16 @@ $(function() {
         el: "#p_indentify_form",
         inputBoxs: ".input_content",
         btnSubmit: "input[type='submit']",
-        fnSubmit: function() {
-            let p_info_popup = new Popup({
-                el: "#p_info_popup",
+        callBack: function() {
+            let popup = new Popup({
+                title: "我们将在3个工作日内为您完成资料确认",
+                content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
+                btnConfirm: "我知道了",
                 callBack: function() {
-                    //认证完成 跳转到基本页面 显示等待3个工作日
-                    console.log("去下一个页面之类的回调");
+                    console.log("aaaa");
                 }
             })
-            p_info_popup.alert();
-            $("#p_info_popup .confrim").on("click", function() {
-                p_info_popup.destory();
-            })
+            popup.alert();
         }
     })
-
-    
 })

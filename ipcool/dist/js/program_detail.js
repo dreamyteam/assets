@@ -90,7 +90,7 @@
 /* 2 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -112,42 +112,80 @@
 	    }
 
 	    _createClass(Popup, [{
-	        key: 'init',
+	        key: "init",
 	        value: function init() {
-	            this.el = $(this.cfg.el);
 	            this.callBack = this.cfg.callBack || null;
+	            this.renderUI();
+	            this.bindUI();
+	        }
+	    }, {
+	        key: "renderUI",
+	        value: function renderUI() {
+	            if (this.cfg.el) {
+	                this.el = $(this.cfg.el);
+	            } else {
+	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
+	                //添加按钮们
+	                if (this.cfg.btnConfirm) {
+	                    var btnConfirm = $("<button class='confirm'>" + this.cfg.btnConfirm + "</button>");
+	                    this.el.append(btnConfirm);
+	                }
+	                if (this.cfg.btnCancle) {
+	                    var btnCancle = $("<button class='cancle'>" + this.cfg.btnCancle + "</button>");
+	                    this.el.append(btnCancle);
+	                }
+	            }
+	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
 	            if ($('#popup_mask').length > 0) {
 	                this.mask = $('#popup_mask');
 	            } else {
 	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
 	            }
-	            this.bindClose();
 	        }
 	    }, {
-	        key: 'bindClose',
-	        value: function bindClose() {
+	        key: "bindUI",
+	        value: function bindUI() {
 	            var self = this;
 	            this.mask.on('click', function () {
 	                self.destory();
-	            });
-	            if (this.el.find('button.close')) {
+	            }); //绑定mask
+	            if (this.el.find('button.close').length > 0) {
+	                //绑定关闭按钮
 	                var btnClose = this.el.find('button.close');
 	                btnClose.on('click', function () {
 	                    self.destory();
 	                });
 	            }
-	        }
-	    }, {
-	        key: 'destory',
-	        value: function destory() {
-	            this.mask.remove();
-	            this.el.hide();
-	            if (this.callBack) {
-	                this.callBack();
+	            if (this.el.find('button.confirm').length > 0) {
+	                //绑定确认按钮
+	                var btnConfirm = this.el.find("button.confirm");
+	                btnConfirm.on("click", function () {
+	                    self.destructor();
+	                });
+	            }
+	            if (this.el.find('button.cancle').length > 0) {
+	                var btnCancle = this.el.find("button.cancle");
+	                btnCancle.on("click", function () {
+	                    self.destory();
+	                });
 	            }
 	        }
 	    }, {
-	        key: 'alert',
+	        key: "destructor",
+	        value: function destructor() {
+	            if (this.callBack) {
+	                this.callBack();
+	            }
+	            this.destory();
+	        }
+	    }, {
+	        key: "destory",
+	        value: function destory() {
+	            this.mask.remove();
+	            this.el.hide();
+	        }
+	    }, {
+	        key: "alert",
 	        value: function alert() {
 	            this.mask.appendTo("body");
 	            this.el.show();
@@ -1231,7 +1269,7 @@
 	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'age') {
-	                this.subTitle = this.caculateSubTitle(data[1].value);
+	                this.subTitle = this.caculateSubTitle(data[0].value);
 	            }
 	            var option = {
 	                title: {
@@ -1243,7 +1281,7 @@
 	                series: [{
 	                    name: '平均分布',
 	                    type: 'bar',
-	                    data: data[0].value,
+	                    data: data[1].value,
 	                    itemStyle: {
 	                        emphasis: {
 	                            color: '#EEE'
@@ -1254,7 +1292,7 @@
 	                    type: 'bar',
 	                    barGap: '-50%',
 	                    z: 3,
-	                    data: data[1].value
+	                    data: data[0].value
 	                }]
 	            };
 	            this.chart.setOption(option);
