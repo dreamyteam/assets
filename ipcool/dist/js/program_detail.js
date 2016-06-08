@@ -122,6 +122,7 @@
 	        key: "renderUI",
 	        value: function renderUI() {
 	            if (this.cfg.el) {
+	                //判断el元素
 	                this.el = $(this.cfg.el);
 	            } else {
 	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
@@ -135,12 +136,12 @@
 	                    this.el.append(btnCancle);
 	                }
 	            }
-	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
 	            if ($('#popup_mask').length > 0) {
 	                this.mask = $('#popup_mask');
 	            } else {
 	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
 	            }
+	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
 	        }
 	    }, {
 	        key: "bindUI",
@@ -182,7 +183,7 @@
 	        key: "destory",
 	        value: function destory() {
 	            this.mask.remove();
-	            this.el.hide();
+	            this.el.hide().removeClass("active");
 	        }
 	    }, {
 	        key: "alert",
