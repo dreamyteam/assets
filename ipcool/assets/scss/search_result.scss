@@ -78,6 +78,17 @@ section.search_sizer {
     }
 }
 
+.search_loading {
+    width: 100%;
+    margin: 0 0 2em;
+    height: 100px;
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto 1em;
+    display: inline-block;
+    vertical-align: top;
+}
+
 section.search_result {
     padding: 0 30px 24px 30px;
     .sresult_ip {

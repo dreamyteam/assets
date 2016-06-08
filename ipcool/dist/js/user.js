@@ -51,7 +51,7 @@
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
-	var _avatar_upload = __webpack_require__(20);
+	var _avatar_upload = __webpack_require__(22);
 
 	var _avatar_upload2 = _interopRequireDefault(_avatar_upload);
 
@@ -59,7 +59,7 @@
 
 	var _validate2 = _interopRequireDefault(_validate);
 
-	var _limiteChoose = __webpack_require__(22);
+	var _limiteChoose = __webpack_require__(24);
 
 	var _limiteChoose2 = _interopRequireDefault(_limiteChoose);
 
@@ -90,7 +90,10 @@
 	    var cInfoForm = new _validate2.default({
 	        el: "#c_indentify_form",
 	        inputBoxs: ".input_content",
-	        btnSubmit: "input[type='submit']"
+	        btnSubmit: "input[type='submit']",
+	        callBack: function callBack() {
+	            //去到银行验证页面
+	        }
 	    });
 
 	    //个人身份验证 完成后弹窗
@@ -455,7 +458,7 @@
 
 /***/ },
 
-/***/ 20:
+/***/ 22:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -466,7 +469,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _cropper = __webpack_require__(21);
+	var _cropper = __webpack_require__(23);
 
 	var _cropper2 = _interopRequireDefault(_cropper);
 
@@ -602,7 +605,7 @@
 
 /***/ },
 
-/***/ 21:
+/***/ 23:
 /***/ function(module, exports) {
 
 	/*!
@@ -3510,7 +3513,7 @@
 
 /***/ },
 
-/***/ 22:
+/***/ 24:
 /***/ function(module, exports) {
 
 	"use strict";

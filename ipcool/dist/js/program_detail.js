@@ -432,7 +432,6 @@
 	                dataType: 'jsonp',
 	                jsonp: 'callback',
 	                success: function success(result) {
-	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        self.renderUI(result.data);
 	                    }
@@ -1058,9 +1057,10 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
+	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'sex') {
-	                this.subTitle = this.caculateSubTitle(data[0].value, data[1].value);
+	                this.subTitle = this.caculateSubTitle(data[1].value, data[0].value);
 	            }
 	            var option = {
 	                title: {

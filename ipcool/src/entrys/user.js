@@ -28,7 +28,7 @@ $(function() {
     let cInfoForm = new Validate({
         el: "#c_indentify_form",
         inputBoxs: ".input_content",
-        btnSubmit: "input[type='submit']"
+        btnSubmit: "input[type='submit']",
         callBack: function() {
             //去到银行验证页面
         }

@@ -25,7 +25,6 @@ export default class GetHistory {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                console.log(result);
                 if (result.error_code == 0) {
                     self.renderUI(result.data);
                 }

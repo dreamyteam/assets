@@ -51,7 +51,7 @@
 
 	var _paging2 = _interopRequireDefault(_paging);
 
-	var _sizer = __webpack_require__(23);
+	var _sizer = __webpack_require__(20);
 
 	var _sizer2 = _interopRequireDefault(_sizer);
 
@@ -227,8 +227,8 @@
 
 /***/ },
 
-/***/ 23:
-/***/ function(module, exports) {
+/***/ 20:
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
@@ -237,6 +237,12 @@
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _loader = __webpack_require__(21);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -260,6 +266,7 @@
 	            this.btnToggle = this.el.find(this.cfg.btnToggle);
 	            this.subSizer = this.el.find(this.cfg.subSizer);
 	            this.bindToggleBtn();
+	            this.bindSizer();
 	        }
 	    }, {
 	        key: "bindToggleBtn",
@@ -302,12 +309,77 @@
 	                spread = !spread;
 	            });
 	        }
+	    }, {
+	        key: "bindSizer",
+	        value: function bindSizer() {
+	            this.el.find("input[type=checkbox]").each(function () {
+	                $(this).on("click", function () {
+	                    var loader = new _loader2.default({
+	                        parent: ".search_loading"
+	                    });
+	                    loader.showLoading();
+	                    // loader.hideLoading();
+	                });
+	            });
+	        }
 	    }]);
 
 	    return Sizer;
 	}();
 
 	exports.default = Sizer;
+
+/***/ },
+
+/***/ 21:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Loader = function () {
+	    function Loader(cfg) {
+	        _classCallCheck(this, Loader);
+
+	        this.cfg = cfg;
+	        this.parent = null;
+	        this.dom = null;
+	        this.width = null;
+	        this.init();
+	    }
+
+	    _createClass(Loader, [{
+	        key: "init",
+	        value: function init() {
+	            this.parent = $(this.cfg.parent);
+	            this.width = this.cfg.width || 40;
+	            this.dom = $("<svg class='myLoader' width = '" + this.width + "px' height = '" + this.width + "px' viewBox = '0 0 50 50'>" + "<path fill='#00a69d' d = 'M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z' ></path>" + "</svg>");
+	        }
+	    }, {
+	        key: "showLoading",
+	        value: function showLoading() {
+	            if (this.parent.find('.myLoader').length <= 0) {
+	                this.dom.appendTo(this.parent);
+	            }
+	        }
+	    }, {
+	        key: "hideLoading",
+	        value: function hideLoading() {
+	            this.dom.remove();
+	        }
+	    }]);
+
+	    return Loader;
+	}();
+
+	exports.default = Loader;
 
 /***/ }
 

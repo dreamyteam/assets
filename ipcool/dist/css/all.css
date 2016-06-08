@@ -293,6 +293,26 @@ input[type=checkbox]:checked {
   width: 100%;
   height: 2px; }
 
+.myLoader {
+  -webkit-animation: round 800ms linear infinite;
+          animation: round 800ms linear infinite; }
+
+@-webkit-keyframes round {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes round {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
 .popup_mask {
   position: fixed;
   z-index: 9998;

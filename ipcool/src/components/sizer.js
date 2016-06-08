@@ -1,3 +1,5 @@
+import Loader from '../components/loader.js';
+
 export default class Sizer {
     constructor(cfg) {
         this.cfg = cfg;
@@ -13,6 +15,7 @@ export default class Sizer {
         this.btnToggle = this.el.find(this.cfg.btnToggle);
         this.subSizer = this.el.find(this.cfg.subSizer);
         this.bindToggleBtn();
+        this.bindSizer();
     }
     bindToggleBtn() {
         let self = this;
@@ -50,6 +53,17 @@ export default class Sizer {
                 onSpread();
             }
             spread = !spread;
+        })
+    }
+    bindSizer() {
+        this.el.find("input[type=checkbox]").each(function() {
+            $(this).on("click", function() {
+                let loader = new Loader({
+                    parent: ".search_loading"
+                })
+                loader.showLoading();
+                // loader.hideLoading();
+            })
         })
     }
 }
