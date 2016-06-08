@@ -70,8 +70,6 @@
 	        var avatar = new _avatar_upload2.default({
 	            input: '#avatar_input_upload',
 	            preview: '#avatar_upload',
-	            confrimBtn: "#avatar_upload_submit",
-	            cancleBtn: "#avatar_upload_cancle",
 	            bioImage: ".user_avatar_container img",
 	            navImage: "#currentUser img"
 	        });
@@ -90,7 +88,10 @@
 	    var cInfoForm = new _validate2.default({
 	        el: "#c_indentify_form",
 	        inputBoxs: ".input_content",
-	        btnSubmit: "input[type='submit']"
+	        btnSubmit: "input[type='submit']",
+	        callBack: function callBack() {
+	            //去到银行验证页面
+	        }
 	    });
 
 	    //个人身份验证 完成后弹窗
@@ -98,18 +99,16 @@
 	        el: "#p_indentify_form",
 	        inputBoxs: ".input_content",
 	        btnSubmit: "input[type='submit']",
-	        fnSubmit: function fnSubmit() {
-	            var p_info_popup = new _pop_up2.default({
-	                el: "#p_info_popup",
+	        callBack: function callBack() {
+	            var popup = new _pop_up2.default({
+	                title: "我们将在3个工作日内为您完成资料确认",
+	                content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
+	                btnConfirm: "我知道了",
 	                callBack: function callBack() {
-	                    //认证完成 跳转到基本页面 显示等待3个工作日
-	                    console.log("去下一个页面之类的回调");
+	                    console.log("aaaa");
 	                }
 	            });
-	            p_info_popup.alert();
-	            $("#p_info_popup .confrim").on("click", function () {
-	                p_info_popup.destory();
-	            });
+	            popup.alert();
 	        }
 	    });
 	});
@@ -119,7 +118,7 @@
 /***/ 2:
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -141,42 +140,80 @@
 	    }
 
 	    _createClass(Popup, [{
-	        key: 'init',
+	        key: "init",
 	        value: function init() {
-	            this.el = $(this.cfg.el);
 	            this.callBack = this.cfg.callBack || null;
+	            this.renderUI();
+	            this.bindUI();
+	        }
+	    }, {
+	        key: "renderUI",
+	        value: function renderUI() {
+	            if (this.cfg.el) {
+	                this.el = $(this.cfg.el);
+	            } else {
+	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
+	                //添加按钮们
+	                if (this.cfg.btnConfirm) {
+	                    var btnConfirm = $("<button class='confirm'>" + this.cfg.btnConfirm + "</button>");
+	                    this.el.append(btnConfirm);
+	                }
+	                if (this.cfg.btnCancle) {
+	                    var btnCancle = $("<button class='cancle'>" + this.cfg.btnCancle + "</button>");
+	                    this.el.append(btnCancle);
+	                }
+	            }
+	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
 	            if ($('#popup_mask').length > 0) {
 	                this.mask = $('#popup_mask');
 	            } else {
 	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
 	            }
-	            this.bindClose();
 	        }
 	    }, {
-	        key: 'bindClose',
-	        value: function bindClose() {
+	        key: "bindUI",
+	        value: function bindUI() {
 	            var self = this;
 	            this.mask.on('click', function () {
 	                self.destory();
-	            });
-	            if (this.el.find('button.close')) {
+	            }); //绑定mask
+	            if (this.el.find('button.close').length > 0) {
+	                //绑定关闭按钮
 	                var btnClose = this.el.find('button.close');
 	                btnClose.on('click', function () {
 	                    self.destory();
 	                });
 	            }
-	        }
-	    }, {
-	        key: 'destory',
-	        value: function destory() {
-	            this.mask.remove();
-	            this.el.hide();
-	            if (this.callBack) {
-	                this.callBack();
+	            if (this.el.find('button.confirm').length > 0) {
+	                //绑定确认按钮
+	                var btnConfirm = this.el.find("button.confirm");
+	                btnConfirm.on("click", function () {
+	                    self.destructor();
+	                });
+	            }
+	            if (this.el.find('button.cancle').length > 0) {
+	                var btnCancle = this.el.find("button.cancle");
+	                btnCancle.on("click", function () {
+	                    self.destory();
+	                });
 	            }
 	        }
 	    }, {
-	        key: 'alert',
+	        key: "destructor",
+	        value: function destructor() {
+	            if (this.callBack) {
+	                this.callBack();
+	            }
+	            this.destory();
+	        }
+	    }, {
+	        key: "destory",
+	        value: function destory() {
+	            this.mask.remove();
+	            this.el.hide();
+	        }
+	    }, {
+	        key: "alert",
 	        value: function alert() {
 	            this.mask.appendTo("body");
 	            this.el.show();
@@ -222,7 +259,7 @@
 	            this.el = $(this.cfg.el);
 	            this.inputBoxs = this.el.find(this.cfg.inputBoxs);
 	            this.btnSubmit = this.el.find(this.cfg.btnSubmit);
-	            this.fnSubmit = this.cfg.fnSubmit;
+	            this.callBack = this.cfg.callBack;
 	            this.errMsg = ".err_msg";
 	            if (this.el.length > 0) {
 	                this.validateBlur();
@@ -439,11 +476,11 @@
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit) {
-	                    return false;
-	                    // self.fnSubmit();
+	                    // return false;
+	                    self.callBack();
 	                } else {
-	                        self.fnSubmit();
-	                    }
+	                    self.callBack();
+	                }
 	            });
 	        }
 	    }]);
@@ -519,7 +556,12 @@
 	                    file = files[0];
 	                    if (/^image\/\w+$/.test(file.type)) {
 	                        // 是图片文件的处理TODO 非图片文件提示
-	                        var avatar_popup = new _pop_up2.default({ el: "#avatar_popup" });
+	                        var avatar_popup = new _pop_up2.default({
+	                            el: "#avatar_popup",
+	                            callBack: function callBack() {
+	                                self.uploadImg(file, x, y, width, avatar_popup);
+	                            }
+	                        });
 	                        avatar_popup.alert();
 
 	                        blobURL = URL.createObjectURL(file);
@@ -540,14 +582,6 @@
 	                                width = e.width;
 	                            }
 	                        }).cropper('replace', blobURL);
-	                        self.confrimBtn.off('click');
-	                        self.confrimBtn.on("click", function () {
-	                            self.uploadImg(file, x, y, width, avatar_popup);
-	                        });
-	                        self.cancleBtn.off("click");
-	                        self.cancleBtn.on("click", function () {
-	                            avatar_popup.destory();
-	                        });
 	                    }
 	                }
 	            });

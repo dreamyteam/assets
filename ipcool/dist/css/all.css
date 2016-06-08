@@ -312,10 +312,29 @@ section {
     .popup_box button.close:hover {
       -webkit-transform: rotate(30deg);
               transform: rotate(30deg); }
+  .popup_box .title {
+    color: #2B2C2E;
+    font-size: 22px; }
+  .popup_box .sub_title {
+    color: #9B9B9B;
+    font-size: 16px; }
 
 .popup_box.active {
   -webkit-animation: popup 300ms ease forwards;
           animation: popup 300ms ease forwards; }
+
+input[type=checkbox] {
+  margin: 0;
+  display: inline-block;
+  vertical-align: bottom;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  width: 14px;
+  height: 14px; }
+
+input[type=checkbox]:checked {
+  background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
+  background-size: 12px; }
 
 @-webkit-keyframes popup {
   from {
@@ -500,19 +519,6 @@ section {
     color: #fff;
     font-size: 14px; }
 
-input[type=checkbox] {
-  margin: 0;
-  display: inline-block;
-  vertical-align: bottom;
-  border: 1px solid #cccccc;
-  border-radius: 2px;
-  width: 14px;
-  height: 14px; }
-
-input[type=checkbox]:checked {
-  background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
-  background-size: 12px; }
-
 .avatar {
   width: 400px;
   height: 600px;
@@ -546,7 +552,7 @@ input[type=checkbox]:checked {
         border-radius: 5px;
         height: 40px;
         font-size: 18px; }
-    .avatar .img_upload_container .submit {
+    .avatar .img_upload_container .confirm {
       background: #00a69d;
       color: #ffffff; }
     .avatar .img_upload_container .cancle {
@@ -554,21 +560,22 @@ input[type=checkbox]:checked {
       background: transparent;
       color: #00a69d; }
 
-.p_info_confrim {
+.normal {
   width: 600px;
   height: 278px;
   text-align: center;
   margin-left: -300px;
   margin-top: -139px;
   padding-top: 76px; }
-  .p_info_confrim .title {
+  .normal .title {
     color: #2B2C2E;
     font-size: 22px; }
-  .p_info_confrim .sub_title {
+  .normal .sub_title {
     color: #9B9B9B;
     font-size: 16px; }
-  .p_info_confrim .confrim {
-    width: 228px;
+  .normal .confirm, .normal .cancle {
+    margin: 20px 5px;
+    width: 200px;
     height: 43px;
     border-radius: 4px;
     border: 1px solid #00a69d;
@@ -576,8 +583,7 @@ input[type=checkbox]:checked {
     text-align: center;
     font-size: 18px;
     line-height: 43px;
-    background: transparent;
-    margin-top: 20px; }
+    background: transparent; }
 
 #gotoTop {
   position: fixed;
