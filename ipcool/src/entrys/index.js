@@ -26,9 +26,6 @@ $(function() {
         })
     }, 800)
 
-
-
-
     let sec2Tab = new Tab({
         el: "#sec_2_tab",
         tabNav: ".tab_nav",
@@ -55,28 +52,6 @@ $(function() {
         next: ".next",
         li: ".single_product",
     })
-    $("#register").on('click', function() {
-        let popReg = new Popup({ el: '#popup_sign' });
-        popReg.alert();
-        new SignIn({
-            el: '#popup_sign',
-            type: 0
-        })
-    })
-    $("#login").on('click', function() {
-        let popLogin = new Popup({ el: "#popup_sign" });
-        popLogin.alert();
-        new SignIn({
-            el: "#popup_sign",
-            type: 1
-        })
-    })
-    $("#regBottom").on('click', function() {
-        let popRegBottom = new Popup({ el: '#popup_sign' });
-        popRegBottom.alert();
-        new SignIn({
-            el: '#popup_sign',
-            type: 0
-        })
-    })
+    
+    let sign = new SignIn({ el: "#popup_sign" })
 })

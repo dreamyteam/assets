@@ -5,30 +5,40 @@ export default class Validate {
         this.inputBoxs = null; //input 容器 用于查找 input 和 errmsg
         this.btnSubmit = null;
         this.fnSubmit = null;
+        this.callBack = null;
         this.init();
     }
     init() {
         this.el = $(this.cfg.el);
         this.inputBoxs = this.el.find(this.cfg.inputBoxs);
         this.btnSubmit = this.el.find(this.cfg.btnSubmit);
-        this.callBack = this.cfg.callBack;
+        this.callBack = this.cfg.callBack || null;
         this.errMsg = ".err_msg";
         if (this.el.length > 0) {
             this.validateBlur();
             this.checkSubmit();
         }
     }
+    setErrMsg(errMsg, errText) {
+        errMsg.show().html(errText);
+        setTimeout(function() {
+            errMsg.addClass("active");
+        }, 100);
+    }
+    removeErrMsg(errMsg) {
+        errMsg.removeClass("active").hide().html("");
+    }
     checkRequired(obj, parent, canSubmit) {
         let self = this;
         let errMsg = parent.find(this.errMsg);
         if (obj.val() == '') {
             let errText = obj.data("required") ? obj.data("required") : "必填";
-            errMsg.show().html(errText);
+            self.setErrMsg(errMsg, errText);
             if (canSubmit) {
                 self.canSubmit = false;
             }
         } else {
-            errMsg.hide();
+            self.removeErrMsg(errMsg);
             if (canSubmit) {
                 self.canSubmit = true;
             }
@@ -39,12 +49,12 @@ export default class Validate {
         let errMsg = parent.find(this.errMsg);
         let regMail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if (!regMail.test(obj.val())) {
-            errMsg.show().html("请输入正确的邮箱格式");
+            self.setErrMsg(errMsg, "请输入正确的邮箱格式");
             if (canSubmit) {
                 self.canSubmit = false;
             }
         } else {
-            errMsg.hide();
+            self.removeErrMsg(errMsg);
             if (canSubmit) {
                 self.canSubmit = true;
             }
@@ -56,12 +66,12 @@ export default class Validate {
         let regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
 
         if (!regPhone.test(obj.val())) {
-            errMsg.show().html("请输入正确的手机号码格式");
+            self.setErrMsg(errMsg, "手机号码错误");
             if (canSubmit) {
                 self.canSubmit = false;
             }
         } else {
-            errMsg.hide();
+            self.removeErrMsg(errMsg);
             if (canSubmit) {
                 self.canSubmit = true;
             }
@@ -73,12 +83,12 @@ export default class Validate {
         let regId = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
 
         if (!regId.test(obj.val())) {
-            errMsg.show().html("请输入正确的身份证号码格式");
+            self.setErrMsg(errMsg, "请输入正确的身份证号码格式");
             if (canSubmit) {
                 self.canSubmit = false;
             }
         } else {
-            errMsg.hide();
+            self.removeErrMsg(errMsg);
             if (canSubmit) {
                 self.canSubmit = true;
             }
@@ -89,12 +99,28 @@ export default class Validate {
         let errMsg = parent.find(this.errMsg);
         if (obj.val() == 0) {
             let errText = obj.data("required") ? obj.data("required") : "您需要选择类型";
-            errMsg.show().html(errText);
+            self.setErrMsg(errMsg, errText);
             if (canSubmit) {
                 self.canSubmit = false;
             }
         } else {
-            errMsg.hide();
+            self.removeErrMsg(errMsg);
+            if (canSubmit) {
+                self.canSubmit = true;
+            }
+        }
+    }
+    checkPwd(obj, parent, canSubmit) {
+        let self = this;
+        let errMsg = parent.find(this.errMsg);
+        var regPwd = /^[a-zA-Z\d]{6,16}$/;
+        if (!regPwd.test(obj.val())) {
+            self.setErrMsg(errMsg, "密码必须为6-16位字母或数字");
+            if (canSubmit) {
+                self.canSubmit = false;
+            }
+        } else {
+            self.removeErrMsg(errMsg);
             if (canSubmit) {
                 self.canSubmit = true;
             }
@@ -102,22 +128,17 @@ export default class Validate {
     }
     checkCurrentPwd(obj, parent, canSubmit) {
         let self = this;
-        let errMsg = parent.find(this.errMsg);
-        // errMsg.show().html("旧密码不正确")
-        if (canSubmit) {
-            self.canSubmit = true;
-        }
     }
     checkNewPwd(obj, newPwd, parent, canSubmit) {
         let self = this;
         let errMsg = parent.find(this.errMsg);
         if (obj.val() != newPwd) {
-            errMsg.show().html("两次密码输入不一致");
+            self.setErrMsg(errMsg, "两次输入密码不一致");
             if (canSubmit) {
                 self.canSubmit = false;
             }
         } else {
-            errMsg.hide();
+            self.removeErrMsg(errMsg);
             if (canSubmit) {
                 self.canSubmit = true;
             }
@@ -143,6 +164,7 @@ export default class Validate {
                     self.checkIdCard(curInput, curBox, false);
                 }
                 if (curInput.attr("type") == "password") { //验证密码
+                    self.checkPwd(curInput, curBox, false);
                     if (curInput.attr("name") == "currentPassword") {
                         self.checkCurrentPwd(curInput, curBox, false)
                     }
@@ -153,7 +175,7 @@ export default class Validate {
                 }
             });
             curInput.on("focus", function() {
-                errMsg.hide().html("");
+                self.removeErrMsg(errMsg);
             });
             // select框
             let curSelect = $(this).find("select");
@@ -163,7 +185,7 @@ export default class Validate {
                 }
             });
             curSelect.on("focus", function() {
-                errMsg.hide();
+                self.removeErrMsg(errMsg);
             })
         })
     }
@@ -185,6 +207,7 @@ export default class Validate {
                 self.checkIdCard(curInput, curBox, true);
             }
             if (curInput.attr("type") == "password") { //验证密码
+                self.checkPwd(curInput, curBox, true);
                 if (curInput.attr("name") == "currentPassword") {
                     self.checkCurrentPwd(curInput, curBox, true)
                 }
@@ -203,11 +226,13 @@ export default class Validate {
         let self = this;
         this.btnSubmit.on("click", function() {
             self.validateSubmit();
-            if (!self.canSubmit) {
-                // return false;
-                self.callBack();
+            if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
+                return false;
+                // self.callBack();
             } else {
-                self.callBack();
+                if (self.callBack) {
+                    self.callBack();
+                }
             }
         })
     }

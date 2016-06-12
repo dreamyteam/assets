@@ -651,6 +651,12 @@ ul.sidebar_nav {
     font-size: 14px;
     color: #2b2c2e;
     margin-top: 20px; }
+  .sidebar_content span.update_date {
+    display: inline-block;
+    vertical-align: bottom;
+    float: right;
+    font-size: 12px;
+    color: #9b9b9b; }
   .sidebar_content p {
     font-size: 13px;
     color: #262626;

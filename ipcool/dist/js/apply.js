@@ -1,58 +1,60 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
+/*!*****************************!*\
+  !*** ./src/entrys/apply.js ***!
+  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-
-	var _validate = __webpack_require__(5);
-
+	
+	var _validate = __webpack_require__(/*! ../components/validate.js */ 4);
+	
 	var _validate2 = _interopRequireDefault(_validate);
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+	
 	$(function () {
 		var applyValidate = new _validate2.default({
 			el: "#applyValidate",
@@ -62,44 +64,63 @@
 	});
 
 /***/ },
-
-/***/ 5:
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */
+/*!************************************!*\
+  !*** ./src/components/validate.js ***!
+  \************************************/
 /***/ function(module, exports) {
 
 	"use strict";
-
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+	
 	var Validate = function () {
 	    function Validate(cfg) {
 	        _classCallCheck(this, Validate);
-
+	
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.inputBoxs = null; //input 容器 用于查找 input 和 errmsg
 	        this.btnSubmit = null;
 	        this.fnSubmit = null;
+	        this.callBack = null;
 	        this.init();
 	    }
-
+	
 	    _createClass(Validate, [{
 	        key: "init",
 	        value: function init() {
 	            this.el = $(this.cfg.el);
 	            this.inputBoxs = this.el.find(this.cfg.inputBoxs);
 	            this.btnSubmit = this.el.find(this.cfg.btnSubmit);
-	            this.callBack = this.cfg.callBack;
+	            this.callBack = this.cfg.callBack || null;
 	            this.errMsg = ".err_msg";
 	            if (this.el.length > 0) {
 	                this.validateBlur();
 	                this.checkSubmit();
 	            }
+	        }
+	    }, {
+	        key: "setErrMsg",
+	        value: function setErrMsg(errMsg, errText) {
+	            errMsg.show().html(errText);
+	            setTimeout(function () {
+	                errMsg.addClass("active");
+	            }, 100);
+	        }
+	    }, {
+	        key: "removeErrMsg",
+	        value: function removeErrMsg(errMsg) {
+	            errMsg.removeClass("active").hide().html("");
 	        }
 	    }, {
 	        key: "checkRequired",
@@ -108,12 +129,12 @@
 	            var errMsg = parent.find(this.errMsg);
 	            if (obj.val() == '') {
 	                var errText = obj.data("required") ? obj.data("required") : "必填";
-	                errMsg.show().html(errText);
+	                self.setErrMsg(errMsg, errText);
 	                if (canSubmit) {
 	                    self.canSubmit = false;
 	                }
 	            } else {
-	                errMsg.hide();
+	                self.removeErrMsg(errMsg);
 	                if (canSubmit) {
 	                    self.canSubmit = true;
 	                }
@@ -126,12 +147,12 @@
 	            var errMsg = parent.find(this.errMsg);
 	            var regMail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	            if (!regMail.test(obj.val())) {
-	                errMsg.show().html("请输入正确的邮箱格式");
+	                self.setErrMsg(errMsg, "请输入正确的邮箱格式");
 	                if (canSubmit) {
 	                    self.canSubmit = false;
 	                }
 	            } else {
-	                errMsg.hide();
+	                self.removeErrMsg(errMsg);
 	                if (canSubmit) {
 	                    self.canSubmit = true;
 	                }
@@ -143,14 +164,14 @@
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
 	            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-
+	
 	            if (!regPhone.test(obj.val())) {
-	                errMsg.show().html("请输入正确的手机号码格式");
+	                self.setErrMsg(errMsg, "手机号码错误");
 	                if (canSubmit) {
 	                    self.canSubmit = false;
 	                }
 	            } else {
-	                errMsg.hide();
+	                self.removeErrMsg(errMsg);
 	                if (canSubmit) {
 	                    self.canSubmit = true;
 	                }
@@ -162,14 +183,14 @@
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
 	            var regId = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
-
+	
 	            if (!regId.test(obj.val())) {
-	                errMsg.show().html("请输入正确的身份证号码格式");
+	                self.setErrMsg(errMsg, "请输入正确的身份证号码格式");
 	                if (canSubmit) {
 	                    self.canSubmit = false;
 	                }
 	            } else {
-	                errMsg.hide();
+	                self.removeErrMsg(errMsg);
 	                if (canSubmit) {
 	                    self.canSubmit = true;
 	                }
@@ -182,12 +203,30 @@
 	            var errMsg = parent.find(this.errMsg);
 	            if (obj.val() == 0) {
 	                var errText = obj.data("required") ? obj.data("required") : "您需要选择类型";
-	                errMsg.show().html(errText);
+	                self.setErrMsg(errMsg, errText);
 	                if (canSubmit) {
 	                    self.canSubmit = false;
 	                }
 	            } else {
-	                errMsg.hide();
+	                self.removeErrMsg(errMsg);
+	                if (canSubmit) {
+	                    self.canSubmit = true;
+	                }
+	            }
+	        }
+	    }, {
+	        key: "checkPwd",
+	        value: function checkPwd(obj, parent, canSubmit) {
+	            var self = this;
+	            var errMsg = parent.find(this.errMsg);
+	            var regPwd = /^[a-zA-Z\d]{6,16}$/;
+	            if (!regPwd.test(obj.val())) {
+	                self.setErrMsg(errMsg, "密码必须为6-16位字母或数字");
+	                if (canSubmit) {
+	                    self.canSubmit = false;
+	                }
+	            } else {
+	                self.removeErrMsg(errMsg);
 	                if (canSubmit) {
 	                    self.canSubmit = true;
 	                }
@@ -197,11 +236,6 @@
 	        key: "checkCurrentPwd",
 	        value: function checkCurrentPwd(obj, parent, canSubmit) {
 	            var self = this;
-	            var errMsg = parent.find(this.errMsg);
-	            // errMsg.show().html("旧密码不正确")
-	            if (canSubmit) {
-	                self.canSubmit = true;
-	            }
 	        }
 	    }, {
 	        key: "checkNewPwd",
@@ -209,12 +243,12 @@
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
 	            if (obj.val() != newPwd) {
-	                errMsg.show().html("两次密码输入不一致");
+	                self.setErrMsg(errMsg, "两次输入密码不一致");
 	                if (canSubmit) {
 	                    self.canSubmit = false;
 	                }
 	            } else {
-	                errMsg.hide();
+	                self.removeErrMsg(errMsg);
 	                if (canSubmit) {
 	                    self.canSubmit = true;
 	                }
@@ -244,6 +278,7 @@
 	                    }
 	                    if (curInput.attr("type") == "password") {
 	                        //验证密码
+	                        self.checkPwd(curInput, curBox, false);
 	                        if (curInput.attr("name") == "currentPassword") {
 	                            self.checkCurrentPwd(curInput, curBox, false);
 	                        }
@@ -254,7 +289,7 @@
 	                    }
 	                });
 	                curInput.on("focus", function () {
-	                    errMsg.hide().html("");
+	                    self.removeErrMsg(errMsg);
 	                });
 	                // select框
 	                var curSelect = $(this).find("select");
@@ -264,7 +299,7 @@
 	                    }
 	                });
 	                curSelect.on("focus", function () {
-	                    errMsg.hide();
+	                    self.removeErrMsg(errMsg);
 	                });
 	            });
 	        }
@@ -290,6 +325,7 @@
 	                }
 	                if (curInput.attr("type") == "password") {
 	                    //验证密码
+	                    self.checkPwd(curInput, curBox, true);
 	                    if (curInput.attr("name") == "currentPassword") {
 	                        self.checkCurrentPwd(curInput, curBox, true);
 	                    }
@@ -310,21 +346,23 @@
 	            var self = this;
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
-	                if (!self.canSubmit) {
-	                    // return false;
-	                    self.callBack();
+	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
+	                    return false;
+	                    // self.callBack();
 	                } else {
-	                    self.callBack();
-	                }
+	                        if (self.callBack) {
+	                            self.callBack();
+	                        }
+	                    }
 	            });
 	        }
 	    }]);
-
+	
 	    return Validate;
 	}();
-
+	
 	exports.default = Validate;
 
 /***/ }
-
-/******/ });
+/******/ ]);
+//# sourceMappingURL=apply.js.map

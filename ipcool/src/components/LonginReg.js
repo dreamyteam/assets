@@ -1,265 +1,192 @@
+import Tab from '../components/tab.js'
+import Popup from '../components/pop_up.js'
+import Validate from '../components/validate.js'
+
 export default class Sign {
     constructor(cfg) {
         this.cfg = cfg;
-        this.type = null; // 0 reg 1 login
-        this.el = null;
-        this.boxReg = null;
-        this.boxLogin = null;
-        this.err_msg = null;
-        this.boxValidate = null;
-        this.canClickSendVCB = null;
+        this.tab = null;
+        this.popup = null;
+        this.canSubmit = null;
+        this.countdown = null;
         this.init();
     }
     init() {
-        this.el = $("#popup_sign");
-        this.boxReg = $("#register_form");
-        this.boxLogin = $("#login_form");
-        this.err_msg = this.el.find('.err_msg');
-        this.boxValidate = $("#register_form .btn_send_verify_code");
-        this.canClickSendVCB = true; //可以发送验证码
-        this.type = this.cfg.type;
-        this.boxReg.hide();
-        this.boxLogin.hide();
-        this.err_msg.hide();
-        this.checkType(this.type); //检测type
-        this.bindSwitchBtn();
-    }
-    bindSwitchBtn() {
-        var self = this;
-        this.boxReg.find('.tips_bottom_btn').on('click', function() {
-            self.type = 1;
-            self.checkType(self.type)
+        this.el = $(this.cfg.el);
+        this.tab = new Tab({
+            el: this.el,
+            tabContents: ".sign_content",
         })
-        this.boxLogin.find('.tips_bottom_btn').on('click', function() {
-            self.type = 0;
-            self.checkType(self.type)
-        })
+        this.pupUp = new Popup({ el: this.el });
+        this.bindApplicationLayer();
+        this.feLogInValidate();
+        this.feCheckCodeValidate();
+        this.feRegValidate();
     }
-    checkType(type) {
-        if (type == 0) { // reg
-            this.renderReg();
-        } else if (type == 1) { //login
-            this.renderLogin();
+    bindApplicationLayer() {
+        let self = this;
+        $("#popup_sign .nav .login").on("click", function() {
+            self.tab.switchContent(0, true);
+        });
+        $("#popup_sign .nav .reg").on("click", function() {
+            self.tab.switchContent(1, true);
+        });
+        // $("#popup_sign .forgot_pwd").on("click", function() {
+        //     self.tab.switchContent(2, true);
+        // });
+        // $("#popup_sign .go_find_pwd").on("click", function() {
+        //     self.tab.switchContent(3, true);
+        // });
+        $("#register").on('click', function() {
+            self.pupUp.alert();
+            self.tab.switchContent(1, true);
+        });
+        $("#login").on('click', function() {
+            self.pupUp.alert();
+            self.tab.switchContent(0, true);
+        });
+        if ($("#regBottom").length > 0) {
+            $("#regBottom").on('click', function() {
+                self.pupUp.alert();
+                self.tab.switchContent(1, true);
+            });
         }
     }
-    renderReg() {
-        this.boxLogin.hide();
-        this.boxReg.show();
-        this.validateBase(0);
-    }
-    renderLogin() {
-        this.boxReg.hide();
-        this.boxLogin.show();
-        this.validateBase(1);
-    }
-    validateBase(type) { // 0 跳入 reg判断 1 跳入 login 判断
-        var self = this;
-        var hasValueRegPhone = false,
-            hasValueRegPwd = false,
-            hasValueLoginPhone = false,
-            hasValueLoginPwd = false;
-
-        if (type == 0) { //reg
-            this.boxReg.find('input').on("input propertychange", function() {
-                if ($(this).is("input[name='phone_number']")) {
-                    $(this).val($(this).val().replace(/\D/g, '')); //只能输入数字
-                    if ($(this).val() !== '') {
-                        hasValueRegPhone = true;
-                    }
-                }
-                if ($(this).is("input[name='password']")) {
-                    if ($(this).val() !== '') {
-                        hasValueRegPwd = true;
-                    }
-                }
-                if (hasValueRegPhone && hasValueRegPwd) {
-                    self.bindBtnValidateReg();
-                }
-            })
-        } else if (type == 1) { //login
-            this.boxLogin.find('input').on("input propertychange", function() {
-                if ($(this).is("input[name='phone_number']")) {
-                    $(this).val($(this).val().replace(/\D/g, '')); //只能输入数字
-                    if ($(this).val() !== '') {
-                        hasValueLoginPhone = true;
-                    }
-                }
-                if ($(this).is("input[name='password']")) {
-                    if ($(this).val() !== '') {
-                        hasValueLoginPwd = true;
-                    }
-                }
-                if (hasValueLoginPhone && hasValueLoginPwd) {
-                    self.loginSubmit();
-                }
-            })
-        }
-    }
-    bindBtnValidateReg() {
-        var self = this;
-        if (this.canClickSendVCB) {
-            this.boxValidate.addClass('active');
-            this.boxValidate.removeAttr("disabled");
-        }
-        this.boxValidate.off('click');
-        this.boxValidate.on('click', function(e) {
-            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-            var regPwd = /^[a-zA-Z\d]{6,16}$/;
-            var inputPhone = self.boxReg.find("input[name='phone_number']");
-            var inputPwd = self.boxReg.find("input[name='password']");
-            if (!regPhone.test(inputPhone.val())) {
-                self.err_msg.show().html("手机号码格式错误")
-            } else if (!regPwd.test(inputPwd.val())) {
-                self.err_msg.show().html("密码必须为6-16位,字母或数字")
-            } else {
-                self.err_msg.hide();
-                self.checkValidate();
+    feLogInValidate() { //前端登录验证
+        let self = this;
+        let el = this.el.find(".nav_login");
+        let felogIn = new Validate({
+            el: el,
+            inputBoxs: ".input_content",
+            btnSubmit: "button.submit",
+            callBack: function() {
+                self.serverLogInValidate(el)
             }
-            return false;
         })
     }
-    checkValidate() {
-        var self = this;
+    serverLogInValidate(el) { //后端登录
+        let self = this;
+        let phone = el.find("input[name='phone_number']").val();
+        let pwd = el.find("input[name='password']").val();
+        let inputRpwd = el.find("input[name='remember_pwd']");
+        let rememberPwd;
+        if (inputRpwd.is(":checked")) {
+            rememberPwd = 1;
+        } else {
+            rememberPwd = 0;
+        }
+        let errMsg = el.find(".err_from_server .err_msg");
         $.ajax({
-            url: '/user/register/verificationCode',
+            url: '/user/login',
             type: 'POST',
             data: {
-                mobile: self.boxReg.find("input[name='phone_number']").val(),
+                mobile: phone,
+                password: pwd,
+                rememberPwd: rememberPwd
             },
             success: function(result) {
                 if (result.error_code == 0) {
-                    self.boxValidate.removeClass('active');
-                    self.boxValidate.attr("disabled", "disabled");
-                    self.canClickSendVCB = false;
-                    self.regSubmit();
-                    settime(self.boxValidate);
+                    location.reload();
                 } else if (result.error_code > 0) {
-                    self.err_msg.show().html(result.error_msg);
+                    self.showErr(errMsg, result.error_msg);
                 }
             }
-        });
-        var countdown = 60;
-
-        function settime(obj) {
-            if (countdown == 0) {
-                obj.removeAttr("disabled");
-                obj.addClass("active");
-                obj.html("重新发送");
-                countdown = 60;
-                return;
-            } else {
-                obj.attr("disabled", "disabled")
-                obj.html("重新发送" + countdown + 's');
-                countdown--;
-            }
-            setTimeout(function() {
-                settime(obj)
-            }, 1000)
-        }
-    }
-    regSubmit() {
-        var self = this;
-        var btnSubmit = this.boxReg.find("button.solid");
-        var lastInput = this.boxReg.find("input[name='verify_code']");
-        btnSubmit.addClass('active');
-        lastInput.off("keydown");
-        lastInput.on("keydown", function(e) {
-            var key = e.which;
-            if (key == 13) {
-                e.preventDefault();
-                self.regConfirm();
-                return false;
-            }
-        })
-        btnSubmit.off('click');
-        btnSubmit.on('click', function() {
-            self.regConfirm();
-            return false;
         })
     }
-    regConfirm() {
-        var self = this;
+    feCheckCodeValidate() { //验证码检验器
+        let self = this;
+        let el = this.el.find(".nav_reg .verify_container");
+        let feCheckCode = new Validate({
+            el: el,
+            inputBoxs: ".input_content",
+            btnSubmit: ".get_verify_code",
+            callBack: function() {
+                self.sendVerifyCode(el);
+            }
+        })
+    }
+    feRegValidate() { //注册前端总检验器
+        let self = this;
+        let el = this.el.find(".nav_reg");
+        let feReg = new Validate({
+            el: el,
+            inputBoxs: ".input_content",
+            btnSubmit: "button.submit",
+            callBack: function() {
+                self.serverRegValidate(el);
+            }
+        })
+    }
+    serverRegValidate(el) {
+        let self = this;
+        let userName = el.find("input[name='userName']").val();
+        let phone = el.find("input[name='phone_number']").val();
+        let pwd = el.find("input[name='password']").val();
+        let checkCode = el.find("input[name='verify_code']").val();
+        let errMsg = el.find(".err_from_server .err_msg");
         $.ajax({
             url: '/user/register',
             type: 'POST',
             data: {
-                mobile: self.boxReg.find("input[name='phone_number']").val(),
-                password: self.boxReg.find("input[name='password']").val(),
-                checkCode: self.boxReg.find("input[name='verify_code']").val()
+                // userName: userName,
+                mobile: phone,
+                password: pwd,
+                checkCode: checkCode,
             },
             success: function(result) {
                 console.log(result);
                 if (result.error_code == 0) {
                     location.reload();
                 } else if (result.error_code > 0) {
-                    self.err_msg.show().html(result.error_msg);
+                    self.showErr(errMsg, result.error_msg);
                 }
             }
         })
     }
-    loginSubmit() {
-        var self = this;
-        var btnSubmit = this.boxLogin.find("button.solid");
-        var lastInput = this.boxLogin.find("input[name='password']");
-        btnSubmit.addClass('active');
-
-        lastInput.off("keydown");
-        lastInput.on("keydown", function(e) {
-            var key = e.which;
-            if (key == 13) {
-                e.preventDefault();
-                self.loginBeforeAjax();
-                return false;
-            }
-        })
-        btnSubmit.off("click");
-        btnSubmit.on('click', function(e) {
-            e.preventDefault();
-            self.loginBeforeAjax();
-            return false;
-        })
-    }
-    loginBeforeAjax() {
-        var self = this;
-        var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-        var regPwd = /^[a-zA-Z\d]{6,16}$/;
-        var inputPhone = self.boxLogin.find("input[name='phone_number']");
-        var inputPwd = self.boxLogin.find("input[name='password']");
-        var inputRememberPwd = self.boxLogin.find("input[name='remember_pwd']");
-        var rememberPwd;
-        if (inputRememberPwd.is(":checked")) {
-            rememberPwd = 1;
-        } else {
-            rememberPwd = 0;
-        }
-        if (!regPhone.test(inputPhone.val())) {
-            self.err_msg.show().html("手机号码格式错误")
-        } else if (!regPwd.test(inputPwd.val())) {
-            self.err_msg.show().html("密码必须为6-16位,字母或数字")
-        } else {
-            self.err_msg.hide();
-            self.loginConfirm(rememberPwd);
-        }
-    }
-    loginConfirm(cheked) {
-        var self = this;
-        $.ajax({
-            url: '/user/login',
-            type: 'POST',
-            data: {
-                mobile: self.boxLogin.find("input[name='phone_number']").val(),
-                password: self.boxLogin.find("input[name='password']").val(),
-                rememberPwd: cheked
-            },
-            success: function(result) {
-                console.log(result)
-                if (result.error_code == 0) {
-                    location.reload();
-                } else if (result.error_code > 0) {
-                    self.err_msg.show().html(result.error_msg);
+    sendVerifyCode(el) { //发送验证码模块
+        let self = this;
+        let phone = el.find("input[name='phone_number']").val();
+        let btn = el.find(".get_verify_code");
+        let errMsg =
+            $.ajax({
+                url: '/user/register/verificationCode',
+                type: 'POST',
+                data: {
+                    mobile: phone,
+                },
+                success: function(result) {
+                    console.log(result);
+                    if (result.error_code == 0) {
+                        self.countdown = 60;
+                        self.settime(btn);
+                    } else if (result.error_code > 0) {
+                        self.showErr(el, result.error_msg);
+                    }
                 }
-            }
-        })
+            }); //后端发送验证码
+    }
+    settime(obj) { //验证码倒数计时
+        let self = this;
+        if (this.countdown == 0) {
+            obj.removeAttr("disabled");
+            obj.removeClass("disable");
+            obj.html("重新发送");
+            this.countdown = 60;
+            return;
+        } else {
+            obj.attr("disabled", "disabled");
+            obj.addClass("disable");
+            obj.html("重新发送" + this.countdown + 's');
+            this.countdown--;
+        }
+        setTimeout(function() {
+            self.settime(obj)
+        }, 1000)
+    }
+    showErr(errMsg, msg) {
+        errMsg.show().html(msg);
+        setTimeout(function() {
+            errMsg.addClass("active");
+        }, 100);
     }
 }
-

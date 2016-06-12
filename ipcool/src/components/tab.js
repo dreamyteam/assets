@@ -35,6 +35,7 @@ export default class Tab {
         this.tabNavList.eq(index).addClass('active');
         this.switchContent(index, true);
     }
+
     switchContent(index, animate) {
         this.contentList.each(function() { $(this).removeClass('active'); });
         this.contentList.eq(index).addClass('active');

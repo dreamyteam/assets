@@ -39,9 +39,12 @@ export default class Popup {
             this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
         }
     }
+
     bindUI() {
         let self = this;
-        this.mask.on('click', function() { self.destory(); }) //绑定mask
+        this.mask.on("click", function() {
+            self.destory();
+        });
         if (this.el.find('button.close').length > 0) { //绑定关闭按钮
             let btnClose = this.el.find('button.close');
             btnClose.on('click', function() {
