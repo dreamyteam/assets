@@ -126,21 +126,25 @@
 	            this.el = $(this.cfg.el);
 	            this.tab = new _tab2.default({
 	                el: this.el,
+	                tabNav: ".nav",
 	                tabContents: ".sign_content",
 	                onTabGo: function onTabGo() {
 	                    //控制返回按钮逻辑
 	                    var btnBack = this.el.find(".btn_back");
+	                    var nav = this.el.find(".nav");
 	                    var curIndex = this.curIndex;
 	                    if (curIndex == 2 || curIndex == 3) {
 	                        btnBack.show();
+	                        nav.hide();
 	                    } else {
 	                        btnBack.hide();
+	                        nav.show();
 	                    }
 	                    btnBack.on("click", function () {
 	                        if (curIndex == 2) {
-	                            self.tab.switchContent(0, true);
+	                            self.tab.switchTabNav(0, true);
 	                        } else if (curIndex == 3) {
-	                            self.tab.switchContent(2, true);
+	                            self.tab.switchTabNav(2, true);
 	                        }
 	                    });
 	                }
@@ -155,30 +159,24 @@
 	        key: 'bindApplicationLayer',
 	        value: function bindApplicationLayer() {
 	            var self = this;
-	            $("#popup_sign .nav .login").on("click", function () {
-	                self.tab.switchContent(0, true);
-	            });
-	            $("#popup_sign .nav .reg").on("click", function () {
-	                self.tab.switchContent(1, true);
-	            });
 	            $("#popup_sign .forgot_pwd").on("click", function () {
-	                self.tab.switchContent(2, true);
+	                self.tab.switchTabNav(2, true);
 	            });
 	            // $("#popup_sign .go_find_pwd").on("click", function() {
 	            //     self.tab.switchContent(3, true);
 	            // });
 	            $("#register").on('click', function () {
 	                self.pupUp.alert();
-	                self.tab.switchContent(1, false);
+	                self.tab.switchTabNav(1, false);
 	            });
 	            $("#login").on('click', function () {
 	                self.pupUp.alert();
-	                self.tab.switchContent(0, false);
+	                self.tab.switchTabNav(0, false);
 	            });
 	            if ($("#regBottom").length > 0) {
 	                $("#regBottom").on('click', function () {
 	                    self.pupUp.alert();
-	                    self.tab.switchContent(1, false);
+	                    self.tab.switchTabNav(1, false);
 	                });
 	            }
 	        }
@@ -401,19 +399,19 @@
 	                this.tabNavList.each(function () {
 	                    $(this).on("click", function () {
 	                        var index = $(this).index();
-	                        self.switchTabNav(index);
+	                        self.switchTabNav(index, true);
 	                    });
 	                });
 	            }
 	        }
 	    }, {
 	        key: "switchTabNav",
-	        value: function switchTabNav(index) {
+	        value: function switchTabNav(index, animate) {
 	            this.tabNavList.each(function () {
 	                $(this).removeClass('active');
 	            });
 	            this.tabNavList.eq(index).addClass('active');
-	            this.switchContent(index, true);
+	            this.switchContent(index, animate);
 	            this.curIndex = index;
 	        }
 	    }, {
@@ -427,7 +425,6 @@
 	            if (animate) {
 	                this.contentList.eq(index).addClass('animate');
 	            }
-	
 	            this.onTabGo();
 	        }
 	    }, {
@@ -464,14 +461,11 @@
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.mask = null;
-	        this.callBack = null;
-	        this.init();
 	    }
 	
 	    _createClass(Popup, [{
 	        key: "init",
 	        value: function init() {
-	            this.callBack = this.cfg.callBack || null;
 	            this.renderUI();
 	            this.bindUI();
 	        }
@@ -493,40 +487,25 @@
 	                }
 	            }
 	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
-	            if ($('#popup_mask').length > 0) {
-	                this.mask = $('#popup_mask');
-	            } else {
-	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
-	            }
+	            this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+	            this.mask.appendTo("body");
+	            this.el.show();
+	            this.el.addClass("active");
 	        }
 	    }, {
 	        key: "bindUI",
 	        value: function bindUI() {
 	            var self = this;
-	            this.mask.off("click");
 	            this.mask.on("click", function () {
 	                self.destory();
 	            });
-	            if (this.el.find('button.close').length > 0) {
-	                //绑定关闭按钮
-	                var btnClose = this.el.find('button.close');
-	                btnClose.on('click', function () {
-	                    self.destory();
-	                });
-	            }
-	            if (this.el.find('button.confirm').length > 0) {
-	                //绑定确认按钮
-	                var btnConfirm = this.el.find("button.confirm");
-	                btnConfirm.on("click", function () {
-	                    self.destructor();
-	                });
-	            }
-	            if (this.el.find('button.cancle').length > 0) {
-	                var btnCancle = this.el.find("button.cancle");
-	                btnCancle.on("click", function () {
-	                    self.destory();
-	                });
-	            }
+	            this.el.delegate("button.close", "click", function () {
+	                self.destory();
+	            }).delegate("button.confirm", "click", function () {
+	                self.destructor();
+	            }).delegate("button.cancle", "click", function () {
+	                self.destory();
+	            });
 	        }
 	    }, {
 	        key: "destructor",
@@ -539,16 +518,17 @@
 	    }, {
 	        key: "destory",
 	        value: function destory() {
-	            this.mask.remove();
-	            this.el.removeClass("active").hide();
+	            this.mask && this.mask.off().remove();
+	            this.el.removeClass("active").hide().off();
 	        }
 	    }, {
 	        key: "alert",
 	        value: function alert() {
-	            this.mask.appendTo("body");
-	            this.el.show();
-	            this.el.addClass("active");
+	            this.init();
 	        }
+	    }, {
+	        key: "callBack",
+	        value: function callBack() {}
 	    }]);
 	
 	    return Popup;

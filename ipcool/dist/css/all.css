@@ -363,16 +363,19 @@ input[type=checkbox]:checked {
   text-align: center;
   margin-left: -150px; }
   .sign .nav {
-    position: relative;
-    margin-top: 33px; }
-    .sign .nav span {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 117px;
+    z-index: 999999; }
+    .sign .nav li {
       cursor: pointer;
       display: inline-block;
       font-size: 14px;
       width: 40px;
       color: rgba(55, 55, 55, 0.8);
       border-bottom: 2px solid transparent; }
-      .sign .nav span.active {
+      .sign .nav li.active {
         color: #00a69d;
         border-bottom: 2px solid #00a69d; }
   .sign .sign_content li {
@@ -467,6 +470,8 @@ input[type=checkbox]:checked {
           color: rgba(55, 55, 55, 0.6);
           text-align: left;
           background: transparent; }
+    .sign .sign_content li .form.sign_form {
+      margin-top: 84px; }
     .sign .sign_content li.active {
       display: block; }
     .sign .sign_content li.animate {
@@ -580,7 +585,7 @@ input[type=checkbox]:checked {
   from {
     -webkit-transform: translateX(100px);
             transform: translateX(100px);
-    opacity: 0; }
+    opacity: 0.8; }
   to {
     -webkit-transform: translateX(0);
             transform: translateX(0);
@@ -590,7 +595,7 @@ input[type=checkbox]:checked {
   from {
     -webkit-transform: translateX(100px);
             transform: translateX(100px);
-    opacity: 0; }
+    opacity: 0.8; }
   to {
     -webkit-transform: translateX(0);
             transform: translateX(0);

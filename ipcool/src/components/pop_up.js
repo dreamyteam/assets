@@ -3,11 +3,8 @@ export default class Popup {
         this.cfg = cfg;
         this.el = null;
         this.mask = null;
-        this.callBack = null;
-        this.init();
     }
     init() {
-        this.callBack = this.cfg.callBack || null;
         this.renderUI();
         this.bindUI();
     }
@@ -33,37 +30,23 @@ export default class Popup {
             }
         }
         this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
-        if ($('#popup_mask').length > 0) {
-            this.mask = $('#popup_mask');
-        } else {
-            this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
-        }
+        this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+        this.mask.appendTo("body");
+        this.el.show();
+        this.el.addClass("active");
     }
-
     bindUI() {
         let self = this;
-        this.mask.off("click");
         this.mask.on("click", function() {
             self.destory();
         });
-        if (this.el.find('button.close').length > 0) { //绑定关闭按钮
-            let btnClose = this.el.find('button.close');
-            btnClose.on('click', function() {
-                self.destory();
-            })
-        }
-        if (this.el.find('button.confirm').length > 0) { //绑定确认按钮
-            let btnConfirm = this.el.find("button.confirm");
-            btnConfirm.on("click", function() {
-                self.destructor();
-            })
-        }
-        if (this.el.find('button.cancle').length > 0) {
-            let btnCancle = this.el.find("button.cancle");
-            btnCancle.on("click", function() {
-                self.destory();
-            })
-        }
+        this.el.delegate("button.close", "click", function() {
+            self.destory();
+        }).delegate("button.confirm", "click", function() {
+            self.destructor();
+        }).delegate("button.cancle", "click", function() {
+            self.destory();
+        })
     }
     destructor() {
         if (this.callBack) {
@@ -72,12 +55,13 @@ export default class Popup {
         this.destory();
     }
     destory() {
-        this.mask.remove();
-        this.el.removeClass("active").hide();
+        this.mask && this.mask.off().remove();
+        this.el.removeClass("active").hide().off();
     }
     alert() {
-        this.mask.appendTo("body");
-        this.el.show();
-        this.el.addClass("active");
+        this.init();
+    }
+    callBack() {
+
     }
 }

@@ -16,20 +16,24 @@ export default class Sign {
         this.el = $(this.cfg.el);
         this.tab = new Tab({
             el: this.el,
+            tabNav: ".nav",
             tabContents: ".sign_content",
             onTabGo: function() { //控制返回按钮逻辑
                 let btnBack = this.el.find(".btn_back");
+                let nav = this.el.find(".nav");
                 let curIndex = this.curIndex;
                 if (curIndex == 2 || curIndex == 3) {
                     btnBack.show();
+                    nav.hide();
                 } else {
                     btnBack.hide();
+                    nav.show();
                 }
                 btnBack.on("click", function() {
                     if (curIndex == 2) {
-                        self.tab.switchContent(0, true);
+                        self.tab.switchTabNav(0, true);
                     } else if (curIndex == 3) {
-                        self.tab.switchContent(2, true);
+                        self.tab.switchTabNav(2, true);
                     }
                 })
             }
@@ -42,30 +46,24 @@ export default class Sign {
     }
     bindApplicationLayer() {
         let self = this;
-        $("#popup_sign .nav .login").on("click", function() {
-            self.tab.switchContent(0, true);
-        });
-        $("#popup_sign .nav .reg").on("click", function() {
-            self.tab.switchContent(1, true);
-        });
         $("#popup_sign .forgot_pwd").on("click", function() {
-            self.tab.switchContent(2, true);
+            self.tab.switchTabNav(2, true);
         });
         // $("#popup_sign .go_find_pwd").on("click", function() {
         //     self.tab.switchContent(3, true);
         // });
         $("#register").on('click', function() {
             self.pupUp.alert();
-            self.tab.switchContent(1, false);
+            self.tab.switchTabNav(1, false);
         });
         $("#login").on('click', function() {
             self.pupUp.alert();
-            self.tab.switchContent(0, false);
+            self.tab.switchTabNav(0, false);
         });
         if ($("#regBottom").length > 0) {
             $("#regBottom").on('click', function() {
                 self.pupUp.alert();
-                self.tab.switchContent(1, false);
+                self.tab.switchTabNav(1, false);
             });
         }
     }

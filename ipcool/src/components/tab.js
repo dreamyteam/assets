@@ -27,15 +27,15 @@ export default class Tab {
             this.tabNavList.each(function() {
                 $(this).on("click", function() {
                     let index = $(this).index();
-                    self.switchTabNav(index);
+                    self.switchTabNav(index, true);
                 })
             })
         }
     }
-    switchTabNav(index) {
+    switchTabNav(index, animate) {
         this.tabNavList.each(function() { $(this).removeClass('active'); });
         this.tabNavList.eq(index).addClass('active');
-        this.switchContent(index, true);
+        this.switchContent(index, animate);
         this.curIndex = index;
     }
     switchContent(index, animate) {
@@ -45,9 +45,7 @@ export default class Tab {
         if (animate) {
             this.contentList.eq(index).addClass('animate');
         }
-
         this.onTabGo();
-
     }
     onTabGo() {
 
