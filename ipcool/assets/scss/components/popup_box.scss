@@ -208,6 +208,11 @@ input[type=checkbox]:checked {
                         color: rgba(55, 55, 55, 0.60);
                         text-align: left;
                         background: transparent;
+                        transition: all 200ms ease;
+                        &:hover {
+                            color: #4A90E2;
+                            text-decoration: underline;
+                        }
                     }
                 }
             }

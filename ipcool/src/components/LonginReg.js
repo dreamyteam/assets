@@ -18,7 +18,7 @@ export default class Sign {
             el: this.el,
             tabNav: ".nav",
             tabContents: ".sign_content",
-            onTabGo: function() { //控制返回按钮逻辑
+            onTabGo: function() { //控制返回按钮，注册登录是否显示逻辑
                 let btnBack = this.el.find(".btn_back");
                 let nav = this.el.find(".nav");
                 let curIndex = this.curIndex;
@@ -40,17 +40,17 @@ export default class Sign {
         })
         this.pupUp = new Popup({ el: this.el });
         this.bindApplicationLayer();
-        this.feLogInValidate();
-        this.feCheckCodeValidate();
-        this.feRegValidate();
+        this.feLogInValidate(); //登录
+        this.feRegVCValidate(); //注册发送验证码
+        this.feRegValidate(); //注册
+        this.feFindPwdVCValidate(); // 找回密码发送验证码
+        this.feFindPwdValidate(); //验证找回密码验证码
+        this.feResetPwd();
     }
     bindApplicationLayer() {
         let self = this;
         $("#popup_sign .forgot_pwd").on("click", function() {
             self.tab.switchTabNav(2, true);
-        });
-        $("#popup_sign .go_find_pwd").on("click", function() {
-            self.tab.switchTabNav(3, true);
         });
         $("#register").on('click', function() {
             self.pupUp.alert();
@@ -108,7 +108,7 @@ export default class Sign {
             }
         })
     }
-    feCheckCodeValidate() { //验证码检验器
+    feRegVCValidate() { //注册验证码验证器
         let self = this;
         let el = this.el.find(".nav_reg .verify_container");
         let feCheckCode = new Validate({
@@ -128,7 +128,9 @@ export default class Sign {
             inputBoxs: ".input_content",
             btnSubmit: "button.submit",
             callBack: function() {
-                self.serverRegValidate(el);
+                self.checkValidateCode(el, function() {
+                    self.serverRegValidate(el);
+                });
             }
         })
     }
@@ -137,32 +139,135 @@ export default class Sign {
         let userName = el.find("input[name='userName']").val();
         let phone = el.find("input[name='phone_number']").val();
         let pwd = el.find("input[name='password']").val();
-        let checkCode = el.find("input[name='verify_code']").val();
         let errMsg = el.find(".err_from_server .err_msg");
         $.ajax({
             url: '/user/register',
             type: 'POST',
             data: {
-                // userName: userName,
+                userName: userName,
                 mobile: phone,
                 password: pwd,
-                checkCode: checkCode,
             },
             success: function(result) {
                 console.log(result);
                 if (result.error_code == 0) {
-                    location.reload();
+                    // location.reload();
                 } else if (result.error_code > 0) {
                     self.showErr(errMsg, result.error_msg);
                 }
             }
         })
     }
-    sendVerifyCode(el) { //发送验证码模块
+    feFindPwdVCValidate() { //前端找回密码 发送验证码验证
+        let self = this;
+        let el = this.el.find(".nav_find_pwd .verify_container");
+        let feFindPwd = new Validate({
+            el: el,
+            inputBoxs: ".input_content",
+            btnSubmit: ".get_verify_code",
+            callBack: function() {
+                self.sendVerifyCode(el);
+            }
+        })
+    }
+    feFindPwdValidate() { //找回密码验证
+        let self = this;
+        let el = this.el.find(".nav_find_pwd");
+        let feFindPwd = new Validate({
+            el: el,
+            inputBoxs: ".input_content",
+            btnSubmit: "button.submit",
+            callBack: function() {
+                self.checkValidateCode(el, function() {
+                    self.serverCheckPhoneNumber(el);
+                });
+            }
+        })
+    }
+    serverCheckPhoneNumber(el) {
+        let self = this;
+        let phone = el.find("input[name='phone_number']").val();
+        let errMsg = el.find(".get_verify_code_content .err_msg");
+        $.ajax({
+            url: '/user/getpwd/doCheckPhone',
+            type: 'POST',
+            data: {
+                mobile: phone,
+            },
+            success: function(result) {
+                if (result.error_code == 0) {
+                    console.log("去到修改密码页");
+                    self.tab.switchTabNav(3, true);
+                } else if (result.error_code > 0) {
+                    self.showErr(errMsg, result.error_msg);
+                }
+            }
+        })
+    }
+    feResetPwd() {
+        let self = this;
+        let el = this.el.find(".nav_reset_pwd");
+        let feResetPwd = new Validate({
+            el: el,
+            inputBoxs: ".input_content",
+            btnSubmit: "button.submit",
+            callBack: function() {
+                self.serverResetPwd(el);
+            }
+        })
+    }
+    serverResetPwd(el) {
+        // let self = this;
+        // $.ajax({
+        //     url: '/user/getpwd/doCheckPhone',
+        //     type: 'POST',
+        //     data: {
+        //         mobile: phone,
+        //     },
+        //     success: function(result) {
+        //         if (result.error_code == 0) {
+        //             console.log("去到修改密码页");
+        //             self.tab.switchTabNav(3, true);
+        //         } else if (result.error_code > 0) {
+        //             self.showErr(errMsg, result.error_msg);
+        //         }
+        //     }
+        // })
+    }
+
+
+
+
+    checkValidateCode(el, cb) { //验证验证码模块
+        let self = this;
+        let phone = el.find("input[name='phone_number']").val();
+        let checkCode = el.find("input[name='verify_code']").val();
+        let errMsg = el.find(".verify_code_content .err_msg");
+        $.ajax({
+                url: '/user/register/checkPhoneCode',
+                type: 'POST',
+                data: {
+                    mobile: phone,
+                    checkCode: checkCode
+                },
+                success: function(result) {
+                    console.log(result);
+                    if (result.error_code == 0) {
+                        if (typeof cb == "function") {
+                            cb();
+                        }
+                    } else if (result.error_code > 0) {
+                        self.showErr(errMsg, result.error_msg);
+                    }
+                }
+            }) //验证码检测器
+    }
+    sendVerifyCode(el) { //发送验证码模块 
         let self = this;
         let phone = el.find("input[name='phone_number']").val();
         let btn = el.find(".get_verify_code");
         let errMsg = el.find(".get_verify_code_content .err_msg");
+        let url;
         $.ajax({
             url: '/user/register/verificationCode',
             type: 'POST',
@@ -170,7 +275,6 @@ export default class Sign {
                 mobile: phone,
             },
             success: function(result) {
-                console.log(result);
                 if (result.error_code == 0) {
                     self.countdown = 60;
                     self.settime(btn);

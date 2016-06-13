@@ -469,7 +469,11 @@ input[type=checkbox]:checked {
           font-size: 12px;
           color: rgba(55, 55, 55, 0.6);
           text-align: left;
-          background: transparent; }
+          background: transparent;
+          transition: all 200ms ease; }
+          .sign .sign_content li .form .line .forgot_pwd:hover {
+            color: #4A90E2;
+            text-decoration: underline; }
     .sign .sign_content li .form.sign_form {
       margin-top: 84px; }
     .sign .sign_content li.active {
