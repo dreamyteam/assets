@@ -243,6 +243,7 @@ export default class Sign {
         let phone = el.find("input[name='phone_number']").val();
         let checkCode = el.find("input[name='verify_code']").val();
         let errMsg = el.find(".verify_code_content .err_msg");
+        console.log(errMsg);
         $.ajax({
                 url: '/user/register/checkPhoneCode',
                 type: 'POST',
@@ -275,6 +276,7 @@ export default class Sign {
                 mobile: phone,
             },
             success: function(result) {
+                console.log(result);
                 if (result.error_code == 0) {
                     self.countdown = 60;
                     self.settime(btn);

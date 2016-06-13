@@ -427,6 +427,7 @@
 	            var phone = el.find("input[name='phone_number']").val();
 	            var checkCode = el.find("input[name='verify_code']").val();
 	            var errMsg = el.find(".verify_code_content .err_msg");
+	            console.log(errMsg);
 	            $.ajax({
 	                url: '/user/register/checkPhoneCode',
 	                type: 'POST',
@@ -462,6 +463,7 @@
 	                    mobile: phone
 	                },
 	                success: function success(result) {
+	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        self.countdown = 60;
 	                        self.settime(btn);
