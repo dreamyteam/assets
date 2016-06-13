@@ -153,6 +153,7 @@
 	        key: "bindUI",
 	        value: function bindUI() {
 	            var self = this;
+	            this.mask.off("click");
 	            this.mask.on("click", function () {
 	                self.destory();
 	            });
@@ -189,7 +190,7 @@
 	        key: "destory",
 	        value: function destory() {
 	            this.mask.remove();
-	            this.el.hide();
+	            this.el.removeClass("active").hide();
 	        }
 	    }, {
 	        key: "alert",

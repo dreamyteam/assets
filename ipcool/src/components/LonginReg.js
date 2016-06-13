@@ -12,10 +12,27 @@ export default class Sign {
         this.init();
     }
     init() {
+        let self = this;
         this.el = $(this.cfg.el);
         this.tab = new Tab({
             el: this.el,
             tabContents: ".sign_content",
+            onTabGo: function() { //控制返回按钮逻辑
+                let btnBack = this.el.find(".btn_back");
+                let curIndex = this.curIndex;
+                if (curIndex == 2 || curIndex == 3) {
+                    btnBack.show();
+                } else {
+                    btnBack.hide();
+                }
+                btnBack.on("click", function() {
+                    if (curIndex == 2) {
+                        self.tab.switchContent(0, true);
+                    } else if (curIndex == 3) {
+                        self.tab.switchContent(2, true);
+                    }
+                })
+            }
         })
         this.pupUp = new Popup({ el: this.el });
         this.bindApplicationLayer();
@@ -31,24 +48,24 @@ export default class Sign {
         $("#popup_sign .nav .reg").on("click", function() {
             self.tab.switchContent(1, true);
         });
-        // $("#popup_sign .forgot_pwd").on("click", function() {
-        //     self.tab.switchContent(2, true);
-        // });
+        $("#popup_sign .forgot_pwd").on("click", function() {
+            self.tab.switchContent(2, true);
+        });
         // $("#popup_sign .go_find_pwd").on("click", function() {
         //     self.tab.switchContent(3, true);
         // });
         $("#register").on('click', function() {
             self.pupUp.alert();
-            self.tab.switchContent(1, true);
+            self.tab.switchContent(1, false);
         });
         $("#login").on('click', function() {
             self.pupUp.alert();
-            self.tab.switchContent(0, true);
+            self.tab.switchContent(0, false);
         });
         if ($("#regBottom").length > 0) {
             $("#regBottom").on('click', function() {
                 self.pupUp.alert();
-                self.tab.switchContent(1, true);
+                self.tab.switchContent(1, false);
             });
         }
     }
@@ -147,23 +164,23 @@ export default class Sign {
         let self = this;
         let phone = el.find("input[name='phone_number']").val();
         let btn = el.find(".get_verify_code");
-        let errMsg =
-            $.ajax({
-                url: '/user/register/verificationCode',
-                type: 'POST',
-                data: {
-                    mobile: phone,
-                },
-                success: function(result) {
-                    console.log(result);
-                    if (result.error_code == 0) {
-                        self.countdown = 60;
-                        self.settime(btn);
-                    } else if (result.error_code > 0) {
-                        self.showErr(el, result.error_msg);
-                    }
+        let errMsg = el.find(".get_verify_code_content .err_msg");
+        $.ajax({
+            url: '/user/register/verificationCode',
+            type: 'POST',
+            data: {
+                mobile: phone,
+            },
+            success: function(result) {
+                console.log(result);
+                if (result.error_code == 0) {
+                    self.countdown = 60;
+                    self.settime(btn);
+                } else if (result.error_code > 0) {
+                    self.showErr(errMsg, result.error_msg);
                 }
-            }); //后端发送验证码
+            }
+        }); //后端发送验证码
     }
     settime(obj) { //验证码倒数计时
         let self = this;

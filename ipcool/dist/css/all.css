@@ -366,6 +366,7 @@ input[type=checkbox]:checked {
     position: relative;
     margin-top: 33px; }
     .sign .nav span {
+      cursor: pointer;
       display: inline-block;
       font-size: 14px;
       width: 40px;
@@ -467,9 +468,21 @@ input[type=checkbox]:checked {
           text-align: left;
           background: transparent; }
     .sign .sign_content li.active {
-      display: block;
+      display: block; }
+    .sign .sign_content li.animate {
       -webkit-animation: fadeLeft 300ms forwards;
               animation: fadeLeft 300ms forwards; }
+  .sign .btn_back {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background: url("../../assets/images/icon_back.png") no-repeat;
+    background-size: 24px;
+    width: 24px;
+    height: 24px;
+    left: 9px;
+    top: 9px;
+    transition: all 300ms ease; }
 
 .pop_up_vote {
   width: 800px;

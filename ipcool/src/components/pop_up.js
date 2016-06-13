@@ -42,6 +42,7 @@ export default class Popup {
 
     bindUI() {
         let self = this;
+        this.mask.off("click");
         this.mask.on("click", function() {
             self.destory();
         });
@@ -72,7 +73,7 @@ export default class Popup {
     }
     destory() {
         this.mask.remove();
-        this.el.hide();
+        this.el.removeClass("active").hide();
     }
     alert() {
         this.mask.appendTo("body");
