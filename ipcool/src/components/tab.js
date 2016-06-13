@@ -10,6 +10,8 @@ export default class Tab {
         this.tabNavList = this.tabNav.find("li");
         this.contentList = this.tabContents.find("li");
         this.trigger = this.cfg.trigger || "click";
+        this.curIndex = 0;
+        this.onTabGo = this.cfg.onTabGo || null;
         this.checkTrigger();
     }
     checkTrigger() {
@@ -34,10 +36,20 @@ export default class Tab {
         this.tabNavList.each(function() { $(this).removeClass('active'); });
         this.tabNavList.eq(index).addClass('active');
         this.switchContent(index, true);
+        this.curIndex = index;
     }
-
     switchContent(index, animate) {
-        this.contentList.each(function() { $(this).removeClass('active'); });
+        this.curIndex = index;
+        this.contentList.each(function() { $(this).removeClass('active animate'); });
         this.contentList.eq(index).addClass('active');
+        if (animate) {
+            this.contentList.eq(index).addClass('animate');
+        }
+
+        this.onTabGo();
+
+    }
+    onTabGo() {
+
     }
 }

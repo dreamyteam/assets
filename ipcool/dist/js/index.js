@@ -168,10 +168,28 @@
 	    _createClass(Sign, [{
 	        key: 'init',
 	        value: function init() {
+	            var self = this;
 	            this.el = $(this.cfg.el);
 	            this.tab = new _tab2.default({
 	                el: this.el,
-	                tabContents: ".sign_content"
+	                tabContents: ".sign_content",
+	                onTabGo: function onTabGo() {
+	                    //控制返回按钮逻辑
+	                    var btnBack = this.el.find(".btn_back");
+	                    var curIndex = this.curIndex;
+	                    if (curIndex == 2 || curIndex == 3) {
+	                        btnBack.show();
+	                    } else {
+	                        btnBack.hide();
+	                    }
+	                    btnBack.on("click", function () {
+	                        if (curIndex == 2) {
+	                            self.tab.switchContent(0, true);
+	                        } else if (curIndex == 3) {
+	                            self.tab.switchContent(2, true);
+	                        }
+	                    });
+	                }
 	            });
 	            this.pupUp = new _pop_up2.default({ el: this.el });
 	            this.bindApplicationLayer();
@@ -189,24 +207,24 @@
 	            $("#popup_sign .nav .reg").on("click", function () {
 	                self.tab.switchContent(1, true);
 	            });
-	            // $("#popup_sign .forgot_pwd").on("click", function() {
-	            //     self.tab.switchContent(2, true);
-	            // });
+	            $("#popup_sign .forgot_pwd").on("click", function () {
+	                self.tab.switchContent(2, true);
+	            });
 	            // $("#popup_sign .go_find_pwd").on("click", function() {
 	            //     self.tab.switchContent(3, true);
 	            // });
 	            $("#register").on('click', function () {
 	                self.pupUp.alert();
-	                self.tab.switchContent(1, true);
+	                self.tab.switchContent(1, false);
 	            });
 	            $("#login").on('click', function () {
 	                self.pupUp.alert();
-	                self.tab.switchContent(0, true);
+	                self.tab.switchContent(0, false);
 	            });
 	            if ($("#regBottom").length > 0) {
 	                $("#regBottom").on('click', function () {
 	                    self.pupUp.alert();
-	                    self.tab.switchContent(1, true);
+	                    self.tab.switchContent(1, false);
 	                });
 	            }
 	        }
@@ -322,7 +340,8 @@
 	            var self = this;
 	            var phone = el.find("input[name='phone_number']").val();
 	            var btn = el.find(".get_verify_code");
-	            var errMsg = $.ajax({
+	            var errMsg = el.find(".get_verify_code_content .err_msg");
+	            $.ajax({
 	                url: '/user/register/verificationCode',
 	                type: 'POST',
 	                data: {
@@ -334,7 +353,7 @@
 	                        self.countdown = 60;
 	                        self.settime(btn);
 	                    } else if (result.error_code > 0) {
-	                        self.showErr(el, result.error_msg);
+	                        self.showErr(errMsg, result.error_msg);
 	                    }
 	                }
 	            }); //后端发送验证码
@@ -409,6 +428,8 @@
 	            this.tabNavList = this.tabNav.find("li");
 	            this.contentList = this.tabContents.find("li");
 	            this.trigger = this.cfg.trigger || "click";
+	            this.curIndex = 0;
+	            this.onTabGo = this.cfg.onTabGo || null;
 	            this.checkTrigger();
 	        }
 	    }, {
@@ -439,15 +460,25 @@
 	            });
 	            this.tabNavList.eq(index).addClass('active');
 	            this.switchContent(index, true);
+	            this.curIndex = index;
 	        }
 	    }, {
 	        key: "switchContent",
 	        value: function switchContent(index, animate) {
+	            this.curIndex = index;
 	            this.contentList.each(function () {
-	                $(this).removeClass('active');
+	                $(this).removeClass('active animate');
 	            });
 	            this.contentList.eq(index).addClass('active');
+	            if (animate) {
+	                this.contentList.eq(index).addClass('animate');
+	            }
+	
+	            this.onTabGo();
 	        }
+	    }, {
+	        key: "onTabGo",
+	        value: function onTabGo() {}
 	    }]);
 	
 	    return Tab;
@@ -518,6 +549,7 @@
 	        key: "bindUI",
 	        value: function bindUI() {
 	            var self = this;
+	            this.mask.off("click");
 	            this.mask.on("click", function () {
 	                self.destory();
 	            });
@@ -554,7 +586,7 @@
 	        key: "destory",
 	        value: function destory() {
 	            this.mask.remove();
-	            this.el.hide();
+	            this.el.removeClass("active").hide();
 	        }
 	    }, {
 	        key: "alert",
