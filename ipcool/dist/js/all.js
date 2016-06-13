@@ -162,9 +162,9 @@
 	            $("#popup_sign .forgot_pwd").on("click", function () {
 	                self.tab.switchTabNav(2, true);
 	            });
-	            // $("#popup_sign .go_find_pwd").on("click", function() {
-	            //     self.tab.switchContent(3, true);
-	            // });
+	            $("#popup_sign .go_find_pwd").on("click", function () {
+	                self.tab.switchTabNav(3, true);
+	            });
 	            $("#register").on('click', function () {
 	                self.pupUp.alert();
 	                self.tab.switchTabNav(1, false);
