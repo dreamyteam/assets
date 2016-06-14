@@ -249,7 +249,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _loader = __webpack_require__(21);
+	var _loader = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/loader.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _loader2 = _interopRequireDefault(_loader);
 
@@ -266,8 +266,6 @@
 	        this.target = null;
 	        this.btnToggle = null;
 	        this.subSizer = null;
-	        this.typeList = [];
-	        this.url = null;
 	        this.init();
 	    }
 
@@ -278,10 +276,8 @@
 	            this.target = $(this.cfg.target);
 	            this.btnToggle = this.el.find(this.cfg.btnToggle);
 	            this.subSizer = this.el.find(this.cfg.subSizer);
-	            this.url = window.location.href;
 	            this.bindToggleBtn();
 	            this.bindSizer();
-	            this.initSizer();
 	        }
 	    }, {
 	        key: "bindToggleBtn",
@@ -294,7 +290,6 @@
 	                "border-bottom": "none"
 	            });
 	            self.btnToggle.removeClass("active");
-
 	            function offSpread() {
 	                self.subSizer.animate({
 	                    "height": "0px"
@@ -303,7 +298,6 @@
 	                });
 	                self.btnToggle.removeClass("active");
 	            }
-
 	            function onSpread() {
 	                self.subSizer.animate({
 	                    "height": subSizerHeght + "px"
@@ -312,7 +306,6 @@
 	                });
 	                self.btnToggle.addClass("active");
 	            }
-
 	            this.btnToggle.on("click", function () {
 	                if (spread) {
 	                    // 收起逻辑
@@ -325,64 +318,17 @@
 	            });
 	        }
 	    }, {
-	        key: "initSizer",
-	        value: function initSizer() {
-	            var self = this;
-	            this.el.find("input[type=checkbox]").each(function () {
-	                if ($(this).is(":checked")) {
-	                    self.typeList.push($(this).val());
-	                }
-	            });
-	        }
-	    }, {
 	        key: "bindSizer",
 	        value: function bindSizer() {
-	            var self = this;
 	            this.el.find("input[type=checkbox]").each(function () {
 	                $(this).on("click", function () {
-	                    var curValue = $(this).val();
-	                    if ($(this).is(":checked")) {
-	                        self.typeList.push(curValue);
-	                    } else {
-	                        self.typeList.splice($.inArray(curValue, self.typeList), 1);
-	                    }
-	                    self.requestPage();
+	                    var loader = new _loader2.default({
+	                        parent: ".search_loading"
+	                    });
+	                    loader.showLoading();
+	                    // loader.hideLoading();
 	                });
 	            });
-	        }
-	    }, {
-	        key: "requestPage",
-	        value: function requestPage() {
-	            var self = this;
-	            var url = self.url;
-	            var newType = self.stringfyTypeList();
-	            if (self.url.indexOf("type") > 0) {
-	                //字符串分割 去除 type
-	                url = self.resetUrl("type", newType);
-	            } else {
-	                url += "&type=" + newType;
-	            }
-	            console.log(url);
-	            window.location.href = url;
-	        }
-	    }, {
-	        key: "stringfyTypeList",
-	        value: function stringfyTypeList() {
-	            var type = void 0;
-	            if (this.typeList.length) {
-	                type = "[" + this.typeList.join(",") + "]";
-	            } else {
-	                type = "[]";
-	            }
-	            return type;
-	        }
-	    }, {
-	        key: "resetUrl",
-	        value: function resetUrl(paramName, replaceValue) {
-	            var oUrl = this.url;
-	            var re = eval('/(' + paramName + '=)([^&]*)/gi');
-	            var nUrl = oUrl.replace(re, paramName + '=' + replaceValue);
-	            return nUrl;
 	        }
 	    }]);
 
@@ -390,58 +336,6 @@
 	}();
 
 	exports.default = Sizer;
-
-/***/ },
-
-/***/ 21:
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Loader = function () {
-	    function Loader(cfg) {
-	        _classCallCheck(this, Loader);
-
-	        this.cfg = cfg;
-	        this.parent = null;
-	        this.dom = null;
-	        this.width = null;
-	        this.init();
-	    }
-
-	    _createClass(Loader, [{
-	        key: "init",
-	        value: function init() {
-	            this.parent = $(this.cfg.parent);
-	            this.width = this.cfg.width || 40;
-	            this.dom = $("<svg class='myLoader' width = '" + this.width + "px' height = '" + this.width + "px' viewBox = '0 0 50 50'>" + "<path fill='#00a69d' d = 'M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z' ></path>" + "</svg>");
-	        }
-	    }, {
-	        key: "showLoading",
-	        value: function showLoading() {
-	            if (this.parent.find('.myLoader').length <= 0) {
-	                this.dom.appendTo(this.parent);
-	            }
-	        }
-	    }, {
-	        key: "hideLoading",
-	        value: function hideLoading() {
-	            this.dom.remove();
-	        }
-	    }]);
-
-	    return Loader;
-	}();
-
-	exports.default = Loader;
 
 /***/ }
 
