@@ -307,7 +307,7 @@
 	            var userName = el.find("input[name='userName']").val();
 	            var phone = el.find("input[name='phone_number']").val();
 	            var pwd = el.find("input[name='password']").val();
-	            var errMsg = el.find(".err_from_server .err_msg");
+	            var errMsg = el.find(".get_verify_code_content .err_msg");
 	            $.ajax({
 	                url: '/user/register',
 	                type: 'POST',
@@ -319,10 +319,10 @@
 	                success: function success(result) {
 	                    console.log(result);
 	                    if (result.error_code == 0) {
-	                        // location.reload();
+	                        location.reload();
 	                    } else if (result.error_code > 0) {
-	                            self.showErr(errMsg, result.error_msg);
-	                        }
+	                        self.showErr(errMsg, result.error_msg);
+	                    }
 	                }
 	            });
 	        }

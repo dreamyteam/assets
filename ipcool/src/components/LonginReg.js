@@ -140,7 +140,7 @@ export default class Sign {
         let userName = el.find("input[name='userName']").val();
         let phone = el.find("input[name='phone_number']").val();
         let pwd = el.find("input[name='password']").val();
-        let errMsg = el.find(".err_from_server .err_msg");
+        let errMsg = el.find(".get_verify_code_content .err_msg");
         $.ajax({
             url: '/user/register',
             type: 'POST',
@@ -152,7 +152,7 @@ export default class Sign {
             success: function(result) {
                 console.log(result);
                 if (result.error_code == 0) {
-                    // location.reload();
+                    location.reload();
                 } else if (result.error_code > 0) {
                     self.showErr(errMsg, result.error_msg);
                 }
