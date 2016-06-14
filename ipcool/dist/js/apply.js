@@ -40,14 +40,13 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _validate = __webpack_require__(5);
+	var _validate = __webpack_require__(4);
 
 	var _validate2 = _interopRequireDefault(_validate);
 
@@ -62,8 +61,10 @@
 	});
 
 /***/ },
-
-/***/ 5:
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -358,5 +359,4 @@
 	exports.default = Validate;
 
 /***/ }
-
-/******/ });
+/******/ ]);

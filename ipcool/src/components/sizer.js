@@ -87,12 +87,11 @@ export default class Sizer {
         let newType = self.stringfyTypeList();
         if (self.url.indexOf("type") > 0) {
             //字符串分割 去除 type
-            url = self.resetUrl("type", newType);
+            url = self.resetUrl(url, "currentPage", "1");
+            url = self.resetUrl(url, "type", newType);
         } else {
             url += "&type=" + newType;
         }
-
-        console.log(url);
         window.location.href = url;
     }
     stringfyTypeList() {
@@ -104,8 +103,7 @@ export default class Sizer {
         }
         return type;
     }
-    resetUrl(paramName, replaceValue) {
-        let oUrl = this.url;
+    resetUrl(oUrl, paramName, replaceValue) {
         let re = eval('/(' + paramName + '=)([^&]*)/gi');
         let nUrl = oUrl.replace(re, paramName + '=' + replaceValue);
         return nUrl;

@@ -26,6 +26,7 @@
             ul {
                 line-height: 54px;
                 li {
+                    cursor: pointer;
                     display: inline-block;
                     vertical-align: middle;
                     color: #fff;
@@ -247,15 +248,15 @@
             }
         }
     }
-    .icon_down{
-        background:url("../../assets/images/index/icon_down.png") no-repeat;
+    .icon_down {
+        background: url("../../assets/images/index/icon_down.png") no-repeat;
         background-size: 49px;
-        width:49px;
-        height:28px;
+        width: 49px;
+        height: 28px;
         position: absolute;
-        left:50%;
+        left: 50%;
         margin-left: -24.5px;
-        bottom:40px;
+        bottom: 40px;
     }
 }
 

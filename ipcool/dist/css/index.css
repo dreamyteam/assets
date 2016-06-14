@@ -216,6 +216,7 @@ html.fp-enabled, .fp-enabled body {
       .sec_1 header nav ul {
         line-height: 54px; }
         .sec_1 header nav ul li {
+          cursor: pointer;
           display: inline-block;
           vertical-align: middle;
           color: #fff;

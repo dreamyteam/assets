@@ -5,7 +5,7 @@ import HoverDelay from '../components/hover_delay.js';
 
 $(function() {
     let userMenu = new HoverDelay({
-        el:"#currentUser",
+        el:"#currentUserTrigger",
         target:"#user_menu"
     });
     new BackTop(); //返回顶部

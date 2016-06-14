@@ -47,7 +47,7 @@
 
 	'use strict';
 
-	var _pop_up = __webpack_require__(2);
+	var _pop_up = __webpack_require__(3);
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
@@ -55,7 +55,7 @@
 
 	var _avatar_upload2 = _interopRequireDefault(_avatar_upload);
 
-	var _validate = __webpack_require__(5);
+	var _validate = __webpack_require__(4);
 
 	var _validate2 = _interopRequireDefault(_validate);
 
@@ -116,7 +116,7 @@
 
 /***/ },
 
-/***/ 2:
+/***/ 3:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -212,7 +212,7 @@
 
 /***/ },
 
-/***/ 5:
+/***/ 4:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -523,7 +523,7 @@
 
 	var _cropper2 = _interopRequireDefault(_cropper);
 
-	var _pop_up = __webpack_require__(2);
+	var _pop_up = __webpack_require__(3);
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 

@@ -50,7 +50,7 @@
 
 	var _fix_top2 = _interopRequireDefault(_fix_top);
 
-	var _pop_up = __webpack_require__(2);
+	var _pop_up = __webpack_require__(3);
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
@@ -87,7 +87,8 @@
 
 /***/ },
 /* 1 */,
-/* 2 */
+/* 2 */,
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -182,7 +183,6 @@
 	exports.default = Popup;
 
 /***/ },
-/* 3 */,
 /* 4 */,
 /* 5 */,
 /* 6 */,

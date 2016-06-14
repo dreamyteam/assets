@@ -150,7 +150,6 @@ export default class Sign {
                 password: pwd,
             },
             success: function(result) {
-                console.log(result);
                 if (result.error_code == 0) {
                     location.reload();
                 } else if (result.error_code > 0) {
@@ -276,6 +275,7 @@ export default class Sign {
                 mobile: phone,
             },
             success: function(result) {
+                console.log(result);
                 if (result.error_code == 0) {
                     self.countdown = 60;
                     self.settime(btn);

@@ -357,12 +357,11 @@
 	            var newType = self.stringfyTypeList();
 	            if (self.url.indexOf("type") > 0) {
 	                //字符串分割 去除 type
-	                url = self.resetUrl("type", newType);
+	                url = self.resetUrl(url, "currentPage", "1");
+	                url = self.resetUrl(url, "type", newType);
 	            } else {
 	                url += "&type=" + newType;
 	            }
-
-	            console.log(url);
 	            window.location.href = url;
 	        }
 	    }, {
@@ -378,8 +377,7 @@
 	        }
 	    }, {
 	        key: "resetUrl",
-	        value: function resetUrl(paramName, replaceValue) {
-	            var oUrl = this.url;
+	        value: function resetUrl(oUrl, paramName, replaceValue) {
 	            var re = eval('/(' + paramName + '=)([^&]*)/gi');
 	            var nUrl = oUrl.replace(re, paramName + '=' + replaceValue);
 	            return nUrl;
