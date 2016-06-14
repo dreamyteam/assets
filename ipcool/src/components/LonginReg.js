@@ -231,6 +231,7 @@ export default class Sign {
                 newPasswordConfirm: newPasswordConfirm
             },
             success: function(result) {
+                console.log(result);
                 if (result.error_code == 0) {
                     location.reload();
                 } else if (result.error_code > 0) {

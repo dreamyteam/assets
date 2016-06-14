@@ -3,8 +3,10 @@ export default class Popup {
         this.cfg = cfg;
         this.el = null;
         this.mask = null;
+        this.callBack = null;
     }
     init() {
+        this.callBack = this.cfg.callBack || null;
         this.renderUI();
         this.bindUI();
     }
@@ -60,8 +62,5 @@ export default class Popup {
     }
     alert() {
         this.init();
-    }
-    callBack() {
-
     }
 }

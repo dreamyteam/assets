@@ -135,11 +135,13 @@
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.mask = null;
+	        this.callBack = null;
 	    }
 
 	    _createClass(Popup, [{
 	        key: "init",
 	        value: function init() {
+	            this.callBack = this.cfg.callBack || null;
 	            this.renderUI();
 	            this.bindUI();
 	        }
@@ -200,9 +202,6 @@
 	        value: function alert() {
 	            this.init();
 	        }
-	    }, {
-	        key: "callBack",
-	        value: function callBack() {}
 	    }]);
 
 	    return Popup;
@@ -578,9 +577,7 @@
 	                            }
 	                        });
 	                        avatar_popup.alert();
-
 	                        blobURL = URL.createObjectURL(file);
-	                        //此处正式时候为弹窗
 	                        self.preview.cropper({
 	                            aspectRatio: 1 / 1,
 	                            viewMode: 3,
@@ -620,6 +617,7 @@
 	                contentType: false,
 	                data: fd,
 	                success: function success(result) {
+	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        var image_url = result.data.image_url;
 	                        self.setImageUrl(image_url);

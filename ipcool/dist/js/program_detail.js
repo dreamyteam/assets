@@ -107,11 +107,13 @@
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.mask = null;
+	        this.callBack = null;
 	    }
 
 	    _createClass(Popup, [{
 	        key: "init",
 	        value: function init() {
+	            this.callBack = this.cfg.callBack || null;
 	            this.renderUI();
 	            this.bindUI();
 	        }
@@ -172,9 +174,6 @@
 	        value: function alert() {
 	            this.init();
 	        }
-	    }, {
-	        key: "callBack",
-	        value: function callBack() {}
 	    }]);
 
 	    return Popup;
