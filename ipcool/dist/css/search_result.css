@@ -280,7 +280,9 @@ section.search_result {
         box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5); }
     section.search_result .sresult_ip .sresult_content {
       float: left;
-      padding-top: 14px; }
+      padding-top: 14px;
+      width: 556px;
+      overflow: hidden; }
       section.search_result .sresult_ip .sresult_content h2 {
         font-size: 24px; }
         section.search_result .sresult_ip .sresult_content h2 a {
@@ -333,9 +335,10 @@ section.search_result {
             color: #9B9B9B;
             font-size: 24px; }
     section.search_result .sresult_ip .overall {
+      width: 174px;
       float: right;
       text-align: center;
-      margin: 25px 20px 0 0; }
+      padding: 25px 20px 0 0; }
       section.search_result .sresult_ip .overall h6 {
         font-size: 14px;
         color: #5E5E5E; }

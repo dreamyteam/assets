@@ -3,28 +3,37 @@ export default class Paging {
         this.el = $(el);
         this.url = null;
         this.pageAttach = null;
+        this.pageParams = null;
         this.totalNum = null;
         this.current = null;
         this.totalPage = null;
-        this.content = null;
+        this.params = "";
         this.ul = null;
         this.init();
     }
     init() {
         this.url = window.location.pathname;
         this.pageAttach = this.el.data("pageAttach");
-
+        this.pageParams = this.el.data("pageParams");
         this.totalNum = this.pageAttach.totalNum; //总数据数 用于计算非显示
         this.current = this.pageAttach.currentPage; //当前页码
         this.pageSize = this.pageAttach.pageSize; //每页显示多少个
         this.totalPage = Math.ceil(this.totalNum / this.pageSize); //总页数 用于显示
-        this.content = this.pageAttach.content; //查询参数用于拼接字符串
-
+        this.setParams();
         //第一层判断 是否显示分页 如果pagesize <= totalNumber 则显示
         if (this.el.length > 0 && this.pageSize <= this.totalNum) {
             this.setPaging();
-            // this.setWidget();
         }
+    }
+    setParams() {
+        let params = "";
+        for (let o in this.pageParams) {
+            console.log(o);
+            console.log(this.pageParams[o]);
+            params += "&" + o + "=" + this.pageParams[o]
+        }
+        this.params = params.replace(/\&/, "?");
+        console.log(this.params);
     }
     setPaging() {
         this.ul = $("<ul class='pagging_container'></ul>");

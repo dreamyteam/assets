@@ -120,6 +120,8 @@ section.search_result {
         .sresult_content {
             float: left;
             padding-top: 14px;
+            width: 556px;
+            overflow: hidden;
             h2 {
                 font-size: 24px;
                 a {
@@ -185,9 +187,10 @@ section.search_result {
             }
         }
         .overall {
+            width: 174px;
             float: right;
             text-align: center;
-            margin: 25px 20px 0 0;
+            padding: 25px 20px 0 0;
             h6 {
                 font-size: 14px;
                 color: #5E5E5E;

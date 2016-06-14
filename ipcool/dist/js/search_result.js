@@ -91,10 +91,11 @@
 	        this.el = $(el);
 	        this.url = null;
 	        this.pageAttach = null;
+	        this.pageParams = null;
 	        this.totalNum = null;
 	        this.current = null;
 	        this.totalPage = null;
-	        this.content = null;
+	        this.params = "";
 	        this.ul = null;
 	        this.init();
 	    }
@@ -104,18 +105,28 @@
 	        value: function init() {
 	            this.url = window.location.pathname;
 	            this.pageAttach = this.el.data("pageAttach");
-
+	            this.pageParams = this.el.data("pageParams");
 	            this.totalNum = this.pageAttach.totalNum; //总数据数 用于计算非显示
 	            this.current = this.pageAttach.currentPage; //当前页码
 	            this.pageSize = this.pageAttach.pageSize; //每页显示多少个
 	            this.totalPage = Math.ceil(this.totalNum / this.pageSize); //总页数 用于显示
-	            this.content = this.pageAttach.content; //查询参数用于拼接字符串
-
+	            this.setParams();
 	            //第一层判断 是否显示分页 如果pagesize <= totalNumber 则显示
 	            if (this.el.length > 0 && this.pageSize <= this.totalNum) {
 	                this.setPaging();
-	                // this.setWidget();
 	            }
+	        }
+	    }, {
+	        key: "setParams",
+	        value: function setParams() {
+	            var params = "";
+	            for (var o in this.pageParams) {
+	                console.log(o);
+	                console.log(this.pageParams[o]);
+	                params += "&" + o + "=" + this.pageParams[o];
+	            }
+	            this.params = params.replace(/\&/, "?");
+	            console.log(this.params);
 	        }
 	    }, {
 	        key: "setPaging",
@@ -255,6 +266,8 @@
 	        this.target = null;
 	        this.btnToggle = null;
 	        this.subSizer = null;
+	        this.typeList = [];
+	        this.url = null;
 	        this.init();
 	    }
 
@@ -265,6 +278,7 @@
 	            this.target = $(this.cfg.target);
 	            this.btnToggle = this.el.find(this.cfg.btnToggle);
 	            this.subSizer = this.el.find(this.cfg.subSizer);
+	            this.url = window.location.href;
 	            this.bindToggleBtn();
 	            this.bindSizer();
 	        }
@@ -312,15 +326,35 @@
 	    }, {
 	        key: "bindSizer",
 	        value: function bindSizer() {
+	            var self = this;
 	            this.el.find("input[type=checkbox]").each(function () {
 	                $(this).on("click", function () {
-	                    var loader = new _loader2.default({
-	                        parent: ".search_loading"
-	                    });
-	                    loader.showLoading();
-	                    // loader.hideLoading();
+	                    var curValue = $(this).val();
+	                    if ($(this).is(":checked")) {
+	                        self.typeList.push(curValue);
+	                    } else {
+	                        self.typeList.splice($.inArray(curValue, self.typeList), 1);
+	                    }
+	                    self.requestPage();
 	                });
 	            });
+	        }
+	    }, {
+	        key: "requestPage",
+	        value: function requestPage() {
+	            var self = this;
+	            var url = self.url;
+	            if (self.typeList.length) {
+	                var type = "&type=[";
+	                for (var i = 0; i < self.typeList.length; i++) {
+	                    type += '"' + self.typeList[i] + '",';
+	                }
+	                type = type.substring(0, type.length - 1);
+	                type += "]";
+	                url = url + type;
+	            }
+	            console.log(url);
+	            window.location.href = url;
 	        }
 	    }]);
 
