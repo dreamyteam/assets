@@ -283,6 +283,8 @@ section.rank_list {
       text-align: center; }
     section.rank_list table .content {
       width: 275px; }
+      section.rank_list table .content a {
+        color: #2b2c2e; }
     section.rank_list table th {
       font-size: 12px;
       font-weight: normal;
