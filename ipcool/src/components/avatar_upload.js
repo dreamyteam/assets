@@ -6,8 +6,6 @@ export default class Avatar {
         this.cfg = cfg;
         this.input = null; //输入框
         this.preview = null;
-        this.confrimBtn = null;
-        this.cancleBtn = null;
         this.bioImage = null; //用户中心右侧头像
         this.navImage = null; //导航右侧头像
         this.init();
@@ -15,8 +13,6 @@ export default class Avatar {
     init() {
         this.input = $(this.cfg.input);
         this.preview = $(this.cfg.preview);
-        this.confrimBtn = $(this.cfg.confrimBtn);
-        this.cancleBtn = $(this.cfg.cancleBtn);
         this.bioImage = $(this.cfg.bioImage);
         this.navImage = $(this.cfg.navImage);
         this.inputHandler();

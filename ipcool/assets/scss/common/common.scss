@@ -194,6 +194,21 @@ section {
     }
 }
 
+input[type=checkbox] {
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    width: 14px;
+    height: 14px;
+}
+
+input[type=checkbox]:checked {
+    background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
+    background-size: 12px;
+}
+
 // 2等分
 .col_2_container {
     font-size: 0;
@@ -278,4 +293,17 @@ section {
     right: 100%;
     width: 100%;
     height: 2px;
+}
+
+.myLoader {
+    animation: round 800ms linear infinite;
+}
+
+@keyframes round {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(360deg)
+    }
 }

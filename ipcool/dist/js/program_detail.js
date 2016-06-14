@@ -1,72 +1,69 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!********************************************!*\
-  !*** ./src/entrys/program_detail_entry.js ***!
-  \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var _fix_top = __webpack_require__(/*! ../components/fix_top.js */ 8);
-	
+
+	var _fix_top = __webpack_require__(8);
+
 	var _fix_top2 = _interopRequireDefault(_fix_top);
-	
-	var _pop_up = __webpack_require__(/*! ../components/pop_up.js */ 3);
-	
+
+	var _pop_up = __webpack_require__(2);
+
 	var _pop_up2 = _interopRequireDefault(_pop_up);
-	
-	var _scroll_load = __webpack_require__(/*! ../components/scroll_load.js */ 9);
-	
+
+	var _scroll_load = __webpack_require__(9);
+
 	var _scroll_load2 = _interopRequireDefault(_scroll_load);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var VoteProto = __webpack_require__(/*! ../components/voteproto.js */ 18); //投票
+
+	var VoteProto = __webpack_require__(18); //投票
 	// import Tab from '../components/tab.js'
-	
-	
+
+
 	$(function () {
 	    //列表切换
 	    // new Tab({ el: '.program_tab' });
@@ -75,13 +72,13 @@
 	    //找到ip名字id
 	    var ip_name = $('.program_info .content h1.name').html();
 	    var ip_Id = $('#getIpid').val();
-	
+
 	    var scrollLoad = new _scroll_load2.default({
 	        els: ".scroll_load",
 	        history: ".scroll_load_history",
 	        chart: ".scroll_load_chart"
 	    });
-	
+
 	    var voteproto = new VoteProto({
 	        el: '.vote_container .vote_content',
 	        ip_Id: ip_Id
@@ -90,34 +87,30 @@
 
 /***/ },
 /* 1 */,
-/* 2 */,
-/* 3 */
-/*!**********************************!*\
-  !*** ./src/components/pop_up.js ***!
-  \**********************************/
+/* 2 */
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Popup = function () {
 	    function Popup(cfg) {
 	        _classCallCheck(this, Popup);
-	
+
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.mask = null;
 	        this.callBack = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Popup, [{
 	        key: "init",
 	        value: function init() {
@@ -129,6 +122,7 @@
 	        key: "renderUI",
 	        value: function renderUI() {
 	            if (this.cfg.el) {
+	                //判断el元素
 	                this.el = $(this.cfg.el);
 	            } else {
 	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
@@ -142,21 +136,20 @@
 	                    this.el.append(btnCancle);
 	                }
 	            }
-	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
 	            if ($('#popup_mask').length > 0) {
 	                this.mask = $('#popup_mask');
 	            } else {
 	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
 	            }
+	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
 	        }
 	    }, {
 	        key: "bindUI",
 	        value: function bindUI() {
 	            var self = this;
-	            this.mask.off("click");
-	            this.mask.on("click", function () {
+	            this.mask.on('click', function () {
 	                self.destory();
-	            });
+	            }); //绑定mask
 	            if (this.el.find('button.close').length > 0) {
 	                //绑定关闭按钮
 	                var btnClose = this.el.find('button.close');
@@ -190,7 +183,7 @@
 	        key: "destory",
 	        value: function destory() {
 	            this.mask.remove();
-	            this.el.removeClass("active").hide();
+	            this.el.hide().removeClass("active");
 	        }
 	    }, {
 	        key: "alert",
@@ -200,46 +193,44 @@
 	            this.el.addClass("active");
 	        }
 	    }]);
-	
+
 	    return Popup;
 	}();
-	
+
 	exports.default = Popup;
 
 /***/ },
+/* 3 */,
 /* 4 */,
 /* 5 */,
 /* 6 */,
 /* 7 */,
 /* 8 */
-/*!***********************************!*\
-  !*** ./src/components/fix_top.js ***!
-  \***********************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var FixTop = function () {
 	    function FixTop(el) {
 	        _classCallCheck(this, FixTop);
-	
+
 	        this.el = el || $('#program_nav');
 	        this.init();
 	    }
-	
+
 	    _createClass(FixTop, [{
 	        key: 'init',
 	        value: function init() {
 	            var _this = this;
-	
+
 	            var self = this;
 	            if (this.el.length > 0) {
 	                (function () {
@@ -255,63 +246,60 @@
 	            }
 	        }
 	    }]);
-	
+
 	    return FixTop;
 	}();
-	
+
 	exports.default = FixTop;
 
 /***/ },
 /* 9 */
-/*!***************************************!*\
-  !*** ./src/components/scroll_load.js ***!
-  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get_value_history = __webpack_require__(/*! ./get_value_history.js */ 10);
-	
+
+	var _get_value_history = __webpack_require__(10);
+
 	var _get_value_history2 = _interopRequireDefault(_get_value_history);
-	
-	var _line = __webpack_require__(/*! ../charts/line.js */ 11);
-	
+
+	var _line = __webpack_require__(11);
+
 	var _line2 = _interopRequireDefault(_line);
-	
-	var _radar = __webpack_require__(/*! ../charts/radar.js */ 13);
-	
+
+	var _radar = __webpack_require__(13);
+
 	var _radar2 = _interopRequireDefault(_radar);
-	
-	var _pieMutiple = __webpack_require__(/*! ../charts/pieMutiple.js */ 14);
-	
+
+	var _pieMutiple = __webpack_require__(14);
+
 	var _pieMutiple2 = _interopRequireDefault(_pieMutiple);
-	
-	var _pieDouble = __webpack_require__(/*! ../charts/pieDouble.js */ 15);
-	
+
+	var _pieDouble = __webpack_require__(15);
+
 	var _pieDouble2 = _interopRequireDefault(_pieDouble);
-	
-	var _barVertical = __webpack_require__(/*! ../charts/barVertical.js */ 16);
-	
+
+	var _barVertical = __webpack_require__(16);
+
 	var _barVertical2 = _interopRequireDefault(_barVertical);
-	
-	var _barComment = __webpack_require__(/*! ../charts/barComment.js */ 17);
-	
+
+	var _barComment = __webpack_require__(17);
+
 	var _barComment2 = _interopRequireDefault(_barComment);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var ScrollLoad = function () {
 	    function ScrollLoad(cfg) {
 	        _classCallCheck(this, ScrollLoad);
-	
+
 	        this.cfg = cfg;
 	        this.els = null;
 	        this.isLoaded = [];
@@ -319,7 +307,7 @@
 	        this.chart = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(ScrollLoad, [{
 	        key: 'init',
 	        value: function init() {
@@ -429,33 +417,30 @@
 	            }
 	        }
 	    }]);
-	
+
 	    return ScrollLoad;
 	}();
-	
+
 	exports.default = ScrollLoad;
 
 /***/ },
 /* 10 */
-/*!*********************************************!*\
-  !*** ./src/components/get_value_history.js ***!
-  \*********************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var GetHistory = function () {
 	    function GetHistory(el, type) {
 	        _classCallCheck(this, GetHistory);
-	
+
 	        this.el = el;
 	        this.type = type;
 	        this.trendEL = null; //趋势箭头
@@ -465,7 +450,7 @@
 	        this.url = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(GetHistory, [{
 	        key: 'init',
 	        value: function init() {
@@ -486,7 +471,6 @@
 	                dataType: 'jsonp',
 	                jsonp: 'callback',
 	                success: function success(result) {
-	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        self.renderUI(result.data);
 	                    }
@@ -518,48 +502,45 @@
 	            this.historyValueEL.html(data.history_top_value);
 	        }
 	    }]);
-	
+
 	    return GetHistory;
 	}();
-	
+
 	exports.default = GetHistory;
 
 /***/ },
 /* 11 */
-/*!****************************!*\
-  !*** ./src/charts/line.js ***!
-  \****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _baseChart = __webpack_require__(/*! ./baseChart.js */ 12);
-	
+
+	var _baseChart = __webpack_require__(12);
+
 	var _baseChart2 = _interopRequireDefault(_baseChart);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var Line = function (_Chart) {
 	    _inherits(Line, _Chart);
-	
+
 	    function Line() {
 	        _classCallCheck(this, Line);
-	
+
 	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Line).apply(this, arguments));
 	    }
-	
+
 	    _createClass(Line, [{
 	        key: 'renderChart',
 	        value: function renderChart() {
@@ -679,33 +660,30 @@
 	            this.chart.setOption(option);
 	        }
 	    }]);
-	
+
 	    return Line;
 	}(_baseChart2.default);
-	
+
 	exports.default = Line;
 
 /***/ },
 /* 12 */
-/*!*********************************!*\
-  !*** ./src/charts/baseChart.js ***!
-  \*********************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Chart = function () {
 	    function Chart(cfg) {
 	        _classCallCheck(this, Chart);
-	
+
 	        this.cfg = cfg;
 	        this.el = null; //表格元素
 	        this.title = null; //标题
@@ -717,7 +695,7 @@
 	        this.url = null; //ajax地址
 	        this.init();
 	    }
-	
+
 	    _createClass(Chart, [{
 	        key: 'init',
 	        value: function init() {
@@ -725,7 +703,7 @@
 	            this.type = this.cfg.type || '';
 	            this.left = this.cfg.left || '';
 	            this.name = this.cfg.name;
-	
+
 	            if (this.el && this.el.hasAttribute('data-fetch-url')) {
 	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	                if (this.type) {
@@ -772,48 +750,45 @@
 	        key: 'showError',
 	        value: function showError(errMsg) {}
 	    }]);
-	
+
 	    return Chart;
 	}();
-	
+
 	exports.default = Chart;
 
 /***/ },
 /* 13 */
-/*!*****************************!*\
-  !*** ./src/charts/radar.js ***!
-  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _baseChart = __webpack_require__(/*! ./baseChart.js */ 12);
-	
+
+	var _baseChart = __webpack_require__(12);
+
 	var _baseChart2 = _interopRequireDefault(_baseChart);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var Radar = function (_Chart) {
 	    _inherits(Radar, _Chart);
-	
+
 	    function Radar() {
 	        _classCallCheck(this, Radar);
-	
+
 	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Radar).apply(this, arguments));
 	    }
-	
+
 	    _createClass(Radar, [{
 	        key: 'renderChart',
 	        value: function renderChart() {
@@ -887,48 +862,45 @@
 	            this.chart.setOption(option);
 	        }
 	    }]);
-	
+
 	    return Radar;
 	}(_baseChart2.default);
-	
+
 	exports.default = Radar;
 
 /***/ },
 /* 14 */
-/*!**********************************!*\
-  !*** ./src/charts/pieMutiple.js ***!
-  \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _baseChart = __webpack_require__(/*! ./baseChart.js */ 12);
-	
+
+	var _baseChart = __webpack_require__(12);
+
 	var _baseChart2 = _interopRequireDefault(_baseChart);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var pieMutiple = function (_Chart) {
 	    _inherits(pieMutiple, _Chart);
-	
+
 	    function pieMutiple() {
 	        _classCallCheck(this, pieMutiple);
-	
+
 	        return _possibleConstructorReturn(this, Object.getPrototypeOf(pieMutiple).apply(this, arguments));
 	    }
-	
+
 	    _createClass(pieMutiple, [{
 	        key: 'renderChart',
 	        value: function renderChart() {
@@ -1006,48 +978,45 @@
 	            this.chart.setOption(option);
 	        }
 	    }]);
-	
+
 	    return pieMutiple;
 	}(_baseChart2.default);
-	
+
 	exports.default = pieMutiple;
 
 /***/ },
 /* 15 */
-/*!*********************************!*\
-  !*** ./src/charts/pieDouble.js ***!
-  \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _baseChart = __webpack_require__(/*! ./baseChart.js */ 12);
-	
+
+	var _baseChart = __webpack_require__(12);
+
 	var _baseChart2 = _interopRequireDefault(_baseChart);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var pieDouble = function (_Chart) {
 	    _inherits(pieDouble, _Chart);
-	
+
 	    function pieDouble() {
 	        _classCallCheck(this, pieDouble);
-	
+
 	        return _possibleConstructorReturn(this, Object.getPrototypeOf(pieDouble).apply(this, arguments));
 	    }
-	
+
 	    _createClass(pieDouble, [{
 	        key: 'checkType',
 	        value: function checkType(type) {
@@ -1127,9 +1096,10 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
+	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'sex') {
-	                this.subTitle = this.caculateSubTitle(data[0].value, data[1].value);
+	                this.subTitle = this.caculateSubTitle(data[1].value, data[0].value);
 	            }
 	            var option = {
 	                title: {
@@ -1162,48 +1132,45 @@
 	            }
 	        }
 	    }]);
-	
+
 	    return pieDouble;
 	}(_baseChart2.default);
-	
+
 	exports.default = pieDouble;
 
 /***/ },
 /* 16 */
-/*!***********************************!*\
-  !*** ./src/charts/barVertical.js ***!
-  \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _baseChart = __webpack_require__(/*! ./baseChart.js */ 12);
-	
+
+	var _baseChart = __webpack_require__(12);
+
 	var _baseChart2 = _interopRequireDefault(_baseChart);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var barVertical = function (_Chart) {
 	    _inherits(barVertical, _Chart);
-	
+
 	    function barVertical() {
 	        _classCallCheck(this, barVertical);
-	
+
 	        return _possibleConstructorReturn(this, Object.getPrototypeOf(barVertical).apply(this, arguments));
 	    }
-	
+
 	    _createClass(barVertical, [{
 	        key: 'checkType',
 	        value: function checkType(type) {
@@ -1300,6 +1267,7 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
+	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'age') {
 	                this.subTitle = this.caculateSubTitle(data[0].value);
@@ -1343,48 +1311,45 @@
 	            return '主要受众年龄段为[' + titleArr[subscript] + ']';
 	        }
 	    }]);
-	
+
 	    return barVertical;
 	}(_baseChart2.default);
-	
+
 	exports.default = barVertical;
 
 /***/ },
 /* 17 */
-/*!**********************************!*\
-  !*** ./src/charts/barComment.js ***!
-  \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _baseChart = __webpack_require__(/*! ./baseChart.js */ 12);
-	
+
+	var _baseChart = __webpack_require__(12);
+
 	var _baseChart2 = _interopRequireDefault(_baseChart);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var barCommit = function (_Chart) {
 	    _inherits(barCommit, _Chart);
-	
+
 	    function barCommit() {
 	        _classCallCheck(this, barCommit);
-	
+
 	        return _possibleConstructorReturn(this, Object.getPrototypeOf(barCommit).apply(this, arguments));
 	    }
-	
+
 	    _createClass(barCommit, [{
 	        key: 'renderChart',
 	        value: function renderChart() {
@@ -1458,13 +1423,12 @@
 	        key: 'updateChart',
 	        value: function updateChart(data) {
 	            this.chart.hideLoading();
-	            console.log(data);
 	            var nameList = [];
 	            var valueList = [];
 	            for (var i = 0; i < data.length; i++) {
 	                nameList.push(data[i].name);
 	                if (data[i].value == 0) {
-	
+
 	                    data[i].value = Math.floor(Math.random() * 30 + 40);
 	                    valueList.push(data[i].value);
 	                } else {
@@ -1482,21 +1446,18 @@
 	            this.chart.setOption(option);
 	        }
 	    }]);
-	
+
 	    return barCommit;
 	}(_baseChart2.default);
-	
+
 	exports.default = barCommit;
 
 /***/ },
 /* 18 */
-/*!*************************************!*\
-  !*** ./src/components/voteproto.js ***!
-  \*************************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	function VoteProto(cfg) {
 	    this.cfg = cfg;
 	    this.el = null; //根元素
@@ -1545,7 +1506,7 @@
 	            var eindex = expect[i] - 1;
 	            this.btnExpexts.eq(eindex).addClass('active').attr("disabled", true);
 	        };
-	
+
 	        for (var j = 0; j < want.length; j++) {
 	            var windex = want[j] - 1;
 	            this.btnWanted.eq(windex).addClass('active').attr("disabled", true);
@@ -1586,9 +1547,8 @@
 	        });
 	    }
 	};
-	
+
 	module.exports = VoteProto;
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=program_detail.js.map

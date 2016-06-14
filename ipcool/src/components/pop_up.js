@@ -12,7 +12,7 @@ export default class Popup {
         this.bindUI();
     }
     renderUI() {
-        if (this.cfg.el) {
+        if (this.cfg.el) { //判断el元素
             this.el = $(this.cfg.el);
         } else {
             this.el = $(
@@ -32,20 +32,16 @@ export default class Popup {
                 this.el.append(btnCancle);
             }
         }
-        this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
         if ($('#popup_mask').length > 0) {
             this.mask = $('#popup_mask');
         } else {
             this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
         }
+        this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
     }
-
     bindUI() {
         let self = this;
-        this.mask.off("click");
-        this.mask.on("click", function() {
-            self.destory();
-        });
+        this.mask.on('click', function() { self.destory(); }) //绑定mask
         if (this.el.find('button.close').length > 0) { //绑定关闭按钮
             let btnClose = this.el.find('button.close');
             btnClose.on('click', function() {
@@ -73,7 +69,7 @@ export default class Popup {
     }
     destory() {
         this.mask.remove();
-        this.el.removeClass("active").hide();
+        this.el.hide().removeClass("active");
     }
     alert() {
         this.mask.appendTo("body");

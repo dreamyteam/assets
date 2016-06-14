@@ -32,7 +32,7 @@ export default class pieDouble extends Chart {
             },
             tooltip: {
                 trigger: 'item',
-                formatter:'{a}<br/>{b} : {d}%'
+                formatter: '{a}<br/>{b} : {d}%'
             },
             series: [{
                 name: this.name,
@@ -74,9 +74,10 @@ export default class pieDouble extends Chart {
         this.url && this.getRemoteData();
     }
     updateChart(data) {
+        console.log(data);
         this.chart.hideLoading();
         if (this.type == 'sex') {
-            this.subTitle = this.caculateSubTitle(data[0].value, data[1].value);
+            this.subTitle = this.caculateSubTitle(data[1].value, data[0].value);
         }
         let option = {
             title: {

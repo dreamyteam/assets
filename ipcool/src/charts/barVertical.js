@@ -91,6 +91,7 @@ export default class barVertical extends Chart {
         this.url && this.getRemoteData();
     }
     updateChart(data) {
+        console.log(data);
         this.chart.hideLoading();
         if (this.type == 'age') {
             this.subTitle = this.caculateSubTitle(data[0].value);

@@ -32,21 +32,22 @@ $(function() {
         }
     })
 
+    let pPopUpConfirm = new Popup({
+        title: "我们将在3个工作日内为您完成资料确认",
+        content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
+        btnConfirm: "我知道了",
+        callBack: function() {
+            console.log("aaaa");
+        }
+    });
+
     //个人身份验证 完成后弹窗
     let pInfoForm = new Validate({
         el: "#p_indentify_form",
         inputBoxs: ".input_content",
         btnSubmit: "input[type='submit']",
         callBack: function() {
-            let popup = new Popup({
-                title: "我们将在3个工作日内为您完成资料确认",
-                content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
-                btnConfirm: "我知道了",
-                callBack: function() {
-                    console.log("aaaa");
-                }
-            })
-            popup.alert();
+            pPopUpConfirm.alert();
         }
     })
 })

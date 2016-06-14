@@ -70,7 +70,6 @@ export default class barCommit extends Chart {
     }
     updateChart(data) {
         this.chart.hideLoading();
-        console.log(data);
         let nameList = [];
         let valueList = [];
         for (let i = 0; i < data.length; i++) {

@@ -224,6 +224,7 @@ export default class Validate {
     }
     checkSubmit() {
         let self = this;
+        this.btnSubmit.off("click");
         this.btnSubmit.on("click", function() {
             self.validateSubmit();
             if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
