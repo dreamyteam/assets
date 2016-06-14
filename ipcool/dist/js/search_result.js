@@ -279,6 +279,7 @@
 	            this.subSizer = this.el.find(this.cfg.subSizer);
 	            this.url = window.location.href;
 	            this.bindToggleBtn();
+	            this.initSizer();
 	            this.bindSizer();
 	        }
 	    }, {
@@ -323,6 +324,16 @@
 	            });
 	        }
 	    }, {
+	        key: "initSizer",
+	        value: function initSizer() {
+	            var self = this;
+	            this.el.find("input[type=checkbox]").each(function () {
+	                if ($(this).is(":checked")) {
+	                    self.typeList.push($(this).val());
+	                }
+	            });
+	        }
+	    }, {
 	        key: "bindSizer",
 	        value: function bindSizer() {
 	            var self = this;
@@ -343,17 +354,35 @@
 	        value: function requestPage() {
 	            var self = this;
 	            var url = self.url;
-	            if (self.typeList.length) {
-	                var type = "&type=[";
-	                for (var i = 0; i < self.typeList.length; i++) {
-	                    type += '"' + self.typeList[i] + '",';
-	                }
-	                type = type.substring(0, type.length - 1);
-	                type += "]";
-	                url = url + type;
+	            var newType = self.stringfyTypeList();
+	            if (self.url.indexOf("type") > 0) {
+	                //字符串分割 去除 type
+	                url = self.resetUrl("type", newType);
+	            } else {
+	                url += "&type=" + newType;
 	            }
+
 	            console.log(url);
 	            window.location.href = url;
+	        }
+	    }, {
+	        key: "stringfyTypeList",
+	        value: function stringfyTypeList() {
+	            var type = void 0;
+	            if (this.typeList.length) {
+	                type = "[" + this.typeList.join(",") + "]";
+	            } else {
+	                type = "[]";
+	            }
+	            return type;
+	        }
+	    }, {
+	        key: "resetUrl",
+	        value: function resetUrl(paramName, replaceValue) {
+	            var oUrl = this.url;
+	            var re = eval('/(' + paramName + '=)([^&]*)/gi');
+	            var nUrl = oUrl.replace(re, paramName + '=' + replaceValue);
+	            return nUrl;
 	        }
 	    }]);
 
