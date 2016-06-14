@@ -94,22 +94,21 @@
 	        }
 	    });
 
-	    var pPopUpConfirm = new _pop_up2.default({
-	        title: "我们将在3个工作日内为您完成资料确认",
-	        content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
-	        btnConfirm: "我知道了",
-	        callBack: function callBack() {
-	            console.log("aaaa");
-	        }
-	    });
-
 	    //个人身份验证 完成后弹窗
 	    var pInfoForm = new _validate2.default({
 	        el: "#p_indentify_form",
 	        inputBoxs: ".input_content",
 	        btnSubmit: "input[type='submit']",
 	        callBack: function callBack() {
-	            pPopUpConfirm.alert();
+	            var popup = new _pop_up2.default({
+	                title: "我们将在3个工作日内为您完成资料确认",
+	                content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
+	                btnConfirm: "我知道了",
+	                callBack: function callBack() {
+	                    console.log("aaaa");
+	                }
+	            });
+	            popup.alert();
 	        }
 	    });
 	});
@@ -137,7 +136,6 @@
 	        this.el = null;
 	        this.mask = null;
 	        this.callBack = null;
-	        this.init();
 	    }
 
 	    _createClass(Popup, [{
@@ -151,7 +149,6 @@
 	        key: "renderUI",
 	        value: function renderUI() {
 	            if (this.cfg.el) {
-	                //判断el元素
 	                this.el = $(this.cfg.el);
 	            } else {
 	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
@@ -165,40 +162,26 @@
 	                    this.el.append(btnCancle);
 	                }
 	            }
-	            if ($('#popup_mask').length > 0) {
-	                this.mask = $('#popup_mask');
-	            } else {
-	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
-	            }
 	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
+	            this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+	            this.mask.appendTo("body");
+	            this.el.show();
+	            this.el.addClass("active");
 	        }
 	    }, {
 	        key: "bindUI",
 	        value: function bindUI() {
 	            var self = this;
-	            this.mask.on('click', function () {
+	            this.mask.on("click", function () {
 	                self.destory();
-	            }); //绑定mask
-	            if (this.el.find('button.close').length > 0) {
-	                //绑定关闭按钮
-	                var btnClose = this.el.find('button.close');
-	                btnClose.on('click', function () {
-	                    self.destory();
-	                });
-	            }
-	            if (this.el.find('button.confirm').length > 0) {
-	                //绑定确认按钮
-	                var btnConfirm = this.el.find("button.confirm");
-	                btnConfirm.on("click", function () {
-	                    self.destructor();
-	                });
-	            }
-	            if (this.el.find('button.cancle').length > 0) {
-	                var btnCancle = this.el.find("button.cancle");
-	                btnCancle.on("click", function () {
-	                    self.destory();
-	                });
-	            }
+	            });
+	            this.el.delegate("button.close", "click", function () {
+	                self.destory();
+	            }).delegate("button.confirm", "click", function () {
+	                self.destructor();
+	            }).delegate("button.cancle", "click", function () {
+	                self.destory();
+	            });
 	        }
 	    }, {
 	        key: "destructor",
@@ -211,15 +194,13 @@
 	    }, {
 	        key: "destory",
 	        value: function destory() {
-	            this.mask.remove();
-	            this.el.hide().removeClass("active");
+	            this.mask && this.mask.off().remove();
+	            this.el.removeClass("active").hide().off();
 	        }
 	    }, {
 	        key: "alert",
 	        value: function alert() {
-	            this.mask.appendTo("body");
-	            this.el.show();
-	            this.el.addClass("active");
+	            this.init();
 	        }
 	    }]);
 
@@ -504,7 +485,6 @@
 	        key: "checkSubmit",
 	        value: function checkSubmit() {
 	            var self = this;
-	            this.btnSubmit.off("click");
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
@@ -556,6 +536,8 @@
 	        this.cfg = cfg;
 	        this.input = null; //输入框
 	        this.preview = null;
+	        this.confrimBtn = null;
+	        this.cancleBtn = null;
 	        this.bioImage = null; //用户中心右侧头像
 	        this.navImage = null; //导航右侧头像
 	        this.init();
@@ -566,6 +548,8 @@
 	        value: function init() {
 	            this.input = $(this.cfg.input);
 	            this.preview = $(this.cfg.preview);
+	            this.confrimBtn = $(this.cfg.confrimBtn);
+	            this.cancleBtn = $(this.cfg.cancleBtn);
 	            this.bioImage = $(this.cfg.bioImage);
 	            this.navImage = $(this.cfg.navImage);
 	            this.inputHandler();
@@ -593,9 +577,7 @@
 	                            }
 	                        });
 	                        avatar_popup.alert();
-
 	                        blobURL = URL.createObjectURL(file);
-	                        //此处正式时候为弹窗
 	                        self.preview.cropper({
 	                            aspectRatio: 1 / 1,
 	                            viewMode: 3,
@@ -635,6 +617,7 @@
 	                contentType: false,
 	                data: fd,
 	                success: function success(result) {
+	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        var image_url = result.data.image_url;
 	                        self.setImageUrl(image_url);

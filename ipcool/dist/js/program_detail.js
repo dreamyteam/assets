@@ -108,7 +108,6 @@
 	        this.el = null;
 	        this.mask = null;
 	        this.callBack = null;
-	        this.init();
 	    }
 
 	    _createClass(Popup, [{
@@ -122,7 +121,6 @@
 	        key: "renderUI",
 	        value: function renderUI() {
 	            if (this.cfg.el) {
-	                //判断el元素
 	                this.el = $(this.cfg.el);
 	            } else {
 	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
@@ -136,40 +134,26 @@
 	                    this.el.append(btnCancle);
 	                }
 	            }
-	            if ($('#popup_mask').length > 0) {
-	                this.mask = $('#popup_mask');
-	            } else {
-	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
-	            }
 	            this.el.appendTo("body").hide(); //初始化添加到dom并隐藏
+	            this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+	            this.mask.appendTo("body");
+	            this.el.show();
+	            this.el.addClass("active");
 	        }
 	    }, {
 	        key: "bindUI",
 	        value: function bindUI() {
 	            var self = this;
-	            this.mask.on('click', function () {
+	            this.mask.on("click", function () {
 	                self.destory();
-	            }); //绑定mask
-	            if (this.el.find('button.close').length > 0) {
-	                //绑定关闭按钮
-	                var btnClose = this.el.find('button.close');
-	                btnClose.on('click', function () {
-	                    self.destory();
-	                });
-	            }
-	            if (this.el.find('button.confirm').length > 0) {
-	                //绑定确认按钮
-	                var btnConfirm = this.el.find("button.confirm");
-	                btnConfirm.on("click", function () {
-	                    self.destructor();
-	                });
-	            }
-	            if (this.el.find('button.cancle').length > 0) {
-	                var btnCancle = this.el.find("button.cancle");
-	                btnCancle.on("click", function () {
-	                    self.destory();
-	                });
-	            }
+	            });
+	            this.el.delegate("button.close", "click", function () {
+	                self.destory();
+	            }).delegate("button.confirm", "click", function () {
+	                self.destructor();
+	            }).delegate("button.cancle", "click", function () {
+	                self.destory();
+	            });
 	        }
 	    }, {
 	        key: "destructor",
@@ -182,15 +166,13 @@
 	    }, {
 	        key: "destory",
 	        value: function destory() {
-	            this.mask.remove();
-	            this.el.hide().removeClass("active");
+	            this.mask && this.mask.off().remove();
+	            this.el.removeClass("active").hide().off();
 	        }
 	    }, {
 	        key: "alert",
 	        value: function alert() {
-	            this.mask.appendTo("body");
-	            this.el.show();
-	            this.el.addClass("active");
+	            this.init();
 	        }
 	    }]);
 
@@ -471,6 +453,7 @@
 	                dataType: 'jsonp',
 	                jsonp: 'callback',
 	                success: function success(result) {
+	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        self.renderUI(result.data);
 	                    }
@@ -1096,10 +1079,9 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
-	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'sex') {
-	                this.subTitle = this.caculateSubTitle(data[1].value, data[0].value);
+	                this.subTitle = this.caculateSubTitle(data[0].value, data[1].value);
 	            }
 	            var option = {
 	                title: {
@@ -1267,7 +1249,6 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
-	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'age') {
 	                this.subTitle = this.caculateSubTitle(data[0].value);
@@ -1423,6 +1404,7 @@
 	        key: 'updateChart',
 	        value: function updateChart(data) {
 	            this.chart.hideLoading();
+	            console.log(data);
 	            var nameList = [];
 	            var valueList = [];
 	            for (var i = 0; i < data.length; i++) {

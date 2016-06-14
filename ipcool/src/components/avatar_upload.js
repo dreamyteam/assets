@@ -35,9 +35,7 @@ export default class Avatar {
                         }
                     });
                     avatar_popup.alert();
-
                     blobURL = URL.createObjectURL(file);
-                    //此处正式时候为弹窗
                     self.preview.cropper({
                         aspectRatio: 1 / 1,
                         viewMode: 3,
@@ -75,6 +73,7 @@ export default class Avatar {
             contentType: false,
             data: fd,
             success: function(result) {
+                console.log(result);
                 if (result.error_code == 0) {
                     let image_url = result.data.image_url;
                     self.setImageUrl(image_url);

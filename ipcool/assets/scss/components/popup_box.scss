@@ -16,7 +16,6 @@
     background: #ffffff;
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.50);
     border-radius: 2px;
-    padding: 42px 28px;
     width: 300px;
     z-index: 99999;
     left: 50%;
@@ -78,10 +77,14 @@ input[type=checkbox]:checked {
 .sign {
     text-align: center;
     margin-left: -150px;
+    padding: 42px 28px;
     .nav {
-        position: relative;
-        margin-top: 33px;
-        span {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 117px;
+        z-index: 999999;
+        li {
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -205,8 +208,16 @@ input[type=checkbox]:checked {
                         color: rgba(55, 55, 55, 0.60);
                         text-align: left;
                         background: transparent;
+                        transition: all 200ms ease;
+                        &:hover {
+                            color: #4A90E2;
+                            text-decoration: underline;
+                        }
                     }
                 }
+            }
+            .form.sign_form {
+                margin-top: 84px;
             }
             &.active {
                 display: block;
@@ -218,7 +229,7 @@ input[type=checkbox]:checked {
     }
     .btn_back {
         display: block;
-        cursor:pointer;
+        cursor: pointer;
         position: absolute;
         background: url("../../assets/images/icon_back.png") no-repeat;
         background-size: 24px;
@@ -266,7 +277,6 @@ input[type=checkbox]:checked {
     width: 400px;
     height: 600px;
     margin-left: -200px;
-    margin-top: -300px;
     .img_upload_container {
         padding: 28px 47px;
         text-align: center;
@@ -347,7 +357,7 @@ input[type=checkbox]:checked {
 @keyframes fadeLeft {
     from {
         transform: translateX(100px);
-        opacity: 0;
+        opacity: 0.8;
     }
     to {
         transform: translateX(0);

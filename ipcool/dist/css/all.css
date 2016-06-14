@@ -333,7 +333,6 @@ input[type=checkbox]:checked {
   background: #ffffff;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
   border-radius: 2px;
-  padding: 42px 28px;
   width: 300px;
   z-index: 99999;
   left: 50%;
@@ -394,18 +393,22 @@ input[type=checkbox]:checked {
 
 .sign {
   text-align: center;
-  margin-left: -150px; }
+  margin-left: -150px;
+  padding: 42px 28px; }
   .sign .nav {
-    position: relative;
-    margin-top: 33px; }
-    .sign .nav span {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 117px;
+    z-index: 999999; }
+    .sign .nav li {
       cursor: pointer;
       display: inline-block;
       font-size: 14px;
       width: 40px;
       color: rgba(55, 55, 55, 0.8);
       border-bottom: 2px solid transparent; }
-      .sign .nav span.active {
+      .sign .nav li.active {
         color: #00a69d;
         border-bottom: 2px solid #00a69d; }
   .sign .sign_content li {
@@ -499,7 +502,13 @@ input[type=checkbox]:checked {
           font-size: 12px;
           color: rgba(55, 55, 55, 0.6);
           text-align: left;
-          background: transparent; }
+          background: transparent;
+          transition: all 200ms ease; }
+          .sign .sign_content li .form .line .forgot_pwd:hover {
+            color: #4A90E2;
+            text-decoration: underline; }
+    .sign .sign_content li .form.sign_form {
+      margin-top: 84px; }
     .sign .sign_content li.active {
       display: block; }
     .sign .sign_content li.animate {
@@ -546,8 +555,7 @@ input[type=checkbox]:checked {
 .avatar {
   width: 400px;
   height: 600px;
-  margin-left: -200px;
-  margin-top: -300px; }
+  margin-left: -200px; }
   .avatar .img_upload_container {
     padding: 28px 47px;
     text-align: center; }
@@ -613,7 +621,7 @@ input[type=checkbox]:checked {
   from {
     -webkit-transform: translateX(100px);
             transform: translateX(100px);
-    opacity: 0; }
+    opacity: 0.8; }
   to {
     -webkit-transform: translateX(0);
             transform: translateX(0);
@@ -623,7 +631,7 @@ input[type=checkbox]:checked {
   from {
     -webkit-transform: translateX(100px);
             transform: translateX(100px);
-    opacity: 0; }
+    opacity: 0.8; }
   to {
     -webkit-transform: translateX(0);
             transform: translateX(0);
