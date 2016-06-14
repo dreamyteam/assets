@@ -162,6 +162,7 @@
 	        this.popup = null;
 	        this.canSubmit = null;
 	        this.countdown = null;
+	        this.userId = null;
 	        this.init();
 	    }
 	
@@ -377,7 +378,7 @@
 	                },
 	                success: function success(result) {
 	                    if (result.error_code == 0) {
-	                        console.log("去到修改密码页");
+	                        self.userId = result.data.userId;
 	                        self.tab.switchTabNav(3, true);
 	                    } else if (result.error_code > 0) {
 	                        self.showErr(errMsg, result.error_msg);
@@ -402,22 +403,26 @@
 	    }, {
 	        key: 'serverResetPwd',
 	        value: function serverResetPwd(el) {
-	            // let self = this;
-	            // $.ajax({
-	            //     url: '/user/getpwd/doCheckPhone',
-	            //     type: 'POST',
-	            //     data: {
-	            //         mobile: phone,
-	            //     },
-	            //     success: function(result) {
-	            //         if (result.error_code == 0) {
-	            //             console.log("去到修改密码页");
-	            //             self.tab.switchTabNav(3, true);
-	            //         } else if (result.error_code > 0) {
-	            //             self.showErr(errMsg, result.error_msg);
-	            //         }
-	            //     }
-	            // })
+	            var self = this;
+	            var newPassword = el.find("input[name='newPassword']").val();
+	            var newPasswordConfirm = el.find("input[name='newPasswordConfirm']").val();
+	            var errMsg = el.find(".err_from_server .err_msg");
+	            $.ajax({
+	                url: '/user/getpwd/doPwd',
+	                type: 'POST',
+	                data: {
+	                    userId: this.userId,
+	                    newPassword: newPassword,
+	                    newPasswordConfirm: newPasswordConfirm
+	                },
+	                success: function success(result) {
+	                    if (result.error_code == 0) {
+	                        location.reload();
+	                    } else if (result.error_code > 0) {
+	                        self.showErr(errMsg, result.error_msg);
+	                    }
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'checkValidateCode',
@@ -427,7 +432,6 @@
 	            var phone = el.find("input[name='phone_number']").val();
 	            var checkCode = el.find("input[name='verify_code']").val();
 	            var errMsg = el.find(".verify_code_content .err_msg");
-	            console.log(errMsg);
 	            $.ajax({
 	                url: '/user/register/checkPhoneCode',
 	                type: 'POST',
@@ -436,7 +440,6 @@
 	                    checkCode: checkCode
 	                },
 	                success: function success(result) {
-	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        if (typeof cb == "function") {
 	                            cb();
@@ -463,7 +466,6 @@
 	                    mobile: phone
 	                },
 	                success: function success(result) {
-	                    console.log(result);
 	                    if (result.error_code == 0) {
 	                        self.countdown = 60;
 	                        self.settime(btn);

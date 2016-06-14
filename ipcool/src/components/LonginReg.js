@@ -9,6 +9,7 @@ export default class Sign {
         this.popup = null;
         this.canSubmit = null;
         this.countdown = null;
+        this.userId = null;
         this.init();
     }
     init() {
@@ -196,7 +197,7 @@ export default class Sign {
             },
             success: function(result) {
                 if (result.error_code == 0) {
-                    console.log("去到修改密码页");
+                    self.userId = result.data.userId;
                     self.tab.switchTabNav(3, true);
                 } else if (result.error_code > 0) {
                     self.showErr(errMsg, result.error_msg);
@@ -217,33 +218,32 @@ export default class Sign {
         })
     }
     serverResetPwd(el) {
-        // let self = this;
-        // $.ajax({
-        //     url: '/user/getpwd/doCheckPhone',
-        //     type: 'POST',
-        //     data: {
-        //         mobile: phone,
-        //     },
-        //     success: function(result) {
-        //         if (result.error_code == 0) {
-        //             console.log("去到修改密码页");
-        //             self.tab.switchTabNav(3, true);
-        //         } else if (result.error_code > 0) {
-        //             self.showErr(errMsg, result.error_msg);
-        //         }
-        //     }
-        // })
+        let self = this;
+        let newPassword = el.find("input[name='newPassword']").val();
+        let newPasswordConfirm = el.find("input[name='newPasswordConfirm']").val();
+        let errMsg = el.find(".err_from_server .err_msg");
+        $.ajax({
+            url: '/user/getpwd/doPwd',
+            type: 'POST',
+            data: {
+                userId: this.userId,
+                newPassword: newPassword,
+                newPasswordConfirm: newPasswordConfirm
+            },
+            success: function(result) {
+                if (result.error_code == 0) {
+                    location.reload();
+                } else if (result.error_code > 0) {
+                    self.showErr(errMsg, result.error_msg);
+                }
+            }
+        })
     }
-
-
-
-
     checkValidateCode(el, cb) { //验证验证码模块
         let self = this;
         let phone = el.find("input[name='phone_number']").val();
         let checkCode = el.find("input[name='verify_code']").val();
         let errMsg = el.find(".verify_code_content .err_msg");
-        console.log(errMsg);
         $.ajax({
                 url: '/user/register/checkPhoneCode',
                 type: 'POST',
@@ -252,7 +252,6 @@ export default class Sign {
                     checkCode: checkCode
                 },
                 success: function(result) {
-                    console.log(result);
                     if (result.error_code == 0) {
                         if (typeof cb == "function") {
                             cb();
@@ -276,7 +275,6 @@ export default class Sign {
                 mobile: phone,
             },
             success: function(result) {
-                console.log(result);
                 if (result.error_code == 0) {
                     self.countdown = 60;
                     self.settime(btn);
