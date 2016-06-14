@@ -955,6 +955,7 @@
 	        key: "checkSubmit",
 	        value: function checkSubmit() {
 	            var self = this;
+	            this.btnSubmit.off("click");
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {

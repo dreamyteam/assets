@@ -51,11 +51,21 @@
 
 	var _paging2 = _interopRequireDefault(_paging);
 
+	var _sizer = __webpack_require__(20);
+
+	var _sizer2 = _interopRequireDefault(_sizer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
 	    //分页
 	    var paging = new _paging2.default('#paging');
+	    var sizer = new _sizer2.default({
+	        el: "#sizer_search",
+	        btnToggle: ".toggle_sub_sizer",
+	        subSizer: ".sub_sizer_container",
+	        target: ".search_result"
+	    });
 	});
 
 /***/ },
@@ -80,10 +90,11 @@
 	        this.el = $(el);
 	        this.url = null;
 	        this.pageAttach = null;
+	        this.pageParams = null;
 	        this.totalNum = null;
 	        this.current = null;
 	        this.totalPage = null;
-	        this.content = null;
+	        this.params = "";
 	        this.ul = null;
 	        this.init();
 	    }
@@ -93,18 +104,28 @@
 	        value: function init() {
 	            this.url = window.location.pathname;
 	            this.pageAttach = this.el.data("pageAttach");
-
+	            this.pageParams = this.el.data("pageParams");
 	            this.totalNum = this.pageAttach.totalNum; //总数据数 用于计算非显示
 	            this.current = this.pageAttach.currentPage; //当前页码
 	            this.pageSize = this.pageAttach.pageSize; //每页显示多少个
 	            this.totalPage = Math.ceil(this.totalNum / this.pageSize); //总页数 用于显示
-	            this.content = this.pageAttach.content; //查询参数用于拼接字符串
+	            this.setParams();
 
+	            this.setPaging();
 	            //第一层判断 是否显示分页 如果pagesize <= totalNumber 则显示
-	            if (this.el.length > 0 && this.pageSize <= this.totalNum) {
-	                this.setPaging();
-	                // this.setWidget();
+	            // if (this.el.length > 0 && this.pageSize <= this.totalNum) {
+	            //     this.setPaging();
+	            // }
+	        }
+	    }, {
+	        key: "setParams",
+	        value: function setParams() {
+	            var params = "";
+	            for (var o in this.pageParams) {
+	                params += "&" + o + "=" + this.pageParams[o];
 	            }
+	            this.params = params.replace(/\&/, "?");
+	            // console.log(this.params);
 	        }
 	    }, {
 	        key: "setPaging",
@@ -154,12 +175,12 @@
 	            for (var i = pageStart; i <= pageEnd; i++) {
 	                if (hasCurrent) {
 	                    if (i == this.current) {
-	                        this.ul.append($("<li class='page active'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"));
+	                        this.ul.append($("<li class='page active'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"));
 	                    } else {
-	                        this.ul.append($("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"));
+	                        this.ul.append($("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"));
 	                    }
 	                } else {
-	                    this.ul.append($("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"));
+	                    this.ul.append($("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"));
 	                }
 	            }
 	        }
@@ -173,7 +194,7 @@
 	        key: "setPrevBtn",
 	        value: function setPrevBtn() {
 	            //先添加上一页按钮
-	            var prevBtn = $("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + (this.current - 1) + "><</a></li>");
+	            var prevBtn = $("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + (this.current - 1) + "><</a></li>");
 	            prevBtn.appendTo(this.ul);
 	            //判断是否为第一页 如果是 则 上一页为disable状态
 	            if (this.current == 1) {
@@ -184,7 +205,7 @@
 	    }, {
 	        key: "setNextBtn",
 	        value: function setNextBtn() {
-	            var nextBtn = $("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + (this.current + 1) + ">></a></li>");
+	            var nextBtn = $("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + (this.current + 1) + ">></a></li>");
 	            nextBtn.appendTo(this.ul);
 	            //判断是否为最后页 如果是 则 下一页为disable状态
 	            if (this.current == this.totalPage) {
@@ -213,6 +234,185 @@
 	}();
 
 	exports.default = Paging;
+
+/***/ },
+
+/***/ 20:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _loader = __webpack_require__(21);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Sizer = function () {
+	    function Sizer(cfg) {
+	        _classCallCheck(this, Sizer);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.target = null;
+	        this.btnToggle = null;
+	        this.subSizer = null;
+	        this.typeList = [];
+	        this.url = null;
+	        this.init();
+	    }
+
+	    _createClass(Sizer, [{
+	        key: "init",
+	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.target = $(this.cfg.target);
+	            this.btnToggle = this.el.find(this.cfg.btnToggle);
+	            this.subSizer = this.el.find(this.cfg.subSizer);
+	            this.url = window.location.href;
+	            this.bindToggleBtn();
+	            this.bindSizer();
+	        }
+	    }, {
+	        key: "bindToggleBtn",
+	        value: function bindToggleBtn() {
+	            var self = this;
+	            var subSizerHeght = this.subSizer.height() + 1; //修正1px边框 并记录高度
+	            var spread = false; //初始化展开 为否
+	            self.subSizer.css({
+	                "height": "0px",
+	                "border-bottom": "none"
+	            });
+	            self.btnToggle.removeClass("active");
+
+	            function offSpread() {
+	                self.subSizer.animate({
+	                    "height": "0px"
+	                }).css({
+	                    "border-bottom": "none"
+	                });
+	                self.btnToggle.removeClass("active");
+	            }
+
+	            function onSpread() {
+	                self.subSizer.animate({
+	                    "height": subSizerHeght + "px"
+	                }).css({
+	                    "border-bottom": "1px solid #eee"
+	                });
+	                self.btnToggle.addClass("active");
+	            }
+
+	            this.btnToggle.on("click", function () {
+	                if (spread) {
+	                    // 收起逻辑
+	                    offSpread();
+	                } else {
+	                    //展开逻辑
+	                    onSpread();
+	                }
+	                spread = !spread;
+	            });
+	        }
+	    }, {
+	        key: "bindSizer",
+	        value: function bindSizer() {
+	            var self = this;
+	            this.el.find("input[type=checkbox]").each(function () {
+	                $(this).on("click", function () {
+	                    var curValue = $(this).val();
+	                    if ($(this).is(":checked")) {
+	                        self.typeList.push(curValue);
+	                    } else {
+	                        self.typeList.splice($.inArray(curValue, self.typeList), 1);
+	                    }
+	                    self.requestPage();
+	                });
+	            });
+	        }
+	    }, {
+	        key: "requestPage",
+	        value: function requestPage() {
+	            var self = this;
+	            var url = self.url;
+	            if (self.typeList.length) {
+	                var type = "&type=[";
+	                for (var i = 0; i < self.typeList.length; i++) {
+	                    type += '"' + self.typeList[i] + '",';
+	                }
+	                type = type.substring(0, type.length - 1);
+	                type += "]";
+	                url = url + type;
+	            }
+	            console.log(url);
+	            window.location.href = url;
+	        }
+	    }]);
+
+	    return Sizer;
+	}();
+
+	exports.default = Sizer;
+
+/***/ },
+
+/***/ 21:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Loader = function () {
+	    function Loader(cfg) {
+	        _classCallCheck(this, Loader);
+
+	        this.cfg = cfg;
+	        this.parent = null;
+	        this.dom = null;
+	        this.width = null;
+	        this.init();
+	    }
+
+	    _createClass(Loader, [{
+	        key: "init",
+	        value: function init() {
+	            this.parent = $(this.cfg.parent);
+	            this.width = this.cfg.width || 40;
+	            this.dom = $("<svg class='myLoader' width = '" + this.width + "px' height = '" + this.width + "px' viewBox = '0 0 50 50'>" + "<path fill='#00a69d' d = 'M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z' ></path>" + "</svg>");
+	        }
+	    }, {
+	        key: "showLoading",
+	        value: function showLoading() {
+	            if (this.parent.find('.myLoader').length <= 0) {
+	                this.dom.appendTo(this.parent);
+	            }
+	        }
+	    }, {
+	        key: "hideLoading",
+	        value: function hideLoading() {
+	            this.dom.remove();
+	        }
+	    }]);
+
+	    return Loader;
+	}();
+
+	exports.default = Loader;
 
 /***/ }
 

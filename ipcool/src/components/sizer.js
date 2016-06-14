@@ -7,6 +7,8 @@ export default class Sizer {
         this.target = null;
         this.btnToggle = null;
         this.subSizer = null;
+        this.typeList = [];
+        this.url = null;
         this.init();
     }
     init() {
@@ -14,6 +16,7 @@ export default class Sizer {
         this.target = $(this.cfg.target);
         this.btnToggle = this.el.find(this.cfg.btnToggle);
         this.subSizer = this.el.find(this.cfg.subSizer);
+        this.url = window.location.href;
         this.bindToggleBtn();
         this.bindSizer();
     }
@@ -26,6 +29,7 @@ export default class Sizer {
             "border-bottom": "none"
         })
         self.btnToggle.removeClass("active");
+
         function offSpread() {
             self.subSizer.animate({
                 "height": "0px",
@@ -34,6 +38,7 @@ export default class Sizer {
             })
             self.btnToggle.removeClass("active");
         }
+
         function onSpread() {
             self.subSizer.animate({
                 "height": subSizerHeght + "px",
@@ -42,9 +47,11 @@ export default class Sizer {
             })
             self.btnToggle.addClass("active");
         }
+
         this.btnToggle.on("click", function() {
             if (spread) { // 收起逻辑
                 offSpread();
+
             } else { //展开逻辑
                 onSpread();
             }
@@ -52,14 +59,32 @@ export default class Sizer {
         })
     }
     bindSizer() {
+        let self = this;
         this.el.find("input[type=checkbox]").each(function() {
             $(this).on("click", function() {
-                let loader = new Loader({
-                    parent: ".search_loading"
-                })
-                loader.showLoading();
-                // loader.hideLoading();
+                let curValue = $(this).val();
+                if ($(this).is(":checked")) {
+                    self.typeList.push(curValue);
+                } else {
+                    self.typeList.splice($.inArray(curValue, self.typeList), 1);
+                }
+                self.requestPage();
             })
         })
+    }
+    requestPage() {
+        let self = this;
+        let url = self.url;
+        if (self.typeList.length) {
+            let type = "&type=[";
+            for (let i = 0; i < self.typeList.length; i++) {
+                type += '"' + self.typeList[i] + '",';
+            }
+            type = type.substring(0, type.length - 1);
+            type += "]";
+            url = url + type;
+        } 
+        console.log(url);
+        window.location.href = url;
     }
 }

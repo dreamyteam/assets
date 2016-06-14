@@ -94,21 +94,22 @@
 	        }
 	    });
 
+	    var pPopUpConfirm = new _pop_up2.default({
+	        title: "我们将在3个工作日内为您完成资料确认",
+	        content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
+	        btnConfirm: "我知道了",
+	        callBack: function callBack() {
+	            console.log("aaaa");
+	        }
+	    });
+
 	    //个人身份验证 完成后弹窗
 	    var pInfoForm = new _validate2.default({
 	        el: "#p_indentify_form",
 	        inputBoxs: ".input_content",
 	        btnSubmit: "input[type='submit']",
 	        callBack: function callBack() {
-	            var popup = new _pop_up2.default({
-	                title: "我们将在3个工作日内为您完成资料确认",
-	                content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
-	                btnConfirm: "我知道了",
-	                callBack: function callBack() {
-	                    console.log("aaaa");
-	                }
-	            });
-	            popup.alert();
+	            pPopUpConfirm.alert();
 	        }
 	    });
 	});
@@ -485,6 +486,7 @@
 	        key: "checkSubmit",
 	        value: function checkSubmit() {
 	            var self = this;
+	            this.btnSubmit.off("click");
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
@@ -536,8 +538,6 @@
 	        this.cfg = cfg;
 	        this.input = null; //输入框
 	        this.preview = null;
-	        this.confrimBtn = null;
-	        this.cancleBtn = null;
 	        this.bioImage = null; //用户中心右侧头像
 	        this.navImage = null; //导航右侧头像
 	        this.init();
@@ -548,8 +548,6 @@
 	        value: function init() {
 	            this.input = $(this.cfg.input);
 	            this.preview = $(this.cfg.preview);
-	            this.confrimBtn = $(this.cfg.confrimBtn);
-	            this.cancleBtn = $(this.cfg.cancleBtn);
 	            this.bioImage = $(this.cfg.bioImage);
 	            this.navImage = $(this.cfg.navImage);
 	            this.inputHandler();
