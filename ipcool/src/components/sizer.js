@@ -19,6 +19,7 @@ export default class Sizer {
         this.url = window.location.href;
         this.bindToggleBtn();
         this.bindSizer();
+        this.initSizer();
     }
     bindToggleBtn() {
         let self = this;
@@ -58,6 +59,14 @@ export default class Sizer {
             spread = !spread;
         })
     }
+    initSizer() {
+        let self = this;
+        this.el.find("input[type=checkbox]").each(function() {
+            if ($(this).is(":checked")) {
+                self.typeList.push($(this).val());
+            }
+        })
+    }
     bindSizer() {
         let self = this;
         this.el.find("input[type=checkbox]").each(function() {
@@ -75,16 +84,29 @@ export default class Sizer {
     requestPage() {
         let self = this;
         let url = self.url;
-        if (self.typeList.length) {
-            let type = "&type=[";
-            for (let i = 0; i < self.typeList.length; i++) {
-                type += '"' + self.typeList[i] + '",';
-            }
-            type = type.substring(0, type.length - 1);
-            type += "]";
-            url = url + type;
-        } 
+        let newType = self.stringfyTypeList();
+        if (self.url.indexOf("type") > 0) {
+            //字符串分割 去除 type
+            url = self.resetUrl("type", newType);
+        } else {
+            url += "&type=" + newType;
+        }
         console.log(url);
         window.location.href = url;
+    }
+    stringfyTypeList() {
+        let type;
+        if (this.typeList.length) {
+            type = "[" + this.typeList.join(",") + "]";
+        } else {
+            type = "[]"
+        }
+        return type;
+    }
+    resetUrl(paramName, replaceValue) {
+        let oUrl = this.url;
+        let re = eval('/(' + paramName + '=)([^&]*)/gi');
+        let nUrl = oUrl.replace(re, paramName + '=' + replaceValue);
+        return nUrl;
     }
 }

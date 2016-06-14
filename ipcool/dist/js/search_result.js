@@ -111,22 +111,22 @@
 	            this.pageSize = this.pageAttach.pageSize; //每页显示多少个
 	            this.totalPage = Math.ceil(this.totalNum / this.pageSize); //总页数 用于显示
 	            this.setParams();
+
+	            this.setPaging();
 	            //第一层判断 是否显示分页 如果pagesize <= totalNumber 则显示
-	            if (this.el.length > 0 && this.pageSize <= this.totalNum) {
-	                this.setPaging();
-	            }
+	            // if (this.el.length > 0 && this.pageSize <= this.totalNum) {
+	            //     this.setPaging();
+	            // }
 	        }
 	    }, {
 	        key: "setParams",
 	        value: function setParams() {
 	            var params = "";
 	            for (var o in this.pageParams) {
-	                console.log(o);
-	                console.log(this.pageParams[o]);
 	                params += "&" + o + "=" + this.pageParams[o];
 	            }
 	            this.params = params.replace(/\&/, "?");
-	            console.log(this.params);
+	            // console.log(this.params);
 	        }
 	    }, {
 	        key: "setPaging",
@@ -176,12 +176,12 @@
 	            for (var i = pageStart; i <= pageEnd; i++) {
 	                if (hasCurrent) {
 	                    if (i == this.current) {
-	                        this.ul.append($("<li class='page active'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"));
+	                        this.ul.append($("<li class='page active'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"));
 	                    } else {
-	                        this.ul.append($("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"));
+	                        this.ul.append($("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"));
 	                    }
 	                } else {
-	                    this.ul.append($("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"));
+	                    this.ul.append($("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"));
 	                }
 	            }
 	        }
@@ -195,7 +195,7 @@
 	        key: "setPrevBtn",
 	        value: function setPrevBtn() {
 	            //先添加上一页按钮
-	            var prevBtn = $("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + (this.current - 1) + "><</a></li>");
+	            var prevBtn = $("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + (this.current - 1) + "><</a></li>");
 	            prevBtn.appendTo(this.ul);
 	            //判断是否为第一页 如果是 则 上一页为disable状态
 	            if (this.current == 1) {
@@ -206,7 +206,7 @@
 	    }, {
 	        key: "setNextBtn",
 	        value: function setNextBtn() {
-	            var nextBtn = $("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + (this.current + 1) + ">></a></li>");
+	            var nextBtn = $("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + (this.current + 1) + ">></a></li>");
 	            nextBtn.appendTo(this.ul);
 	            //判断是否为最后页 如果是 则 下一页为disable状态
 	            if (this.current == this.totalPage) {
@@ -281,6 +281,7 @@
 	            this.url = window.location.href;
 	            this.bindToggleBtn();
 	            this.bindSizer();
+	            this.initSizer();
 	        }
 	    }, {
 	        key: "bindToggleBtn",
@@ -324,6 +325,16 @@
 	            });
 	        }
 	    }, {
+	        key: "initSizer",
+	        value: function initSizer() {
+	            var self = this;
+	            this.el.find("input[type=checkbox]").each(function () {
+	                if ($(this).is(":checked")) {
+	                    self.typeList.push($(this).val());
+	                }
+	            });
+	        }
+	    }, {
 	        key: "bindSizer",
 	        value: function bindSizer() {
 	            var self = this;
@@ -344,17 +355,34 @@
 	        value: function requestPage() {
 	            var self = this;
 	            var url = self.url;
-	            if (self.typeList.length) {
-	                var type = "&type=[";
-	                for (var i = 0; i < self.typeList.length; i++) {
-	                    type += '"' + self.typeList[i] + '",';
-	                }
-	                type = type.substring(0, type.length - 1);
-	                type += "]";
-	                url = url + type;
+	            var newType = self.stringfyTypeList();
+	            if (self.url.indexOf("type") > 0) {
+	                //字符串分割 去除 type
+	                url = self.resetUrl("type", newType);
+	            } else {
+	                url += "&type=" + newType;
 	            }
 	            console.log(url);
 	            window.location.href = url;
+	        }
+	    }, {
+	        key: "stringfyTypeList",
+	        value: function stringfyTypeList() {
+	            var type = void 0;
+	            if (this.typeList.length) {
+	                type = "[" + this.typeList.join(",") + "]";
+	            } else {
+	                type = "[]";
+	            }
+	            return type;
+	        }
+	    }, {
+	        key: "resetUrl",
+	        value: function resetUrl(paramName, replaceValue) {
+	            var oUrl = this.url;
+	            var re = eval('/(' + paramName + '=)([^&]*)/gi');
+	            var nUrl = oUrl.replace(re, paramName + '=' + replaceValue);
+	            return nUrl;
 	        }
 	    }]);
 

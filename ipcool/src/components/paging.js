@@ -20,20 +20,20 @@ export default class Paging {
         this.pageSize = this.pageAttach.pageSize; //每页显示多少个
         this.totalPage = Math.ceil(this.totalNum / this.pageSize); //总页数 用于显示
         this.setParams();
+        
+        this.setPaging();
         //第一层判断 是否显示分页 如果pagesize <= totalNumber 则显示
-        if (this.el.length > 0 && this.pageSize <= this.totalNum) {
-            this.setPaging();
-        }
+        // if (this.el.length > 0 && this.pageSize <= this.totalNum) {
+        //     this.setPaging();
+        // }
     }
     setParams() {
         let params = "";
         for (let o in this.pageParams) {
-            console.log(o);
-            console.log(this.pageParams[o]);
-            params += "&" + o + "=" + this.pageParams[o]
+            params += "&" + o + "=" + this.pageParams[o];
         }
         this.params = params.replace(/\&/, "?");
-        console.log(this.params);
+        // console.log(this.params);
     }
     setPaging() {
         this.ul = $("<ul class='pagging_container'></ul>");
@@ -74,12 +74,12 @@ export default class Paging {
         for (let i = pageStart; i <= pageEnd; i++) {
             if (hasCurrent) {
                 if (i == this.current) {
-                    this.ul.append($("<li class='page active'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"))
+                    this.ul.append($("<li class='page active'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"))
                 } else {
-                    this.ul.append($("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"))
+                    this.ul.append($("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"))
                 }
             } else {
-                this.ul.append($("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + i + ">" + i + "</a></li>"))
+                this.ul.append($("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + i + ">" + i + "</a></li>"))
 
             }
         }
@@ -90,7 +90,7 @@ export default class Paging {
     }
     setPrevBtn() {
         //先添加上一页按钮
-        let prevBtn = $("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + (this.current - 1) + "><</a></li>");
+        let prevBtn = $("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + (this.current - 1) + "><</a></li>");
         prevBtn.appendTo(this.ul);
         //判断是否为第一页 如果是 则 上一页为disable状态
         if (this.current == 1) {
@@ -99,7 +99,7 @@ export default class Paging {
         }
     }
     setNextBtn() {
-        let nextBtn = $("<li class='page'><a href=" + this.url + '?content=' + this.content + '&currentPage=' + (this.current + 1) + ">></a></li>");
+        let nextBtn = $("<li class='page'><a href=" + this.url + this.params + '&currentPage=' + (this.current + 1) + ">></a></li>");
         nextBtn.appendTo(this.ul);
         //判断是否为最后页 如果是 则 下一页为disable状态
         if (this.current == this.totalPage) {
