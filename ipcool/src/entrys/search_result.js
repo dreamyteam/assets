@@ -9,6 +9,5 @@ $(function() {
         btnToggle:".toggle_sub_sizer",
         subSizer:".sub_sizer_container",
         target:".search_result",
-
     })
 })

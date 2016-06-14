@@ -1,4 +1,4 @@
-import Loader from '../components/loader.js';
+// import Loader from '../components/loader.js';
 
 export default class Sizer {
     constructor(cfg) {
