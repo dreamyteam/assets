@@ -51,7 +51,7 @@
 
 	var _paging2 = _interopRequireDefault(_paging);
 
-	var _sizer = __webpack_require__(23);
+	var _sizer = __webpack_require__(20);
 
 	var _sizer2 = _interopRequireDefault(_sizer);
 
@@ -227,7 +227,7 @@
 
 /***/ },
 
-/***/ 23:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -238,7 +238,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _loader = __webpack_require__(24);
+	var _loader = __webpack_require__(21);
 
 	var _loader2 = _interopRequireDefault(_loader);
 
@@ -331,7 +331,7 @@
 
 /***/ },
 
-/***/ 24:
+/***/ 21:
 /***/ function(module, exports) {
 
 	"use strict";
