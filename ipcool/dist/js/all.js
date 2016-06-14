@@ -1,72 +1,69 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!***************************!*\
-  !*** ./src/entrys/all.js ***!
-  \***************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var _LonginReg = __webpack_require__(/*! ../components/LonginReg.js */ 1);
-	
+
+	var _LonginReg = __webpack_require__(1);
+
 	var _LonginReg2 = _interopRequireDefault(_LonginReg);
-	
-	var _pop_up = __webpack_require__(/*! ../components/pop_up.js */ 3);
-	
+
+	var _pop_up = __webpack_require__(2);
+
 	var _pop_up2 = _interopRequireDefault(_pop_up);
-	
-	var _back_top = __webpack_require__(/*! ../components/back_top.js */ 5);
-	
+
+	var _back_top = __webpack_require__(3);
+
 	var _back_top2 = _interopRequireDefault(_back_top);
-	
-	var _hover_delay = __webpack_require__(/*! ../components/hover_delay.js */ 6);
-	
+
+	var _hover_delay = __webpack_require__(4);
+
 	var _hover_delay2 = _interopRequireDefault(_hover_delay);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	$(function () {
 	    var userMenu = new _hover_delay2.default({
 	        el: "#currentUser",
@@ -78,39 +75,36 @@
 
 /***/ },
 /* 1 */
-/*!*************************************!*\
-  !*** ./src/components/LonginReg.js ***!
-  \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _tab = __webpack_require__(/*! ../components/tab.js */ 2);
-	
+
+	var _tab = __webpack_require__(6);
+
 	var _tab2 = _interopRequireDefault(_tab);
-	
-	var _pop_up = __webpack_require__(/*! ../components/pop_up.js */ 3);
-	
+
+	var _pop_up = __webpack_require__(2);
+
 	var _pop_up2 = _interopRequireDefault(_pop_up);
-	
-	var _validate = __webpack_require__(/*! ../components/validate.js */ 4);
-	
+
+	var _validate = __webpack_require__(5);
+
 	var _validate2 = _interopRequireDefault(_validate);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Sign = function () {
 	    function Sign(cfg) {
 	        _classCallCheck(this, Sign);
-	
+
 	        this.cfg = cfg;
 	        this.tab = null;
 	        this.popup = null;
@@ -119,7 +113,7 @@
 	        this.userId = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Sign, [{
 	        key: 'init',
 	        value: function init() {
@@ -459,129 +453,35 @@
 	            }, 100);
 	        }
 	    }]);
-	
+
 	    return Sign;
 	}();
-	
+
 	exports.default = Sign;
 
 /***/ },
 /* 2 */
-/*!*******************************!*\
-  !*** ./src/components/tab.js ***!
-  \*******************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Tab = function () {
-	    function Tab(cfg) {
-	        _classCallCheck(this, Tab);
-	
-	        this.cfg = cfg;
-	        this.init();
-	    }
-	
-	    _createClass(Tab, [{
-	        key: "init",
-	        value: function init() {
-	            this.el = $(this.cfg.el);
-	            this.tabNav = this.el.find(this.cfg.tabNav);
-	            this.tabContents = this.el.find(this.cfg.tabContents);
-	            this.tabNavList = this.tabNav.find("li");
-	            this.contentList = this.tabContents.find("li");
-	            this.trigger = this.cfg.trigger || "click";
-	            this.curIndex = 0;
-	            this.onTabGo = this.cfg.onTabGo || null;
-	            this.checkTrigger();
-	        }
-	    }, {
-	        key: "checkTrigger",
-	        value: function checkTrigger() {
-	            var self = this;
-	            if (this.trigger == "mouseover") {
-	                this.tabNavList.each(function () {
-	                    $(this).on("mouseover", function () {
-	                        var index = $(this).index();
-	                        self.switchTabNav(index);
-	                    });
-	                });
-	            } else if (this.trigger == "click") {
-	                this.tabNavList.each(function () {
-	                    $(this).on("click", function () {
-	                        var index = $(this).index();
-	                        self.switchTabNav(index, true);
-	                    });
-	                });
-	            }
-	        }
-	    }, {
-	        key: "switchTabNav",
-	        value: function switchTabNav(index, animate) {
-	            this.tabNavList.each(function () {
-	                $(this).removeClass('active');
-	            });
-	            this.tabNavList.eq(index).addClass('active');
-	            this.switchContent(index, animate);
-	            this.curIndex = index;
-	        }
-	    }, {
-	        key: "switchContent",
-	        value: function switchContent(index, animate) {
-	            this.curIndex = index;
-	            this.contentList.each(function () {
-	                $(this).removeClass('active animate');
-	            });
-	            this.contentList.eq(index).addClass('active');
-	            if (animate) {
-	                this.contentList.eq(index).addClass('animate');
-	            }
-	            this.onTabGo();
-	        }
-	    }, {
-	        key: "onTabGo",
-	        value: function onTabGo() {}
-	    }]);
-	
-	    return Tab;
-	}();
-	
-	exports.default = Tab;
 
-/***/ },
-/* 3 */
-/*!**********************************!*\
-  !*** ./src/components/pop_up.js ***!
-  \**********************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Popup = function () {
 	    function Popup(cfg) {
 	        _classCallCheck(this, Popup);
-	
+
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.mask = null;
 	    }
-	
+
 	    _createClass(Popup, [{
 	        key: "init",
 	        value: function init() {
@@ -649,33 +549,200 @@
 	        key: "callBack",
 	        value: function callBack() {}
 	    }]);
-	
+
 	    return Popup;
 	}();
-	
+
 	exports.default = Popup;
 
 /***/ },
-/* 4 */
-/*!************************************!*\
-  !*** ./src/components/validate.js ***!
-  \************************************/
+/* 3 */
 /***/ function(module, exports) {
 
-	"use strict";
-	
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
+	var BackTop = function () {
+	    function BackTop(contrastElement) {
+	        _classCallCheck(this, BackTop);
+
+	        //参照元素
+	        this.boundingBox = null;
+	        this.contrastElement = $(contrastElement || '.container');
+	        this.init();
+	    }
+
+	    _createClass(BackTop, [{
+	        key: 'init',
+	        value: function init() {
+	            if ($("#gotoTop").length > 0) {
+	                this.renderUI();
+	                this.syncUI();
+	                this.toTop();
+	            }
+	        }
+	    }, {
+	        key: 'renderUI',
+	        value: function renderUI() {
+	            if ($('#gotoTop').length > 0) {
+	                this.boundingBox = $('#gotoTop');
+	            } else {
+	                this.boundingBox = $("<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='/about/feedback'></a></div>");
+	                this.boundingBox.appendTo(document.body);
+	            }
+	            // 先消失
+	            this.boundingBox.hide();
+	            this.show();
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show() {
+	            var self = this;
+	            $(window).scroll(function () {
+	                var top = $(document).scrollTop();
+	                if (top > 400) {
+	                    self.boundingBox.fadeIn(200);
+	                } else if (top < 400) {
+	                    self.boundingBox.fadeOut(200);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'syncUI',
+	        value: function syncUI() {
+	            var self = this;
+	            var cLeft = this.contrastElement.offset().left;
+	            var cWidth = this.contrastElement.width();
+	            this.boundingBox.css({
+	                left: cLeft + cWidth + 20 + 'px'
+	            });
+	            $(window).resize(function () {
+	                var cLeft = self.contrastElement.offset().left;
+	                var cWidth = self.contrastElement.width();
+
+	                self.boundingBox.css({
+	                    left: cLeft + cWidth + 20 + 'px'
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'toTop',
+	        value: function toTop() {
+	            var self = this;
+	            this.boundingBox.find('button.back_to_top').on('click', function () {
+	                $('html,body').animate({ scrollTop: 0 }, 500);
+	            });
+	        }
+	    }]);
+
+	    return BackTop;
+	}();
+
+	exports.default = BackTop;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var HoverDelay = function () {
+	    function HoverDelay(cfg) {
+	        _classCallCheck(this, HoverDelay);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.target = null;
+	        this.init();
+	    }
+
+	    _createClass(HoverDelay, [{
+	        key: "init",
+	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.target = $(this.cfg.target);
+	            this.bindUI();
+	        }
+	    }, {
+	        key: "bindUI",
+	        value: function bindUI() {
+	            var self = this;
+	            var timer = null;
+	            this.el.hover(function () {
+	                self.targetShow();
+	                clearInterval(timer); //关键
+	            }, function () {
+	                timer = setTimeout(function () {
+	                    self.targetHide();
+	                }, 1000);
+	            });
+
+	            this.target.hover(function () {
+	                clearInterval(timer);
+	            }, function () {
+	                timer = setTimeout(function () {
+	                    self.targetHide();
+	                }, 1000);
+	            });
+	        }
+	    }, {
+	        key: "targetShow",
+	        value: function targetShow() {
+	            var self = this;
+	            self.target.show();
+	            setTimeout(function () {
+	                self.target.addClass("active");
+	            }, 1);
+	        }
+	    }, {
+	        key: "targetHide",
+	        value: function targetHide() {
+	            var self = this;
+	            self.target.removeClass("active");
+	            setTimeout(function () {
+	                self.target.hide();
+	            }, 300);
+	        }
+	    }]);
+
+	    return HoverDelay;
+	}();
+
+	exports.default = HoverDelay;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	var Validate = function () {
 	    function Validate(cfg) {
 	        _classCallCheck(this, Validate);
-	
+
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.inputBoxs = null; //input 容器 用于查找 input 和 errmsg
@@ -684,7 +751,7 @@
 	        this.callBack = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Validate, [{
 	        key: "init",
 	        value: function init() {
@@ -753,7 +820,7 @@
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
 	            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-	
+
 	            if (!regPhone.test(obj.val())) {
 	                self.setErrMsg(errMsg, "手机号码错误");
 	                if (canSubmit) {
@@ -772,7 +839,7 @@
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
 	            var regId = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
-	
+
 	            if (!regId.test(obj.val())) {
 	                self.setErrMsg(errMsg, "请输入正确的身份证号码格式");
 	                if (canSubmit) {
@@ -946,188 +1013,99 @@
 	            });
 	        }
 	    }]);
-	
+
 	    return Validate;
 	}();
-	
+
 	exports.default = Validate;
 
 /***/ },
-/* 5 */
-/*!************************************!*\
-  !*** ./src/components/back_top.js ***!
-  \************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var BackTop = function () {
-	    function BackTop(contrastElement) {
-	        _classCallCheck(this, BackTop);
-	
-	        //参照元素
-	        this.boundingBox = null;
-	        this.contrastElement = $(contrastElement || '.container');
-	        this.init();
-	    }
-	
-	    _createClass(BackTop, [{
-	        key: 'init',
-	        value: function init() {
-	            if ($("#gotoTop").length > 0) {
-	                this.renderUI();
-	                this.syncUI();
-	                this.toTop();
-	            }
-	        }
-	    }, {
-	        key: 'renderUI',
-	        value: function renderUI() {
-	            if ($('#gotoTop').length > 0) {
-	                this.boundingBox = $('#gotoTop');
-	            } else {
-	                this.boundingBox = $("<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='/about/feedback'></a></div>");
-	                this.boundingBox.appendTo(document.body);
-	            }
-	            // 先消失
-	            this.boundingBox.hide();
-	            this.show();
-	        }
-	    }, {
-	        key: 'show',
-	        value: function show() {
-	            var self = this;
-	            $(window).scroll(function () {
-	                var top = $(document).scrollTop();
-	                if (top > 400) {
-	                    self.boundingBox.fadeIn(200);
-	                } else if (top < 400) {
-	                    self.boundingBox.fadeOut(200);
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'syncUI',
-	        value: function syncUI() {
-	            var self = this;
-	            var cLeft = this.contrastElement.offset().left;
-	            var cWidth = this.contrastElement.width();
-	            this.boundingBox.css({
-	                left: cLeft + cWidth + 20 + 'px'
-	            });
-	            $(window).resize(function () {
-	                var cLeft = self.contrastElement.offset().left;
-	                var cWidth = self.contrastElement.width();
-	
-	                self.boundingBox.css({
-	                    left: cLeft + cWidth + 20 + 'px'
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'toTop',
-	        value: function toTop() {
-	            var self = this;
-	            this.boundingBox.find('button.back_to_top').on('click', function () {
-	                $('html,body').animate({ scrollTop: 0 }, 500);
-	            });
-	        }
-	    }]);
-	
-	    return BackTop;
-	}();
-	
-	exports.default = BackTop;
-
-/***/ },
 /* 6 */
-/*!***************************************!*\
-  !*** ./src/components/hover_delay.js ***!
-  \***************************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var HoverDelay = function () {
-	    function HoverDelay(cfg) {
-	        _classCallCheck(this, HoverDelay);
-	
+
+	var Tab = function () {
+	    function Tab(cfg) {
+	        _classCallCheck(this, Tab);
+
 	        this.cfg = cfg;
-	        this.el = null;
-	        this.target = null;
 	        this.init();
 	    }
-	
-	    _createClass(HoverDelay, [{
+
+	    _createClass(Tab, [{
 	        key: "init",
 	        value: function init() {
 	            this.el = $(this.cfg.el);
-	            this.target = $(this.cfg.target);
-	            this.bindUI();
+	            this.tabNav = this.el.find(this.cfg.tabNav);
+	            this.tabContents = this.el.find(this.cfg.tabContents);
+	            this.tabNavList = this.tabNav.find("li");
+	            this.contentList = this.tabContents.find("li");
+	            this.trigger = this.cfg.trigger || "click";
+	            this.curIndex = 0;
+	            this.onTabGo = this.cfg.onTabGo || null;
+	            this.checkTrigger();
 	        }
 	    }, {
-	        key: "bindUI",
-	        value: function bindUI() {
+	        key: "checkTrigger",
+	        value: function checkTrigger() {
 	            var self = this;
-	            var timer = null;
-	            this.el.hover(function () {
-	                self.targetShow();
-	                clearInterval(timer); //关键
-	            }, function () {
-	                timer = setTimeout(function () {
-	                    self.targetHide();
-	                }, 1000);
+	            if (this.trigger == "mouseover") {
+	                this.tabNavList.each(function () {
+	                    $(this).on("mouseover", function () {
+	                        var index = $(this).index();
+	                        self.switchTabNav(index);
+	                    });
+	                });
+	            } else if (this.trigger == "click") {
+	                this.tabNavList.each(function () {
+	                    $(this).on("click", function () {
+	                        var index = $(this).index();
+	                        self.switchTabNav(index, true);
+	                    });
+	                });
+	            }
+	        }
+	    }, {
+	        key: "switchTabNav",
+	        value: function switchTabNav(index, animate) {
+	            this.tabNavList.each(function () {
+	                $(this).removeClass('active');
 	            });
-	
-	            this.target.hover(function () {
-	                clearInterval(timer);
-	            }, function () {
-	                timer = setTimeout(function () {
-	                    self.targetHide();
-	                }, 1000);
+	            this.tabNavList.eq(index).addClass('active');
+	            this.switchContent(index, animate);
+	            this.curIndex = index;
+	        }
+	    }, {
+	        key: "switchContent",
+	        value: function switchContent(index, animate) {
+	            this.curIndex = index;
+	            this.contentList.each(function () {
+	                $(this).removeClass('active animate');
 	            });
+	            this.contentList.eq(index).addClass('active');
+	            if (animate) {
+	                this.contentList.eq(index).addClass('animate');
+	            }
+	            this.onTabGo();
 	        }
 	    }, {
-	        key: "targetShow",
-	        value: function targetShow() {
-	            var self = this;
-	            self.target.show();
-	            setTimeout(function () {
-	                self.target.addClass("active");
-	            }, 1);
-	        }
-	    }, {
-	        key: "targetHide",
-	        value: function targetHide() {
-	            var self = this;
-	            self.target.removeClass("active");
-	            setTimeout(function () {
-	                self.target.hide();
-	            }, 300);
-	        }
+	        key: "onTabGo",
+	        value: function onTabGo() {}
 	    }]);
-	
-	    return HoverDelay;
+
+	    return Tab;
 	}();
-	
-	exports.default = HoverDelay;
+
+	exports.default = Tab;
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=all.js.map

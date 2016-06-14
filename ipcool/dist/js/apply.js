@@ -1,60 +1,58 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/*!*****************************!*\
-  !*** ./src/entrys/apply.js ***!
-  \*****************************/
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
-	var _validate = __webpack_require__(/*! ../components/validate.js */ 4);
-	
+
+	var _validate = __webpack_require__(5);
+
 	var _validate2 = _interopRequireDefault(_validate);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	$(function () {
 		var applyValidate = new _validate2.default({
 			el: "#applyValidate",
@@ -64,29 +62,24 @@
 	});
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */
-/*!************************************!*\
-  !*** ./src/components/validate.js ***!
-  \************************************/
+
+/***/ 5:
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Validate = function () {
 	    function Validate(cfg) {
 	        _classCallCheck(this, Validate);
-	
+
 	        this.cfg = cfg;
 	        this.el = null;
 	        this.inputBoxs = null; //input 容器 用于查找 input 和 errmsg
@@ -95,7 +88,7 @@
 	        this.callBack = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Validate, [{
 	        key: "init",
 	        value: function init() {
@@ -164,7 +157,7 @@
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
 	            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-	
+
 	            if (!regPhone.test(obj.val())) {
 	                self.setErrMsg(errMsg, "手机号码错误");
 	                if (canSubmit) {
@@ -183,7 +176,7 @@
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
 	            var regId = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
-	
+
 	            if (!regId.test(obj.val())) {
 	                self.setErrMsg(errMsg, "请输入正确的身份证号码格式");
 	                if (canSubmit) {
@@ -357,12 +350,12 @@
 	            });
 	        }
 	    }]);
-	
+
 	    return Validate;
 	}();
-	
+
 	exports.default = Validate;
 
 /***/ }
-/******/ ]);
-//# sourceMappingURL=apply.js.map
+
+/******/ });
