@@ -582,11 +582,10 @@
 	            if (animate) {
 	                this.contentList.eq(index).addClass('animate');
 	            }
-	            this.onTabGo();
+	            if (this.onTabGo) {
+	                this.onTabGo();
+	            }
 	        }
-	    }, {
-	        key: "onTabGo",
-	        value: function onTabGo() {}
 	    }]);
 
 	    return Tab;

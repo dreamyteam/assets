@@ -20,7 +20,7 @@ export default class Paging {
         this.pageSize = this.pageAttach.pageSize; //每页显示多少个
         this.totalPage = Math.ceil(this.totalNum / this.pageSize); //总页数 用于显示
         this.setParams();
-        
+
         this.setPaging();
         //第一层判断 是否显示分页 如果pagesize <= totalNumber 则显示
         // if (this.el.length > 0 && this.pageSize <= this.totalNum) {
@@ -123,7 +123,7 @@ export default class Paging {
         btn.on("click", function() {
             let whichPage = widget.find("input[name='which_page']").val();
             if (whichPage > 0 && whichPage <= self.totalPage) {
-                window.location.href = self.url + "?content=" + self.content + "&currentPage=" + whichPage;
+                window.location.href = self.url + self.params + "&currentPage=" + whichPage;
             }
         })
     }

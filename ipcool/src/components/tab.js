@@ -45,9 +45,8 @@ export default class Tab {
         if (animate) {
             this.contentList.eq(index).addClass('animate');
         }
-        this.onTabGo();
-    }
-    onTabGo() {
-
+        if (this.onTabGo) {
+            this.onTabGo();
+        }
     }
 }

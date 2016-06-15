@@ -224,7 +224,7 @@
 	            btn.on("click", function () {
 	                var whichPage = widget.find("input[name='which_page']").val();
 	                if (whichPage > 0 && whichPage <= self.totalPage) {
-	                    window.location.href = self.url + "?content=" + self.content + "&currentPage=" + whichPage;
+	                    window.location.href = self.url + self.params + "&currentPage=" + whichPage;
 	                }
 	            });
 	        }

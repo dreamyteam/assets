@@ -908,6 +908,7 @@
 	                    name: this.name,
 	                    type: 'pie',
 	                    startAngle: 140,
+	                    minAngle: 10,
 	                    radius: ['40%', '65%'],
 	                    center: ['50%', '55%'],
 	                    avoidLabelOverlap: true,
