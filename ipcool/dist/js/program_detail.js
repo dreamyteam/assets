@@ -456,7 +456,6 @@
 	                    if (result.error_code == 0) {
 	                        self.renderUI(result.data);
 	                    }
-	                    //TODO 处理error_code
 	                }
 	            });
 	        }
@@ -628,12 +627,40 @@
 	            this.url && this.getRemoteData();
 	        }
 	    }, {
+	        key: 'getRegion',
+	        value: function getRegion(arr) {
+	            var max = Math.max.apply(null, arr);
+	            var min = Math.min.apply(null, arr);
+	            // console.log("max:" + max + "\nmin:" + min);
+	            var maxLength = max.toString().length;
+	            var minLength = min.toString().length;
+
+	            // function getDigit(length) { //位数转1000,10000等
+	            //     let int = "1";
+	            //     for (let i = 0; i < length - 1; i++) {
+	            //         int += "0";
+	            //     }
+	            //     return int;
+	            // }
+
+	            max = Math.ceil(max / 1000) * 1000;
+	            min = Math.floor(min / 1000) * 1000;
+	            return {
+	                max: max,
+	                min: min
+	            };
+	        }
+	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
 	            this.chart.hideLoading();
 	            var option = {
 	                xAxis: [{
 	                    data: data.date
+	                }],
+	                yAxis: [{
+	                    min: this.getRegion(data.data).max,
+	                    max: this.getRegion(data.data).min
 	                }],
 	                series: [{
 	                    data: data.data

@@ -14,7 +14,7 @@ export default class HoverDelay {
         let self = this;
         var timer = null;
         this.el.hover(function() {
-        	self.targetShow();
+            self.targetShow();
             clearInterval(timer); //关键
         }, function() {
             timer = setTimeout(function() {
@@ -31,17 +31,17 @@ export default class HoverDelay {
         });
     }
     targetShow() {
-    	let self = this;
+        let self = this;
         self.target.show();
         setTimeout(function() {
             self.target.addClass("active");
         }, 1)
     }
-    targetHide(){
-    	let self = this;
-    	self.target.removeClass("active");
-    	setTimeout(function(){
-    		self.target.hide();
-    	},300)
+    targetHide() {
+        let self = this;
+        self.target.removeClass("active");
+        setTimeout(function() {
+            self.target.hide();
+        }, 300)
     }
 }

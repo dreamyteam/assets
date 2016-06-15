@@ -28,7 +28,6 @@ export default class GetHistory {
                 if (result.error_code == 0) {
                     self.renderUI(result.data);
                 }
-                //TODO 处理error_code
             }
         })
     }
@@ -49,7 +48,7 @@ export default class GetHistory {
                 break;
         }
         //处理日期
-        this.historyDateEL.html(data.history_top_date.replace(/-/g,'/'));
+        this.historyDateEL.html(data.history_top_date.replace(/-/g, '/'));
         //处理数值
         this.historyValueEL.html(data.history_top_value);
     }

@@ -103,11 +103,37 @@ export default class Line extends Chart {
         this.chart.setOption(optionBasic);
         this.url && this.getRemoteData();
     }
+    getRegion(arr) {
+        let max = Math.max.apply(null, arr);
+        let min = Math.min.apply(null, arr);
+        // console.log("max:" + max + "\nmin:" + min);
+        let maxLength = max.toString().length;
+        let minLength = min.toString().length;
+
+        // function getDigit(length) { //位数转1000,10000等
+        //     let int = "1";
+        //     for (let i = 0; i < length - 1; i++) {
+        //         int += "0";
+        //     }
+        //     return int;
+        // }
+
+        max = Math.ceil(max / 1000) * 1000;
+        min = Math.floor(min / 1000) * 1000;
+        return {
+            max: max,
+            min: min
+        }
+    }
     updateChart(data) {
         this.chart.hideLoading();
         var option = {
             xAxis: [{
                 data: data.date
+            }],
+            yAxis: [{
+                min: this.getRegion(data.data).max,
+                max: this.getRegion(data.data).min,
             }],
             series: [{
                 data: data.data

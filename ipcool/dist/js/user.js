@@ -565,9 +565,8 @@
 	                    y = void 0,
 	                    width = void 0;
 	                if (files && files.length) {
-	                    file = files[0];
-	                    if (/^image\/\w+$/.test(file.type)) {
-	                        // 是图片文件的处理TODO 非图片文件提示
+	                    (function () {
+	                        file = files[0];
 	                        var avatar_popup = new _pop_up2.default({
 	                            el: "#avatar_popup",
 	                            callBack: function callBack() {
@@ -592,7 +591,7 @@
 	                                width = e.width;
 	                            }
 	                        }).cropper('replace', blobURL);
-	                    }
+	                    })();
 	                }
 	            });
 	        }

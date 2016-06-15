@@ -27,32 +27,30 @@ export default class Avatar {
             let x, y, width;
             if (files && files.length) {
                 file = files[0];
-                if (/^image\/\w+$/.test(file.type)) { // 是图片文件的处理TODO 非图片文件提示
-                    var avatar_popup = new Popup({
-                        el: "#avatar_popup",
-                        callBack: function() {
-                            self.uploadImg(file, x, y, width, avatar_popup);
-                        }
-                    });
-                    avatar_popup.alert();
-                    blobURL = URL.createObjectURL(file);
-                    self.preview.cropper({
-                        aspectRatio: 1 / 1,
-                        viewMode: 3,
-                        dragMode: 'move',
-                        guides: false,
-                        center: false,
-                        scalable: false,
-                        zoomable: false,
-                        background: false,
-                        toggleDragModeOnDblclick: false,
-                        crop: function(e) {
-                            x = e.x;
-                            y = e.y;
-                            width = e.width;
-                        }
-                    }).cropper('replace', blobURL)
-                }
+                let avatar_popup = new Popup({
+                    el: "#avatar_popup",
+                    callBack: function() {
+                        self.uploadImg(file, x, y, width, avatar_popup);
+                    }
+                });
+                avatar_popup.alert();
+                blobURL = URL.createObjectURL(file);
+                self.preview.cropper({
+                    aspectRatio: 1 / 1,
+                    viewMode: 3,
+                    dragMode: 'move',
+                    guides: false,
+                    center: false,
+                    scalable: false,
+                    zoomable: false,
+                    background: false,
+                    toggleDragModeOnDblclick: false,
+                    crop: function(e) {
+                        x = e.x;
+                        y = e.y;
+                        width = e.width;
+                    }
+                }).cropper('replace', blobURL)
             }
         })
     }
