@@ -327,7 +327,7 @@
 	        key: "initSizer",
 	        value: function initSizer() {
 	            var self = this;
-	            this.el.find("input[type=checkbox]").each(function () {
+	            this.el.find("input[name=type]").each(function () {
 	                if ($(this).is(":checked")) {
 	                    self.typeList.push($(this).val());
 	                }
@@ -337,7 +337,7 @@
 	        key: "bindSizer",
 	        value: function bindSizer() {
 	            var self = this;
-	            this.el.find("input[type=checkbox]").each(function () {
+	            this.el.find("input[name=type]").each(function () {
 	                $(this).on("click", function () {
 	                    var curValue = $(this).val();
 	                    if ($(this).is(":checked")) {
