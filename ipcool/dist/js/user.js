@@ -70,6 +70,10 @@
 
 	var _companyIdentify2 = _interopRequireDefault(_companyIdentify);
 
+	var _tab = __webpack_require__(2);
+
+	var _tab2 = _interopRequireDefault(_tab);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
@@ -93,6 +97,35 @@
 	    //企业身份验证开始
 	    var companyForms = new _companyIdentify2.default({
 	        el: "#company_identify_container"
+	    });
+
+	    var userState = new _tab2.default({
+	        el: "#user_state_container",
+	        tabContents: ".user_state_content",
+	        onTabGo: function onTabGo() {
+	            if (this.curIndex == 1) {
+	                $(".go_prev").on("click", function () {
+	                    userState.switchContent(0, false);
+	                });
+	            }
+	        }
+	    });
+	    $("button.start_identify").on("click", function () {
+	        userState.switchContent(1, false);
+	    });
+
+	    var pPopUpConfirm = new _pop_up2.default({
+	        title: "提示",
+	        content: "修改认证信息将重新完成认证，在修改完成前用户将使用修改前的相关信息",
+	        btnConfirm: "继续修改",
+	        btnCancle: "放弃修改",
+	        callBack: function callBack() {
+	            userState.switchContent(1, false);
+	        }
+	    });
+
+	    $(".identify_success_container button.submit").on("click", function () {
+	        pPopUpConfirm.alert();
 	    });
 	});
 
@@ -127,8 +160,8 @@
 	            this.el = $(this.cfg.el);
 	            this.tabNav = this.el.find(this.cfg.tabNav);
 	            this.tabContents = this.el.find(this.cfg.tabContents);
-	            this.tabNavList = this.tabNav.find("li");
-	            this.contentList = this.tabContents.find("li");
+	            this.tabNavList = this.tabNav.children("li");
+	            this.contentList = this.tabContents.children("li");
 	            this.trigger = this.cfg.trigger || "click";
 	            this.curIndex = 0;
 	            this.onTabGo = this.cfg.onTabGo || null;
@@ -3851,16 +3884,6 @@
 	                    }
 	                }
 	            });
-	            // console.log(
-	            //     "part:" + part +
-	            //     "\nrealName:" + realName +
-	            //     "\ncardNo:" + cardNo +
-	            //     "\nemail:" + email +
-	            //     "\nphone:" + phone +
-	            //     "\ncardFront:" + cardFront +
-	            //     "\ncardBack:" + cardBack +
-	            //     "\nprofessionInfo" + professionInfo
-	            // )
 	        }
 	    }, {
 	        key: 'postSuccess',

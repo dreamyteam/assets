@@ -60,37 +60,27 @@ export default class PersonalIdentify {
         let cardBack = this.el.find(".card_back").attr("src");
         let professionInfo = this.el.find(".profession_info").attr("src");
         $.ajax({
-                url: '/user/authApply',
-                type: 'POST',
-                data: {
-                    type: type,
-                    part: part,
-                    userName: realName,
-                    cardNo: cardNo,
-                    email: email,
-                    phone: phone,
-                    cardFront: cardFront,
-                    cardBack: cardBack,
-                    professionInfo: professionInfo
-                },
-                success: function(result) {
-                    if (result.error_code == 0) {
-                        self.postSuccess();
-                    } else if (result.error_code > 0) {
-                        console.log(result.error_msg);
-                    }
+            url: '/user/authApply',
+            type: 'POST',
+            data: {
+                type: type,
+                part: part,
+                userName: realName,
+                cardNo: cardNo,
+                email: email,
+                phone: phone,
+                cardFront: cardFront,
+                cardBack: cardBack,
+                professionInfo: professionInfo
+            },
+            success: function(result) {
+                if (result.error_code == 0) {
+                    self.postSuccess();
+                } else if (result.error_code > 0) {
+                    console.log(result.error_msg);
                 }
-            })
-            // console.log(
-            //     "part:" + part +
-            //     "\nrealName:" + realName +
-            //     "\ncardNo:" + cardNo +
-            //     "\nemail:" + email +
-            //     "\nphone:" + phone +
-            //     "\ncardFront:" + cardFront +
-            //     "\ncardBack:" + cardBack +
-            //     "\nprofessionInfo" + professionInfo
-            // )
+            }
+        })
     }
     postSuccess() {
         let pPopUpConfirm = new Popup({

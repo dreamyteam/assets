@@ -218,6 +218,11 @@
   cursor: crosshair; }
 .cropper-disabled .cropper-drag-box, .cropper-disabled .cropper-face, .cropper-disabled .cropper-line, .cropper-disabled .cropper-point {
   cursor: not-allowed; }
+#user_state_container > li {
+  display: none; }
+  #user_state_container > li.active {
+    display: block; }
+
 .user_identify_container li {
   display: none; }
   .user_identify_container li.active {
@@ -380,6 +385,7 @@
       .user_identify_container .start_identify_container .start_identify_content .inner ul {
         margin-top: 10px; }
         .user_identify_container .start_identify_container .start_identify_content .inner ul li {
+          display: block;
           padding-left: 40px;
           line-height: 45px;
           position: relative;

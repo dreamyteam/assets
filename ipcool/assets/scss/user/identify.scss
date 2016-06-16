@@ -1,3 +1,12 @@
+#user_state_container {
+    >li {
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
+}
+
 .user_identify_container {
     li {
         display: none;
@@ -186,6 +195,7 @@
                 ul {
                     margin-top: 10px;
                     li {
+                        display: block;
                         padding-left: 40px;
                         line-height: 45px;
                         position: relative;

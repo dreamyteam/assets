@@ -9,8 +9,8 @@ export default class Tab {
         this.el = $(this.cfg.el);
         this.tabNav = this.el.find(this.cfg.tabNav);
         this.tabContents = this.el.find(this.cfg.tabContents);
-        this.tabNavList = this.tabNav.find("li");
-        this.contentList = this.tabContents.find("li");
+        this.tabNavList = this.tabNav.children("li");
+        this.contentList = this.tabContents.children("li");
         this.trigger = this.cfg.trigger || "click";
         this.curIndex = 0;
         this.onTabGo = this.cfg.onTabGo || null;
