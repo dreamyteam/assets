@@ -40,9 +40,8 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63,6 +62,18 @@
 
 	var _limiteChoose2 = _interopRequireDefault(_limiteChoose);
 
+	var _personalIdentify = __webpack_require__(25);
+
+	var _personalIdentify2 = _interopRequireDefault(_personalIdentify);
+
+	var _companyIdentify = __webpack_require__(27);
+
+	var _companyIdentify2 = _interopRequireDefault(_companyIdentify);
+
+	var _tab = __webpack_require__(2);
+
+	var _tab2 = _interopRequireDefault(_tab);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
@@ -74,49 +85,144 @@
 	            navImage: "#currentUser img"
 	        });
 	    });
-
-	    var applyValidate = new _validate2.default({
+	    var pwdValidate = new _validate2.default({
 	        el: "#pwdModify",
 	        inputBoxs: ".input_content",
 	        btnSubmit: "input[type='submit']"
 	    });
+	    //个人身份验证开始
+	    var personalForms = new _personalIdentify2.default({
+	        el: "#personal_identify_container"
+	    });
+	    //企业身份验证开始
+	    var companyForms = new _companyIdentify2.default({
+	        el: "#company_identify_container"
+	    });
 
-	    var companyLimite = new _limiteChoose2.default("#company_choose_form", 3);
-	    var personalLimite = new _limiteChoose2.default("#personal_choose_form", 5);
-
-	    //企业机构身份验证 完成后进去银行卡 验证页面
-	    var cInfoForm = new _validate2.default({
-	        el: "#c_indentify_form",
-	        inputBoxs: ".input_content",
-	        btnSubmit: "input[type='submit']",
-	        callBack: function callBack() {
-	            //去到银行验证页面
+	    var userState = new _tab2.default({
+	        el: "#user_state_container",
+	        tabContents: ".user_state_content",
+	        onTabGo: function onTabGo() {
+	            if (this.curIndex == 1) {
+	                $(".go_prev").on("click", function () {
+	                    userState.switchContent(0, false);
+	                });
+	            }
 	        }
+	    });
+	    $("button.start_identify").on("click", function () {
+	        userState.switchContent(1, false);
 	    });
 
 	    var pPopUpConfirm = new _pop_up2.default({
-	        title: "我们将在3个工作日内为您完成资料确认",
-	        content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
-	        btnConfirm: "我知道了",
+	        title: "提示",
+	        content: "修改认证信息将重新完成认证，在修改完成前用户将使用修改前的相关信息",
+	        btnConfirm: "继续修改",
+	        btnCancle: "放弃修改",
 	        callBack: function callBack() {
-	            console.log("aaaa");
+	            userState.switchContent(1, false);
 	        }
 	    });
 
-	    //个人身份验证 完成后弹窗
-	    var pInfoForm = new _validate2.default({
-	        el: "#p_indentify_form",
-	        inputBoxs: ".input_content",
-	        btnSubmit: "input[type='submit']",
-	        callBack: function callBack() {
-	            pPopUpConfirm.alert();
-	        }
+	    $(".identify_success_container button.submit").on("click", function () {
+	        pPopUpConfirm.alert();
 	    });
 	});
 
 /***/ },
+/* 1 */,
+/* 2 */
+/***/ function(module, exports) {
 
-/***/ 3:
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Tab = function () {
+	    function Tab(cfg) {
+	        _classCallCheck(this, Tab);
+
+	        this.cfg = cfg;
+	        this.curNav = null;
+	        this.curContent = null;
+	        this.init();
+	    }
+
+	    _createClass(Tab, [{
+	        key: "init",
+	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.tabNav = this.el.find(this.cfg.tabNav);
+	            this.tabContents = this.el.find(this.cfg.tabContents);
+	            this.tabNavList = this.tabNav.children("li");
+	            this.contentList = this.tabContents.children("li");
+	            this.trigger = this.cfg.trigger || "click";
+	            this.curIndex = 0;
+	            this.onTabGo = this.cfg.onTabGo || null;
+	            this.checkTrigger();
+	        }
+	    }, {
+	        key: "checkTrigger",
+	        value: function checkTrigger() {
+	            var self = this;
+	            if (this.trigger == "mouseover") {
+	                this.tabNavList.each(function () {
+	                    $(this).on("mouseover", function () {
+	                        var index = $(this).index();
+	                        self.switchTabNav(index);
+	                    });
+	                });
+	            } else if (this.trigger == "click") {
+	                this.tabNavList.each(function () {
+	                    $(this).on("click", function () {
+	                        var index = $(this).index();
+	                        self.switchTabNav(index, true);
+	                    });
+	                });
+	            }
+	        }
+	    }, {
+	        key: "switchTabNav",
+	        value: function switchTabNav(index, animate) {
+	            this.tabNavList.each(function () {
+	                $(this).removeClass('active');
+	            });
+	            this.curNav = this.tabNavList.eq(index);
+	            this.curNav.addClass('active');
+	            this.switchContent(index, animate);
+	            this.curIndex = index;
+	        }
+	    }, {
+	        key: "switchContent",
+	        value: function switchContent(index, animate) {
+	            this.curIndex = index;
+	            this.contentList.each(function () {
+	                $(this).removeClass('active animate');
+	            });
+	            this.curContent = this.contentList.eq(index);
+	            this.curContent.addClass('active');
+	            if (animate) {
+	                this.contentList.eq(index).addClass('animate');
+	            }
+	            if (this.onTabGo) {
+	                this.onTabGo();
+	            }
+	        }
+	    }]);
+
+	    return Tab;
+	}();
+
+	exports.default = Tab;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -152,7 +258,7 @@
 	            if (this.cfg.el) {
 	                this.el = $(this.cfg.el);
 	            } else {
-	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
+	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='content'>" + this.cfg.content + "</p>" + "</div>");
 	                //添加按钮们
 	                if (this.cfg.btnConfirm) {
 	                    var btnConfirm = $("<button class='confirm'>" + this.cfg.btnConfirm + "</button>");
@@ -211,8 +317,7 @@
 	exports.default = Popup;
 
 /***/ },
-
-/***/ 4:
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -305,7 +410,7 @@
 	        value: function checkPhone(obj, parent, canSubmit) {
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
-	            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	            var regPhone = /^0?1[3|4|5|8|7][0-9]\d{8}$/;
 
 	            if (!regPhone.test(obj.val())) {
 	                self.setErrMsg(errMsg, "手机号码错误");
@@ -490,13 +595,13 @@
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
-	                    return false;
-	                    // self.callBack();
+	                    // return false;
+	                    self.callBack();
 	                } else {
-	                        if (self.callBack) {
-	                            self.callBack();
-	                        }
+	                    if (self.callBack) {
+	                        self.callBack();
 	                    }
+	                }
 	            });
 	        }
 	    }]);
@@ -507,8 +612,24 @@
 	exports.default = Validate;
 
 /***/ },
-
-/***/ 22:
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -645,8 +766,7 @@
 	exports.default = Avatar;
 
 /***/ },
-
-/***/ 23:
+/* 23 */
 /***/ function(module, exports) {
 
 	/*!
@@ -3553,8 +3673,7 @@
 	exports.default = Cropper;
 
 /***/ },
-
-/***/ 24:
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -3568,21 +3687,27 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var LimiteChoose = function () {
-	    function LimiteChoose(el, limit) {
+	    function LimiteChoose(cfg) {
 	        _classCallCheck(this, LimiteChoose);
 
-	        this.el = $(el);
-	        this.limit = limit;
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.limit = null;
+	        this.callBack = null;
 	        this.btnSubmit = null;
 	        this.errMsg = null;
+	        this.characterList = null;
 	        this.init();
 	    }
 
 	    _createClass(LimiteChoose, [{
 	        key: "init",
 	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.limit = this.cfg.limit;
+	            this.callBack = this.cfg.callBack || null;
 	            if (this.el.length > 0) {
-	                this.btnSubmit = this.el.find("input[type='submit']");
+	                this.btnSubmit = this.el.find(".submit");
 	                this.errMsg = this.el.find(".err_msg");
 	                this.limitCheck();
 	                this.submitCheck();
@@ -3603,11 +3728,28 @@
 	        key: "submitCheck",
 	        value: function submitCheck() {
 	            var self = this;
+	            this.btnSubmit.off("click");
 	            this.btnSubmit.on("click", function () {
 	                var curLength = self.el.find("input[type='checkbox']:checked").length;
 	                if (curLength <= 0) {
 	                    self.errMsg.show().html("请至少选择1个角色");
-	                    return false;
+	                } else {
+	                    self.getCharacterList();
+	                    if (self.callBack) {
+	                        self.callBack();
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: "getCharacterList",
+	        value: function getCharacterList() {
+	            var self = this;
+	            this.characterList = [];
+	            var checkboxs = this.el.find("input[type='checkbox']");
+	            checkboxs.each(function () {
+	                if ($(this).is(":checked")) {
+	                    self.characterList.push($(this).val());
 	                }
 	            });
 	        }
@@ -3618,6 +3760,433 @@
 
 	exports.default = LimiteChoose;
 
-/***/ }
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
 
-/******/ });
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _pop_up = __webpack_require__(3);
+
+	var _pop_up2 = _interopRequireDefault(_pop_up);
+
+	var _validate = __webpack_require__(4);
+
+	var _validate2 = _interopRequireDefault(_validate);
+
+	var _tab = __webpack_require__(2);
+
+	var _tab2 = _interopRequireDefault(_tab);
+
+	var _limiteChoose = __webpack_require__(24);
+
+	var _limiteChoose2 = _interopRequireDefault(_limiteChoose);
+
+	var _file_upload = __webpack_require__(26);
+
+	var _file_upload2 = _interopRequireDefault(_file_upload);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var PersonalIdentify = function () {
+	    function PersonalIdentify(cfg) {
+	        _classCallCheck(this, PersonalIdentify);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.tab = null;
+	        this.cList = null;
+	        this.init();
+	    }
+
+	    _createClass(PersonalIdentify, [{
+	        key: 'init',
+	        value: function init() {
+	            var self = this;
+	            this.el = $(this.cfg.el);
+	            this.tab = new _tab2.default({
+	                el: this.el,
+	                tabContents: ".user_identify_container",
+	                onTabGo: function onTabGo() {
+	                    var curIndex = this.curIndex;
+	                    if (curIndex == 1) {
+	                        self.validateForm();
+	                        self.uploadFiles();
+	                        var btn_goPrev = this.curContent.find(".go_prev");
+	                        btn_goPrev.on("click", function () {
+	                            self.tab.switchContent(0, true);
+	                        });
+	                    }
+	                }
+	            });
+	            this.chooseCharacter();
+	        }
+	    }, {
+	        key: 'uploadFiles',
+	        value: function uploadFiles() {
+	            var file = new _file_upload2.default("#p_indentify_form");
+	        }
+	    }, {
+	        key: 'validateForm',
+	        value: function validateForm() {
+	            var self = this;
+	            //个人身份验证 完成后弹窗
+	            var pInfoForm = new _validate2.default({
+	                el: "#p_indentify_form",
+	                inputBoxs: ".input_content",
+	                btnSubmit: ".submit",
+	                callBack: function callBack() {
+	                    // pPopUpConfirm.alert();
+	                    self.getFormValues();
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'getFormValues',
+	        value: function getFormValues() {
+	            var self = this;
+	            var type = 1;
+	            var part = this.cList.join(",");
+	            var realName = this.el.find("input[name=realName]").val();
+	            var cardNo = this.el.find("input[name=cardNo]").val();
+	            var email = this.el.find("input[name=email]").val();
+	            var phone = this.el.find("input[name=phone]").val();
+	            var cardFront = this.el.find(".card_front").attr("src");
+	            var cardBack = this.el.find(".card_back").attr("src");
+	            var professionInfo = this.el.find(".profession_info").attr("src");
+	            $.ajax({
+	                url: '/user/authApply',
+	                type: 'POST',
+	                data: {
+	                    type: type,
+	                    part: part,
+	                    userName: realName,
+	                    cardNo: cardNo,
+	                    email: email,
+	                    phone: phone,
+	                    cardFront: cardFront,
+	                    cardBack: cardBack,
+	                    professionInfo: professionInfo
+	                },
+	                success: function success(result) {
+	                    if (result.error_code == 0) {
+	                        self.postSuccess();
+	                    } else if (result.error_code > 0) {
+	                        console.log(result.error_msg);
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'postSuccess',
+	        value: function postSuccess() {
+	            var pPopUpConfirm = new _pop_up2.default({
+	                title: "我们将在3个工作日内为您完成资料确认",
+	                content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
+	                btnConfirm: "我知道了",
+	                callBack: function callBack() {
+	                    console.log("aaaa");
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'chooseCharacter',
+	        value: function chooseCharacter() {
+	            var self = this;
+	            var personalLimite = new _limiteChoose2.default({
+	                el: "#personal_choose_form",
+	                limit: 5,
+	                callBack: function callBack() {
+	                    self.cList = this.characterList;
+	                    self.tab.switchContent(1, true);
+	                }
+	            });
+	        }
+	    }]);
+
+	    return PersonalIdentify;
+	}();
+
+	exports.default = PersonalIdentify;
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var FileUpload = function () {
+	    function FileUpload(el) {
+	        _classCallCheck(this, FileUpload);
+
+	        this.el = $(el);
+	        this.inputFiles = null;
+	        this.init();
+	    }
+
+	    _createClass(FileUpload, [{
+	        key: "init",
+	        value: function init() {
+	            this.inputFiles = this.el.find("input[type=file]");
+	            this.inputChangeHandler();
+	        }
+	    }, {
+	        key: "inputChangeHandler",
+	        value: function inputChangeHandler() {
+	            var self = this;
+	            this.inputFiles.each(function () {
+	                var curInput = $(this);
+	                var curPreviewBox = curInput.siblings('.preview_image');
+	                curInput.on("change", function () {
+	                    var files = this.files;
+	                    var file = void 0;
+	                    if (files && files.length) {
+	                        file = files[0];
+	                    }
+	                    self.previewImg(curInput, curPreviewBox, file);
+	                    self.upLoadFiles(curPreviewBox, file);
+	                });
+	            });
+	        }
+	    }, {
+	        key: "previewImg",
+	        value: function previewImg(curInput, curPreviewBox, file) {
+	            if (!window.FileReader) return; //如果不支持FileReader 则不处理
+	            var reader = new FileReader();
+	            reader.onload = function (oFREvent) {
+	                curPreviewBox.attr("src", oFREvent.target.result).show();
+	            };
+	            reader.readAsDataURL(file);
+	        }
+	    }, {
+	        key: "upLoadFiles",
+	        value: function upLoadFiles(curPreviewBox, file) {
+	            var self = this;
+	            var fd = new FormData();
+	            fd.append("file", file);
+	            $.ajax({
+	                url: '/upload/img',
+	                type: 'POST',
+	                processData: false,
+	                contentType: false,
+	                data: fd,
+	                success: function success(result) {
+	                    console.log(result);
+	                    if (result.error_code == 0) {
+	                        var image_url = result.data.image_url;
+	                        self.setImageUrl(image_url, curPreviewBox);
+	                    } else if (result.error_code > 0) {
+	                        console.log(result.error_msg);
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: "setImageUrl",
+	        value: function setImageUrl(url, curPreviewBox) {
+	            curPreviewBox.attr("src", url).show();
+	        }
+	    }]);
+
+	    return FileUpload;
+	}();
+
+	exports.default = FileUpload;
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _pop_up = __webpack_require__(3);
+
+	var _pop_up2 = _interopRequireDefault(_pop_up);
+
+	var _validate = __webpack_require__(4);
+
+	var _validate2 = _interopRequireDefault(_validate);
+
+	var _tab = __webpack_require__(2);
+
+	var _tab2 = _interopRequireDefault(_tab);
+
+	var _limiteChoose = __webpack_require__(24);
+
+	var _limiteChoose2 = _interopRequireDefault(_limiteChoose);
+
+	var _file_upload = __webpack_require__(26);
+
+	var _file_upload2 = _interopRequireDefault(_file_upload);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var CompanyIdentify = function () {
+	    function CompanyIdentify(cfg) {
+	        _classCallCheck(this, CompanyIdentify);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.tab = null;
+	        this.cList = null;
+	        this.init();
+	    }
+
+	    _createClass(CompanyIdentify, [{
+	        key: 'init',
+	        value: function init() {
+	            var self = this;
+	            this.el = $(this.cfg.el);
+	            this.tab = new _tab2.default({
+	                el: this.el,
+	                tabContents: ".user_identify_container",
+	                onTabGo: function onTabGo() {
+	                    var curIndex = this.curIndex;
+	                    var btn_goPrev = this.curContent.find(".go_prev");
+	                    if (curIndex == 1) {
+	                        self.validateForm();
+	                        self.uploadFiles();
+	                        btn_goPrev.on("click", function () {
+	                            self.tab.switchContent(0, true);
+	                        });
+	                    }
+	                    if (curIndex == 2) {
+	                        self.validateBank();
+	                        btn_goPrev.on("click", function () {
+	                            self.tab.switchContent(1, true);
+	                        });
+	                    }
+	                    // add curIndex == 2
+	                }
+	            });
+	            this.chooseCharacter();
+	        }
+	    }, {
+	        key: 'uploadFiles',
+	        value: function uploadFiles() {
+	            var file = new _file_upload2.default("#c_indentify_form");
+	        }
+	    }, {
+	        key: 'validateForm',
+	        value: function validateForm() {
+	            var self = this;
+	            var cInfoForm = new _validate2.default({
+	                el: "#c_indentify_form",
+	                inputBoxs: ".input_content",
+	                btnSubmit: ".submit",
+	                callBack: function callBack() {
+	                    self.tab.switchContent(2, true);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'validateBank',
+	        value: function validateBank() {
+	            var self = this;
+	            var cBankForm = new _validate2.default({
+	                el: "#c_bank_info",
+	                inputBoxs: ".input_content",
+	                btnSubmit: ".submit",
+	                callBack: function callBack() {
+	                    self.getFormValues();
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'getFormValues',
+	        value: function getFormValues() {
+	            var self = this;
+	            var type = 2;
+	            var part = this.cList.join(",");
+	            var realName = this.el.find("input[name=realName]").val();
+	            var cardNo = this.el.find("input[name=cardNo]").val();
+	            var email = this.el.find("input[name=email]").val();
+	            var phone = this.el.find("input[name=phone]").val();
+	            var cardFront = this.el.find(".card_front").attr("src");
+	            var cardBack = this.el.find(".card_back").attr("src");
+	            var companyName = this.el.find("input[name=companyName]").val();
+	            var businessLicense = this.el.find(".business_license").attr("src");
+	            var licenseAgreement = this.el.find(".license_agreement").attr("src");
+	            var bankNo = this.el.find("input[name=bankNo]").val();
+	            var bankName = this.el.find("input[name=bankName]").val();
+	            var bankRealyName = this.el.find("input[name=bankRealyName]").val();
+
+	            $.ajax({
+	                url: '/user/authApply',
+	                type: 'POST',
+	                data: {
+	                    type: type,
+	                    part: part,
+	                    userName: realName,
+	                    cardNo: cardNo,
+	                    email: email,
+	                    phone: phone,
+	                    cardFront: cardFront,
+	                    cardBack: cardBack,
+	                    companyName: companyName,
+	                    businessLicense: businessLicense,
+	                    licenseAgreement: licenseAgreement,
+	                    bankNo: bankNo,
+	                    bankName: bankName,
+	                    bankRealyName: bankRealyName
+	                },
+	                success: function success(result) {
+	                    if (result.error_code == 0) {
+	                        self.postSuccess();
+	                    } else if (result.error_code > 0) {
+	                        console.log(result.error_msg);
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'postSuccess',
+	        value: function postSuccess() {
+	            console.log("提交成功");
+	        }
+	    }, {
+	        key: 'chooseCharacter',
+	        value: function chooseCharacter() {
+	            var self = this;
+	            var limit = new _limiteChoose2.default({
+	                el: "#company_choose_form",
+	                limit: 3,
+	                callBack: function callBack() {
+	                    self.cList = this.characterList;
+	                    self.tab.switchContent(1, true);
+	                }
+	            });
+	        }
+	    }]);
+
+	    return CompanyIdentify;
+	}();
+
+	exports.default = CompanyIdentify;
+
+/***/ }
+/******/ ]);

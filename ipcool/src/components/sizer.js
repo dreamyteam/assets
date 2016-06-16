@@ -61,7 +61,7 @@ export default class Sizer {
     }
     initSizer() {
         let self = this;
-        this.el.find("input[type=checkbox]").each(function() {
+        this.el.find("input[name=type]").each(function() {
             if ($(this).is(":checked")) {
                 self.typeList.push($(this).val());
             }
@@ -69,7 +69,7 @@ export default class Sizer {
     }
     bindSizer() {
         let self = this;
-        this.el.find("input[type=checkbox]").each(function() {
+        this.el.find("input[name=type]").each(function() {
             $(this).on("click", function() {
                 let curValue = $(this).val();
                 if ($(this).is(":checked")) {

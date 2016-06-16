@@ -196,166 +196,71 @@ html.fp-enabled, .fp-enabled body {
   background: url("http://o6qhdb7kv.bkt.clouddn.com/home_page_1_bg_pic.jpg") 0 100% no-repeat;
   background-size: cover; }
   .sec_1 header {
-    width: 100%;
-    height: 54px; }
-    .sec_1 header nav {
-      display: block;
-      width: 100%;
-      font-size: 16px;
-      min-width: 940px; }
-      .sec_1 header nav .logo {
-        display: inline-block;
-        float: left;
-        font-size: 12px;
-        background: url("../../assets/images/index/logo_withoutchi.png") 50% no-repeat;
-        vertical-align: middle;
-        background-size: 179px;
-        width: 179px;
-        height: 54px;
-        line-height: 54px; }
-      .sec_1 header nav ul {
-        line-height: 54px; }
-        .sec_1 header nav ul li {
-          cursor: pointer;
-          display: inline-block;
-          vertical-align: middle;
-          color: #fff;
-          line-height: 54px;
-          overflow: hidden; }
-          .sec_1 header nav ul li a {
-            text-align: center;
-            position: relative;
-            color: #fff;
-            display: inline-block;
-            vertical-align: middle;
-            width: 74px;
-            line-height: 54px;
-            text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1); }
-          .sec_1 header nav ul li span {
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 15px;
-            line-height: 54px;
-            text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1); }
-          .sec_1 header nav ul li img {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            line-height: 54px;
-            vertical-align: -15%;
-            border-radius: 100%;
-            box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1); }
-          .sec_1 header nav ul li button {
-            cursor: pointer;
-            display: inline-block;
-            vertical-align: middle;
-            transition: color 300ms ease, background 300ms ease, border 300ms ease; }
-        .sec_1 header nav ul #currentUser {
-          cursor: pointer;
-          position: relative;
-          overflow: visible;
-          margin-left: 15px; }
-          .sec_1 header nav ul #currentUser .user_menu {
-            padding: 5px 0;
-            display: none;
-            opacity: 0;
-            z-index: 999999;
-            position: absolute;
-            top: 55px;
-            right: 0px;
-            width: 205px;
-            border-radius: 2px;
-            background: #fff;
-            -webkit-transform: translateY(20px);
-                    transform: translateY(20px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-            transition: all 300ms ease; }
-            .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr {
-              height: 100%; }
-              .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr li {
-                display: block;
-                width: 100%;
-                height: 40px;
-                line-height: 40px;
-                border-bottom: 1px solid rgba(151, 151, 151, 0.2);
-                transition: all 300ms ease; }
-                .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr li a {
-                  text-align: left;
-                  width: 100%;
-                  color: #383838;
-                  line-height: 40px; }
-                .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr li:hover {
-                  background: #F8F8F8;
-                  border: none; }
-                .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr li:last-child {
-                  border: none; }
-              .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr i {
-                display: inline-block;
-                width: 14px;
-                height: 14px;
-                margin: auto 20px; }
-                .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr i.icon_follow {
-                  background: url("../../assets/images/index/ic_follow.png") 50% 50% no-repeat;
-                  background-size: 14px; }
-                .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr i.icon_info {
-                  background: url("../../assets/images/index/ic_info.png") 50% 50% no-repeat;
-                  background-size: 14px; }
-                .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr i.icon_pwd {
-                  background: url("../../assets/images/index/ic_pwd.png") 50% 50% no-repeat;
-                  background-size: 14px; }
-                .sec_1 header nav ul #currentUser .user_menu .user_menu_contaienr i.icon_logout {
-                  background: url("../../assets/images/index/ic_logout.png") 50% 50% no-repeat;
-                  background-size: 14px; }
-          .sec_1 header nav ul #currentUser .user_menu.active {
-            opacity: 1;
-            -webkit-transform: translateY(0);
-                    transform: translateY(0); }
-      .sec_1 header nav .home_page_nav_left {
-        float: left;
-        margin-left: 90px; }
-        .sec_1 header nav .home_page_nav_left a::after {
-          content: '';
-          position: absolute;
-          left: 150%;
-          bottom: 2px;
-          background: #fff;
-          width: 54px;
-          margin-left: -27px;
-          height: 3px;
-          box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-          transition: left 300ms ease; }
-        .sec_1 header nav .home_page_nav_left li a:hover:after {
-          left: 50%; }
-        .sec_1 header nav .home_page_nav_left li.active a:after {
-          left: 50%; }
-      .sec_1 header nav .home_page_nav_right {
-        float: right; }
-        .sec_1 header nav .home_page_nav_right #register {
-          border: 1px solid #ffffff;
-          border-radius: 2px;
-          width: 79px;
-          height: 33px;
-          line-height: 29px;
-          color: #ffffff;
-          font-size: 14px;
-          background: transparent; }
-          .sec_1 header nav .home_page_nav_right #register:hover {
-            background: #ffffff;
-            border: 1px solid #ffffff;
-            color: #20c9bd; }
-        .sec_1 header nav .home_page_nav_right #login {
-          border: 1px solid #00ffed;
-          border-radius: 2px;
-          background: transparent;
-          width: 98px;
-          height: 33px;
-          line-height: 29px;
-          font-size: 14px;
-          color: #00ffed; }
-          .sec_1 header nav .home_page_nav_right #login:hover {
-            background: #20c9bd;
-            border: 1px solid #20c9bd;
-            color: #ffffff; }
+    background: transparent;
+    box-shadow: none; }
+    .sec_1 header nav .logo {
+      display: inline-block;
+      float: left;
+      font-size: 12px;
+      background: url("../../assets/images/index/logo_withoutchi.png") 50% no-repeat;
+      vertical-align: middle;
+      background-size: 179px;
+      width: 179px;
+      height: 54px;
+      line-height: 54px; }
+    .sec_1 header nav .home_page_nav_left li a {
+      color: #fff; }
+      .sec_1 header nav .home_page_nav_left li a::after {
+        content: '';
+        position: absolute;
+        left: 150%;
+        bottom: 2px;
+        background: #fff;
+        width: 54px;
+        margin-left: -27px;
+        height: 3px;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+        transition: left 300ms ease; }
+    .sec_1 header nav .home_page_nav_left li:hover a {
+      color: #fff; }
+    .sec_1 header nav .home_page_nav_left li a:hover:after {
+      left: 50%; }
+    .sec_1 header nav .home_page_nav_left li.active a:after {
+      left: 50%; }
+    .sec_1 header nav .home_page_nav_right li {
+      color: #fff; }
+      .sec_1 header nav .home_page_nav_right li a {
+        color: #fff; }
+        .sec_1 header nav .home_page_nav_right li a:hover {
+          color: #fff; }
+    .sec_1 header nav .home_page_nav_right #currentUser img {
+      background: #fff; }
+    .sec_1 header nav .home_page_nav_right #register {
+      border: 1px solid #ffffff;
+      border-radius: 2px;
+      width: 79px;
+      height: 33px;
+      line-height: 29px;
+      color: #ffffff;
+      font-size: 14px;
+      background: transparent; }
+      .sec_1 header nav .home_page_nav_right #register:hover {
+        background: #ffffff;
+        border: 1px solid #ffffff;
+        color: #20c9bd; }
+    .sec_1 header nav .home_page_nav_right #login {
+      border: 1px solid #00ffed;
+      border-radius: 2px;
+      background: transparent;
+      width: 98px;
+      height: 33px;
+      line-height: 29px;
+      font-size: 14px;
+      color: #00ffed; }
+      .sec_1 header nav .home_page_nav_right #login:hover {
+        background: #20c9bd;
+        border: 1px solid #20c9bd;
+        color: #ffffff; }
   .sec_1 .main_title {
     display: block;
     background: url("../../assets/images/index/main_title.png") 50% no-repeat;

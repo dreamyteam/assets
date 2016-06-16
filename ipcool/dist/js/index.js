@@ -525,6 +525,8 @@
 	        _classCallCheck(this, Tab);
 
 	        this.cfg = cfg;
+	        this.curNav = null;
+	        this.curContent = null;
 	        this.init();
 	    }
 
@@ -534,8 +536,8 @@
 	            this.el = $(this.cfg.el);
 	            this.tabNav = this.el.find(this.cfg.tabNav);
 	            this.tabContents = this.el.find(this.cfg.tabContents);
-	            this.tabNavList = this.tabNav.find("li");
-	            this.contentList = this.tabContents.find("li");
+	            this.tabNavList = this.tabNav.children("li");
+	            this.contentList = this.tabContents.children("li");
 	            this.trigger = this.cfg.trigger || "click";
 	            this.curIndex = 0;
 	            this.onTabGo = this.cfg.onTabGo || null;
@@ -567,7 +569,8 @@
 	            this.tabNavList.each(function () {
 	                $(this).removeClass('active');
 	            });
-	            this.tabNavList.eq(index).addClass('active');
+	            this.curNav = this.tabNavList.eq(index);
+	            this.curNav.addClass('active');
 	            this.switchContent(index, animate);
 	            this.curIndex = index;
 	        }
@@ -578,7 +581,8 @@
 	            this.contentList.each(function () {
 	                $(this).removeClass('active animate');
 	            });
-	            this.contentList.eq(index).addClass('active');
+	            this.curContent = this.contentList.eq(index);
+	            this.curContent.addClass('active');
 	            if (animate) {
 	                this.contentList.eq(index).addClass('animate');
 	            }
@@ -630,7 +634,7 @@
 	            if (this.cfg.el) {
 	                this.el = $(this.cfg.el);
 	            } else {
-	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
+	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='content'>" + this.cfg.content + "</p>" + "</div>");
 	                //添加按钮们
 	                if (this.cfg.btnConfirm) {
 	                    var btnConfirm = $("<button class='confirm'>" + this.cfg.btnConfirm + "</button>");
@@ -782,7 +786,7 @@
 	        value: function checkPhone(obj, parent, canSubmit) {
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
-	            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	            var regPhone = /^0?1[3|4|5|8|7][0-9]\d{8}$/;
 
 	            if (!regPhone.test(obj.val())) {
 	                self.setErrMsg(errMsg, "手机号码错误");
@@ -967,13 +971,13 @@
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
-	                    return false;
-	                    // self.callBack();
+	                    // return false;
+	                    self.callBack();
 	                } else {
-	                        if (self.callBack) {
-	                            self.callBack();
-	                        }
+	                    if (self.callBack) {
+	                        self.callBack();
 	                    }
+	                }
 	            });
 	        }
 	    }]);

@@ -124,7 +124,7 @@
 	            if (this.cfg.el) {
 	                this.el = $(this.cfg.el);
 	            } else {
-	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
+	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='content'>" + this.cfg.content + "</p>" + "</div>");
 	                //添加按钮们
 	                if (this.cfg.btnConfirm) {
 	                    var btnConfirm = $("<button class='confirm'>" + this.cfg.btnConfirm + "</button>");
