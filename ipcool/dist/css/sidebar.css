@@ -822,7 +822,8 @@ ul.sidebar_nav {
       display: none; }
     .ip_pic_list li img {
       width: 100px;
-      height: 140px; }
+      height: 140px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
     .ip_pic_list li h2.ip_pic_title {
       margin-top: 6px;
       font-size: 12px;
