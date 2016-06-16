@@ -365,9 +365,18 @@
             width: 50%;
             font-size: 14px;
             .input_content {
+                width: 270px;
+                position: relative;
                 .info_label {
                     color: #9B9B9B;
                     margin-top: 12px;
+                }
+                .err_msg {
+                    font-size: 14px;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    color: #bb4945;
                 }
                 input {
                     margin-top: 5px;

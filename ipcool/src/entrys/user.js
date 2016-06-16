@@ -3,6 +3,7 @@ import Avatar from '../components/avatar_upload.js'
 import Validate from '../components/validate.js'
 import LimiteChoose from '../components/limiteChoose.js'
 import PersonalIdentify from '../components/personalIdentify.js'
+import CompanyIdentify from '../components/companyIdentify.js'
 
 $(function() {
     $("#avatar_mask").on("click", function() {
@@ -14,26 +15,16 @@ $(function() {
         })
     })
     let pwdValidate = new Validate({
-        el: "#pwdModify",
-        inputBoxs: ".input_content",
-        btnSubmit: "input[type='submit']"
-    })
-    //个人身份验证开始
+            el: "#pwdModify",
+            inputBoxs: ".input_content",
+            btnSubmit: "input[type='submit']"
+        })
+        //个人身份验证开始
     let personalForms = new PersonalIdentify({
-        el: "#personal_identify_container"
+            el: "#personal_identify_container",
+        })
+        //企业身份验证开始
+    let companyForms = new CompanyIdentify({
+        el: "#company_identify_container",
     })
-
-
-    let companyLimite = new LimiteChoose("#company_choose_form", 3);
-    //企业机构身份验证 完成后进去银行卡 验证页面
-    let cInfoForm = new Validate({
-        el: "#c_indentify_form",
-        inputBoxs: ".input_content",
-        btnSubmit: "input[type='submit']",
-        callBack: function() {
-            //去到银行验证页面
-        }
-    })
-
-
 })

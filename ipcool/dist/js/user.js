@@ -66,6 +66,10 @@
 
 	var _personalIdentify2 = _interopRequireDefault(_personalIdentify);
 
+	var _companyIdentify = __webpack_require__(27);
+
+	var _companyIdentify2 = _interopRequireDefault(_companyIdentify);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
@@ -86,16 +90,9 @@
 	    var personalForms = new _personalIdentify2.default({
 	        el: "#personal_identify_container"
 	    });
-
-	    var companyLimite = new _limiteChoose2.default("#company_choose_form", 3);
-	    //企业机构身份验证 完成后进去银行卡 验证页面
-	    var cInfoForm = new _validate2.default({
-	        el: "#c_indentify_form",
-	        inputBoxs: ".input_content",
-	        btnSubmit: "input[type='submit']",
-	        callBack: function callBack() {
-	            //去到银行验证页面
-	        }
+	    //企业身份验证开始
+	    var companyForms = new _companyIdentify2.default({
+	        el: "#company_identify_container"
 	    });
 	});
 
@@ -565,13 +562,13 @@
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
-	                    return false;
-	                    // self.callBack();
+	                    // return false;
+	                    self.callBack();
 	                } else {
-	                        if (self.callBack) {
-	                            self.callBack();
-	                        }
+	                    if (self.callBack) {
+	                        self.callBack();
 	                    }
+	                }
 	            });
 	        }
 	    }]);
@@ -3988,6 +3985,185 @@
 	}();
 
 	exports.default = FileUpload;
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _pop_up = __webpack_require__(3);
+
+	var _pop_up2 = _interopRequireDefault(_pop_up);
+
+	var _validate = __webpack_require__(4);
+
+	var _validate2 = _interopRequireDefault(_validate);
+
+	var _tab = __webpack_require__(2);
+
+	var _tab2 = _interopRequireDefault(_tab);
+
+	var _limiteChoose = __webpack_require__(24);
+
+	var _limiteChoose2 = _interopRequireDefault(_limiteChoose);
+
+	var _file_upload = __webpack_require__(26);
+
+	var _file_upload2 = _interopRequireDefault(_file_upload);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var CompanyIdentify = function () {
+	    function CompanyIdentify(cfg) {
+	        _classCallCheck(this, CompanyIdentify);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.tab = null;
+	        this.cList = null;
+	        this.init();
+	    }
+
+	    _createClass(CompanyIdentify, [{
+	        key: 'init',
+	        value: function init() {
+	            var self = this;
+	            this.el = $(this.cfg.el);
+	            this.tab = new _tab2.default({
+	                el: this.el,
+	                tabContents: ".user_identify_container",
+	                onTabGo: function onTabGo() {
+	                    var curIndex = this.curIndex;
+	                    var btn_goPrev = this.curContent.find(".go_prev");
+	                    if (curIndex == 1) {
+	                        self.validateForm();
+	                        self.uploadFiles();
+	                        btn_goPrev.on("click", function () {
+	                            self.tab.switchContent(0, true);
+	                        });
+	                    }
+	                    if (curIndex == 2) {
+	                        self.validateBank();
+	                        btn_goPrev.on("click", function () {
+	                            self.tab.switchContent(1, true);
+	                        });
+	                    }
+	                    // add curIndex == 2
+	                }
+	            });
+	            this.chooseCharacter();
+	        }
+	    }, {
+	        key: 'uploadFiles',
+	        value: function uploadFiles() {
+	            var file = new _file_upload2.default("#c_indentify_form");
+	        }
+	    }, {
+	        key: 'validateForm',
+	        value: function validateForm() {
+	            var self = this;
+	            var cInfoForm = new _validate2.default({
+	                el: "#c_indentify_form",
+	                inputBoxs: ".input_content",
+	                btnSubmit: ".submit",
+	                callBack: function callBack() {
+	                    self.tab.switchContent(2, true);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'validateBank',
+	        value: function validateBank() {
+	            var self = this;
+	            var cBankForm = new _validate2.default({
+	                el: "#c_bank_info",
+	                inputBoxs: ".input_content",
+	                btnSubmit: ".submit",
+	                callBack: function callBack() {
+	                    self.getFormValues();
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'getFormValues',
+	        value: function getFormValues() {
+	            var self = this;
+	            var type = 2;
+	            var part = this.cList.join(",");
+	            var realName = this.el.find("input[name=realName]").val();
+	            var cardNo = this.el.find("input[name=cardNo]").val();
+	            var email = this.el.find("input[name=email]").val();
+	            var phone = this.el.find("input[name=phone]").val();
+	            var cardFront = this.el.find(".card_front").attr("src");
+	            var cardBack = this.el.find(".card_back").attr("src");
+	            var companyName = this.el.find("input[name=companyName]").val();
+	            var businessLicense = this.el.find(".business_license").attr("src");
+	            var licenseAgreement = this.el.find(".license_agreement").attr("src");
+	            var bankNo = this.el.find("input[name=bankNo]").val();
+	            var bankName = this.el.find("input[name=bankName]").val();
+	            var bankRealyName = this.el.find("input[name=bankRealyName]").val();
+
+	            $.ajax({
+	                url: '/user/authApply',
+	                type: 'POST',
+	                data: {
+	                    type: type,
+	                    part: part,
+	                    userName: realName,
+	                    cardNo: cardNo,
+	                    email: email,
+	                    phone: phone,
+	                    cardFront: cardFront,
+	                    cardBack: cardBack,
+	                    companyName: companyName,
+	                    businessLicense: businessLicense,
+	                    licenseAgreement: licenseAgreement,
+	                    bankNo: bankNo,
+	                    bankName: bankName,
+	                    bankRealyName: bankRealyName
+	                },
+	                success: function success(result) {
+	                    if (result.error_code == 0) {
+	                        self.postSuccess();
+	                    } else if (result.error_code > 0) {
+	                        console.log(result.error_msg);
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'postSuccess',
+	        value: function postSuccess() {
+	            console.log("提交成功");
+	        }
+	    }, {
+	        key: 'chooseCharacter',
+	        value: function chooseCharacter() {
+	            var self = this;
+	            var limit = new _limiteChoose2.default({
+	                el: "#company_choose_form",
+	                limit: 3,
+	                callBack: function callBack() {
+	                    self.cList = this.characterList;
+	                    self.tab.switchContent(1, true);
+	                }
+	            });
+	        }
+	    }]);
+
+	    return CompanyIdentify;
+	}();
+
+	exports.default = CompanyIdentify;
 
 /***/ }
 /******/ ]);

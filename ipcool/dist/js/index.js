@@ -971,13 +971,13 @@
 	            this.btnSubmit.on("click", function () {
 	                self.validateSubmit();
 	                if (!self.canSubmit || $(this).attr("disabled") == "disabled") {
-	                    return false;
-	                    // self.callBack();
+	                    // return false;
+	                    self.callBack();
 	                } else {
-	                        if (self.callBack) {
-	                            self.callBack();
-	                        }
+	                    if (self.callBack) {
+	                        self.callBack();
 	                    }
+	                }
 	            });
 	        }
 	    }]);
