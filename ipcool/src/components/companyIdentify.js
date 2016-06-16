@@ -110,7 +110,7 @@ export default class CompanyIdentify {
         })
     }
     postSuccess() {
-        console.log("提交成功")
+        window.location.href = "user/auth?pageName=auth";
     }
     chooseCharacter() {
         let self = this;

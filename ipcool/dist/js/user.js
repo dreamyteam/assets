@@ -3893,7 +3893,7 @@
 	                content: "丰富您的个人主页将带来职业优势，再次感谢您的耐性等待！",
 	                btnConfirm: "我知道了",
 	                callBack: function callBack() {
-	                    console.log("aaaa");
+	                    window.location.href = "user/auth?pageName=auth";
 	                }
 	            });
 	        }
@@ -4166,7 +4166,7 @@
 	    }, {
 	        key: 'postSuccess',
 	        value: function postSuccess() {
-	            console.log("提交成功");
+	            window.location.href = "user/auth?pageName=auth";
 	        }
 	    }, {
 	        key: 'chooseCharacter',
