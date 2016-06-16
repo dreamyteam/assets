@@ -63,7 +63,7 @@ export default class Validate {
     checkPhone(obj, parent, canSubmit) {
         let self = this;
         let errMsg = parent.find(this.errMsg);
-        let regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+        let regPhone = /^0?1[3|4|5|8|7][0-9]\d{8}$/;
 
         if (!regPhone.test(obj.val())) {
             self.setErrMsg(errMsg, "手机号码错误");

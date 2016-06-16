@@ -380,7 +380,7 @@
 	        value: function checkPhone(obj, parent, canSubmit) {
 	            var self = this;
 	            var errMsg = parent.find(this.errMsg);
-	            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	            var regPhone = /^0?1[3|4|5|8|7][0-9]\d{8}$/;
 
 	            if (!regPhone.test(obj.val())) {
 	                self.setErrMsg(errMsg, "手机号码错误");
