@@ -360,6 +360,10 @@
         }
         .input_content.whole_line {
             display: block;
+            .err_msg {
+                right: 30px;
+                top: 0;
+            }
         }
     }
     .c_bank_info_container {
