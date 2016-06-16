@@ -1,6 +1,8 @@
 export default class Tab {
     constructor(cfg) {
         this.cfg = cfg;
+        this.curNav = null;
+        this.curContent = null;
         this.init();
     }
     init() {
@@ -34,14 +36,16 @@ export default class Tab {
     }
     switchTabNav(index, animate) {
         this.tabNavList.each(function() { $(this).removeClass('active'); });
-        this.tabNavList.eq(index).addClass('active');
+        this.curNav = this.tabNavList.eq(index);
+        this.curNav.addClass('active');
         this.switchContent(index, animate);
         this.curIndex = index;
     }
     switchContent(index, animate) {
         this.curIndex = index;
         this.contentList.each(function() { $(this).removeClass('active animate'); });
-        this.contentList.eq(index).addClass('active');
+        this.curContent = this.contentList.eq(index);
+        this.curContent.addClass('active');
         if (animate) {
             this.contentList.eq(index).addClass('animate');
         }

@@ -525,6 +525,8 @@
 	        _classCallCheck(this, Tab);
 
 	        this.cfg = cfg;
+	        this.curNav = null;
+	        this.curContent = null;
 	        this.init();
 	    }
 
@@ -567,7 +569,8 @@
 	            this.tabNavList.each(function () {
 	                $(this).removeClass('active');
 	            });
-	            this.tabNavList.eq(index).addClass('active');
+	            this.curNav = this.tabNavList.eq(index);
+	            this.curNav.addClass('active');
 	            this.switchContent(index, animate);
 	            this.curIndex = index;
 	        }
@@ -578,7 +581,8 @@
 	            this.contentList.each(function () {
 	                $(this).removeClass('active animate');
 	            });
-	            this.contentList.eq(index).addClass('active');
+	            this.curContent = this.contentList.eq(index);
+	            this.curContent.addClass('active');
 	            if (animate) {
 	                this.contentList.eq(index).addClass('animate');
 	            }
@@ -630,7 +634,7 @@
 	            if (this.cfg.el) {
 	                this.el = $(this.cfg.el);
 	            } else {
-	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='sub_title'>" + this.cfg.content + "</p>" + "</div>");
+	                this.el = $("<div class='popup_box normal'>" + "<button class='close'></button>" + "<h3 class='title'>" + this.cfg.title + "</h3>" + "<p class='content'>" + this.cfg.content + "</p>" + "</div>");
 	                //添加按钮们
 	                if (this.cfg.btnConfirm) {
 	                    var btnConfirm = $("<button class='confirm'>" + this.cfg.btnConfirm + "</button>");
