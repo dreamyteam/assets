@@ -368,6 +368,33 @@ section.write_comment_container form.write_comment {
     -webkit-transform: translateY(0px);
             transform: translateY(0px); } }
 
+.introduction h1.title {
+  margin-bottom: 20px; }
+
+.introduction .summary {
+  font-size: 14px;
+  color: #4a4a4a;
+  line-height: 25px; }
+
+.introduction .introduction_details_container {
+  margin-top: 15px;
+  font-size: 0; }
+  .introduction .introduction_details_container .introduction_details_content {
+    margin-top: 15px;
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    font-size: 12px; }
+    .introduction .introduction_details_container .introduction_details_content .title {
+      display: inline-block;
+      width: 60px;
+      color: #9B9B9B; }
+    .introduction .introduction_details_container .introduction_details_content .content {
+      color: #4A4A4A;
+      transition: color 300ms ease; }
+      .introduction .introduction_details_container .introduction_details_content .content:hover {
+        color: #00a69d; }
+
 section.program_values {
   font-size: 0; }
   section.program_values .comprehensive_value .number {
@@ -645,17 +672,6 @@ section.program_values {
       border: 1px solid #26b4ac;
       border-radius: 33px;
       width: 82px; }
-
-.introduction h2.title {
-  font-family: PingFangSC-Regular;
-  font-size: 16px;
-  color: #4a4a4a;
-  margin-bottom: 9px; }
-
-.introduction p {
-  font-size: 14px;
-  color: #4a4a4a;
-  line-height: 25px; }
 
 section.comprehensive .values_container .values_content, section.potential_trend .values_container .values_content {
   width: 25%; }

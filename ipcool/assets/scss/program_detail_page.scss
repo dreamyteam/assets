@@ -1,9 +1,9 @@
-
 @import "./components/searchbar.scss";
 @import "./components/program_info.scss";
 @import "./components/program_nav.scss";
 @import "./components/comments.scss";
 @import "./components/backtotop.scss";
+@import "./details/introduction.scss"; //相关简介部分
 // 指数综合
 section.program_values {
     font-size: 0;
@@ -349,21 +349,6 @@ section.program_values {
             border-radius: 33px;
             width: 82px;
         }
-    }
-}
-
-// 简介
-.introduction {
-    h2.title {
-        font-family: PingFangSC-Regular;
-        font-size: 16px;
-        color: #4a4a4a;
-        margin-bottom: 9px;
-    }
-    p {
-        font-size: 14px;
-        color: #4a4a4a;
-        line-height: 25px;
     }
 }
 
