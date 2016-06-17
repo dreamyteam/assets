@@ -584,8 +584,29 @@ section.program_values {
       .vote_container .vote_content .vote h5 {
         font-size: 14px;
         line-height: 14px;
-        color: #bebebe;
+        color: #4A4A4A;
         margin-bottom: 30px; }
+      .vote_container .vote_content .vote .interested {
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 24px;
+        color: #bebebe;
+        background: transparent;
+        display: inline-block;
+        border-radius: 4px;
+        width: 80px;
+        padding: 0;
+        text-align: center;
+        border: 1px solid #bebebe;
+        transition: border 300ms ease, background 300ms ease, color 300ms ease; }
+        .vote_container .vote_content .vote .interested:hover {
+          border: 1px solid #00a69d;
+          background: #00a69d;
+          color: #fff; }
+        .vote_container .vote_content .vote .interested.active {
+          border: 1px solid #00a69d;
+          background: #00a69d;
+          color: #fff; }
       .vote_container .vote_content .vote .vote_btns {
         font-size: 0; }
         .vote_container .vote_content .vote .vote_btns button {

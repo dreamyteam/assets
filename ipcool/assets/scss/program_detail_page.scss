@@ -240,8 +240,32 @@ section.program_values {
             h5 {
                 font-size: 14px;
                 line-height: 14px;
-                color: #bebebe;
+                color: #4A4A4A;
                 margin-bottom: 30px;
+            }
+            .interested {
+                cursor: pointer;
+                font-size: 14px;
+                line-height: 24px;
+                color: #bebebe;
+                background: transparent;
+                display: inline-block;
+                border-radius: 4px;
+                width: 80px;
+                padding: 0;
+                text-align: center;
+                border: 1px solid #bebebe;
+                transition: border 300ms ease, background 300ms ease, color 300ms ease;
+                &:hover {
+                    border: 1px solid #00a69d;
+                    background: #00a69d;
+                    color: #fff;
+                }
+                &.active {
+                    border: 1px solid #00a69d;
+                    background: #00a69d;
+                    color: #fff;
+                }
             }
             .vote_btns {
                 font-size: 0;
@@ -420,7 +444,6 @@ section.user_reviews {
     padding: 50px 0;
     height: 440px;
 }
-
 #chart_heat_trend {
     &::before {
         content: '一周热度指数趋势';
@@ -431,7 +454,6 @@ section.user_reviews {
         color: #4a4a4a;
     }
 }
-
 #chart_user_vitalty {
     &::before {
         content: '用户活跃度趋势';
@@ -442,11 +464,9 @@ section.user_reviews {
         color: #4a4a4a;
     }
 }
-
 #chart_potential_model_small {
     height: 110px;
 }
-
 #chart_reviews {
     width: 500px;
     height: 175px;
@@ -460,7 +480,6 @@ section.user_reviews {
         color: #4a4a4a;
     }
 }
-
 //中国地图
 #chart_media_map_china,
 #chart_similar_contrast {

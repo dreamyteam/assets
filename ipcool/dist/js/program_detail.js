@@ -58,6 +58,10 @@
 
 	var _scroll_load2 = _interopRequireDefault(_scroll_load);
 
+	var _vote = __webpack_require__(28);
+
+	var _vote2 = _interopRequireDefault(_vote);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var VoteProto = __webpack_require__(18); //投票
@@ -70,7 +74,6 @@
 	    //导航置顶
 	    new _fix_top2.default();
 	    //找到ip名字id
-	    var ip_name = $('.program_info .content h1.name').html();
 	    var ip_Id = $('#getIpid').val();
 
 	    var scrollLoad = new _scroll_load2.default({
@@ -82,6 +85,10 @@
 	    var voteproto = new VoteProto({
 	        el: '.vote_container .vote_content',
 	        ip_Id: ip_Id
+	    });
+
+	    var vote = new _vote2.default({
+	        el: '.vote_container .vote_content'
 	    });
 	});
 
@@ -1559,6 +1566,52 @@
 	};
 
 	module.exports = VoteProto;
+
+/***/ },
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Vote = function () {
+	    function Vote(cfg) {
+	        _classCallCheck(this, Vote);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.ipId = null;
+	        this.init();
+	    }
+
+	    _createClass(Vote, [{
+	        key: 'init',
+	        value: function init() {
+	            this.ipId = $('#getIpid').val();
+	            console.log(this.ipId);
+	        }
+	    }]);
+
+	    return Vote;
+	}();
+
+	exports.default = Vote;
 
 /***/ }
 /******/ ]);
